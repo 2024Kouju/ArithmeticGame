@@ -28,23 +28,45 @@ public class ItemController : MonoBehaviour
 
     void SpawnItem()
     {
-        // Imageの四隅を取得（ワールド座標）
         Vector3[] corners = new Vector3[4];
         spawnArea.GetWorldCorners(corners);
 
-        // 左下と右上
         Vector3 bottomLeft = corners[0];
         Vector3 topRight = corners[2];
 
-        // 範囲内でランダム
-        float x = Random.Range(bottomLeft.x, topRight.x);
-        float y = Random.Range(bottomLeft.y, topRight.y);
+        float x, y;
+
+        // どの方向から出すか（0:上 1:下 2:左 3:右）
+        int side = Random.Range(0, 4);
+
+        switch (side)
+        {
+            case 0: // 上
+                x = Random.Range(bottomLeft.x, topRight.x);
+                y = topRight.y + 1f;
+                break;
+
+            case 1: // 下
+                x = Random.Range(bottomLeft.x, topRight.x);
+                y = bottomLeft.y - 1f;
+                break;
+
+            case 2: // 左
+                x = bottomLeft.x - 1f;
+                y = Random.Range(bottomLeft.y, topRight.y);
+                break;
+
+            default: // 右
+                x = topRight.x + 1f;
+                y = Random.Range(bottomLeft.y, topRight.y);
+                break;
+        }
 
         Vector2 spawnPos = new Vector2(x, y);
 
         GameObject item = Instantiate(itemPrefab, spawnPos, Quaternion.identity);
 
-        // 動きつける
+        // 中心に向かう
         item.GetComponent<ItemMove>().spawnArea = spawnArea;
         item.GetComponent<ItemMove>().SetRandomDirection();
     }

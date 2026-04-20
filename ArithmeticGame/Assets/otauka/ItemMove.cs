@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemMove : MonoBehaviour
@@ -7,36 +6,83 @@ public class ItemMove : MonoBehaviour
     public float speed = 5f;
     private Vector2 moveDir;
 
-    public RectTransform spawnArea; // ← 追加
+    public RectTransform spawnArea;
 
-    public void SetRandomDirection()
+    private SpriteRenderer sr;
+    private Camera mainCam;
+
+    void Start()
     {
-        Vector2 center = Vector2.zero;
-        moveDir = (center - (Vector2)transform.position).normalized;
+        sr = GetComponent<SpriteRenderer>();
+        mainCam = Camera.main;
+
+        SetAlpha(0f);
+        StartCoroutine(Fade(0f, 1f, 0.5f));
     }
 
     void Update()
     {
         transform.Translate(moveDir * speed * Time.deltaTime);
 
-        CheckOutOfArea();
+        CheckOutOfScreen();
     }
 
-    void CheckOutOfArea()
+    public void SetRandomDirection()
     {
-        Vector3[] corners = new Vector3[4];
-        spawnArea.GetWorldCorners(corners);
+        Vector3 center = spawnArea.position;
+        moveDir = (center - transform.position).normalized;
+    }
 
-        Vector3 bottomLeft = corners[0];
-        Vector3 topRight = corners[2];
+    // =========================
+    // 画面外判定
+    // =========================
+    void CheckOutOfScreen()
+    {
+        Vector3 viewPos = mainCam.WorldToViewportPoint(transform.position);
 
-        Vector3 pos = transform.position;
+        bool isOut =
+            viewPos.x < -0.1f || viewPos.x > 1.1f ||
+            viewPos.y < -0.1f || viewPos.y > 1.1f;
 
-        // 範囲外なら削除
-        if (pos.x < bottomLeft.x || pos.x > topRight.x ||
-            pos.y < bottomLeft.y || pos.y > topRight.y)
+        if (isOut)
         {
-            Destroy(gameObject);
+            FadeOutAndDestroy();
         }
+    }
+
+    // =========================
+    // フェード
+    // =========================
+    IEnumerator Fade(float from, float to, float duration)
+    {
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float alpha = Mathf.Lerp(from, to, time / duration);
+            SetAlpha(alpha);
+            yield return null;
+        }
+
+        SetAlpha(to);
+    }
+
+    void SetAlpha(float alpha)
+    {
+        Color c = sr.color;
+        c.a = alpha;
+        sr.color = c;
+    }
+
+    public void FadeOutAndDestroy()
+    {
+        StartCoroutine(FadeOut());
+    }
+
+    IEnumerator FadeOut()
+    {
+        yield return StartCoroutine(Fade(1f, 0f, 0.5f));
+        Destroy(gameObject);
     }
 }
