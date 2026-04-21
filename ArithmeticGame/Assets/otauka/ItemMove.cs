@@ -7,24 +7,28 @@ public class ItemMove : MonoBehaviour
     private Vector2 moveDir;
 
     public RectTransform spawnArea;
+    public RectTransform allowArea;
+    public RectTransform denyArea;
 
     private SpriteRenderer sr;
     private Camera mainCam;
+
+    private bool isVisible = true;
 
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
         mainCam = Camera.main;
 
-        SetAlpha(0f);
-        StartCoroutine(Fade(0f, 1f, 0.5f));
+        // 最初は表示
+        SetAlpha(1f);
+        isVisible = true;
     }
 
     void Update()
     {
         transform.Translate(moveDir * speed * Time.deltaTime);
-
-        CheckOutOfScreen();
+        CheckArea();
     }
 
     public void SetRandomDirection()
@@ -34,38 +38,27 @@ public class ItemMove : MonoBehaviour
     }
 
     // =========================
-    // 画面外判定
+    // エリア判定（即表示/非表示）
     // =========================
-    void CheckOutOfScreen()
+    void CheckArea()
     {
-        Vector3 viewPos = mainCam.WorldToViewportPoint(transform.position);
+        Vector2 screenPos =
+            RectTransformUtility.WorldToScreenPoint(mainCam, transform.position);
 
-        bool isOut =
-            viewPos.x < -0.1f || viewPos.x > 1.1f ||
-            viewPos.y < -0.1f || viewPos.y > 1.1f;
+        bool inAllow =
+            RectTransformUtility.RectangleContainsScreenPoint(allowArea, screenPos, mainCam);
 
-        if (isOut)
+        bool inDeny =
+            RectTransformUtility.RectangleContainsScreenPoint(denyArea, screenPos, mainCam);
+
+        bool shouldBeVisible = inAllow && !inDeny;
+
+        // 状態が変わったときだけ更新（無駄処理＆チカつき防止）
+        if (shouldBeVisible != isVisible)
         {
-            FadeOutAndDestroy();
+            isVisible = shouldBeVisible;
+            SetAlpha(isVisible ? 1f : 0f);
         }
-    }
-
-    // =========================
-    // フェード
-    // =========================
-    IEnumerator Fade(float from, float to, float duration)
-    {
-        float time = 0f;
-
-        while (time < duration)
-        {
-            time += Time.deltaTime;
-            float alpha = Mathf.Lerp(from, to, time / duration);
-            SetAlpha(alpha);
-            yield return null;
-        }
-
-        SetAlpha(to);
     }
 
     void SetAlpha(float alpha)
@@ -73,16 +66,5 @@ public class ItemMove : MonoBehaviour
         Color c = sr.color;
         c.a = alpha;
         sr.color = c;
-    }
-
-    public void FadeOutAndDestroy()
-    {
-        StartCoroutine(FadeOut());
-    }
-
-    IEnumerator FadeOut()
-    {
-        yield return StartCoroutine(Fade(1f, 0f, 0.5f));
-        Destroy(gameObject);
     }
 }

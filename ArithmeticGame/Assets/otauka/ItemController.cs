@@ -8,7 +8,9 @@ public class ItemController : MonoBehaviour
     public float minTime = 1f;
     public float maxTime = 3f;
 
-    public RectTransform spawnArea; // ← Imageを入れる！
+    public RectTransform spawnArea; // 出現範囲
+    public RectTransform allowArea; // 表示OKエリア
+    public RectTransform denyArea;  // 表示NGエリア
 
     void Start()
     {
@@ -35,8 +37,6 @@ public class ItemController : MonoBehaviour
         Vector3 topRight = corners[2];
 
         float x, y;
-
-        // どの方向から出すか（0:上 1:下 2:左 3:右）
         int side = Random.Range(0, 4);
 
         switch (side)
@@ -66,8 +66,12 @@ public class ItemController : MonoBehaviour
 
         GameObject item = Instantiate(itemPrefab, spawnPos, Quaternion.identity);
 
-        // 中心に向かう
-        item.GetComponent<ItemMove>().spawnArea = spawnArea;
-        item.GetComponent<ItemMove>().SetRandomDirection();
+        // ★ ここでPrefabに渡す（重要）
+        ItemMove move = item.GetComponent<ItemMove>();
+        move.spawnArea = spawnArea;
+        move.allowArea = allowArea;
+        move.denyArea = denyArea;
+
+        move.SetRandomDirection();
     }
 }
