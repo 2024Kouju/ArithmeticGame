@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -332,9 +332,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9a35a8e23cef5c45ab3cc8c47c5f344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemPrefab: {fileID: 2215618763125096306, guid: 24faa79caa1c3c644bca0da2891c4e14, type: 3}
+  itemPrefab: {fileID: 5324075745140040898, guid: 103d98818fd1a2048ae859c96cc7df8d, type: 3}
   minTime: 1
   maxTime: 3
+  canvas: {fileID: 84852405}
   spawnArea: {fileID: 84852405}
   allowArea: {fileID: 84852405}
   denyArea: {fileID: 477068968}
@@ -351,7 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -391,6 +392,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 2215618763125096306, guid: 2979a2288448f294cb392c34d2b8e0c3, type: 3}
   minTime: 1
   maxTime: 3
+  canvas: {fileID: 0}
   spawnArea: {fileID: 84852405}
   allowArea: {fileID: 84852405}
   denyArea: {fileID: 45361100}

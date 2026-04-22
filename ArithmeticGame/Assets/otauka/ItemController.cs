@@ -8,6 +8,7 @@ public class ItemController : MonoBehaviour
     public float minTime = 1f;
     public float maxTime = 3f;
 
+    public Transform canvas; // ← 追加
     public RectTransform spawnArea; // 出現範囲
     public RectTransform allowArea; // 表示OKエリア
     public RectTransform denyArea;  // 表示NGエリア
@@ -30,11 +31,10 @@ public class ItemController : MonoBehaviour
 
     void SpawnItem()
     {
-        Vector3[] corners = new Vector3[4];
-        spawnArea.GetWorldCorners(corners);
+        RectTransform rtSpawn = spawnArea;
 
-        Vector3 bottomLeft = corners[0];
-        Vector3 topRight = corners[2];
+        float width = rtSpawn.rect.width;
+        float height = rtSpawn.rect.height;
 
         float x, y;
         int side = Random.Range(0, 4);
@@ -42,31 +42,33 @@ public class ItemController : MonoBehaviour
         switch (side)
         {
             case 0: // 上
-                x = Random.Range(bottomLeft.x, topRight.x);
-                y = topRight.y + 1f;
+                x = Random.Range(-width / 2, width / 2);
+                y = height / 2 + 50f;
                 break;
 
             case 1: // 下
-                x = Random.Range(bottomLeft.x, topRight.x);
-                y = bottomLeft.y - 1f;
+                x = Random.Range(-width / 2, width / 2);
+                y = -height / 2 - 50f;
                 break;
 
             case 2: // 左
-                x = bottomLeft.x - 1f;
-                y = Random.Range(bottomLeft.y, topRight.y);
+                x = -width / 2 - 50f;
+                y = Random.Range(-height / 2, height / 2);
                 break;
 
             default: // 右
-                x = topRight.x + 1f;
-                y = Random.Range(bottomLeft.y, topRight.y);
+                x = width / 2 + 50f;
+                y = Random.Range(-height / 2, height / 2);
                 break;
         }
 
-        Vector2 spawnPos = new Vector2(x, y);
+        GameObject item = Instantiate(itemPrefab, spawnArea.parent);
 
-        GameObject item = Instantiate(itemPrefab, spawnPos, Quaternion.identity);
+        RectTransform rt = item.GetComponent<RectTransform>();
 
-        // ★ ここでPrefabに渡す（重要）
+        // ★ ここが超重要
+        rt.anchoredPosition = new Vector2(x, y);
+
         ItemMove move = item.GetComponent<ItemMove>();
         move.spawnArea = spawnArea;
         move.allowArea = allowArea;
