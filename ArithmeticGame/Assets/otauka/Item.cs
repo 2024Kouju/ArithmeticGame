@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+
+
 public class Item : MonoBehaviour
 {
     public GameObject panel;
+    public QuizManager quizManager;
 
     public void SetPanel(GameObject p)
     {
@@ -14,7 +17,13 @@ public class Item : MonoBehaviour
 
     void OnMouseDown()
     {
+        // パネル表示
         panel.SetActive(true);
-    }
 
+        // ★ここで問題を出す
+        if (quizManager != null)
+        {
+            quizManager.ShowRandomQuestion();
+        }
+    }
 }

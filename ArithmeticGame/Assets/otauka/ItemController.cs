@@ -70,5 +70,8 @@ public class ItemController : MonoBehaviour
         // š ‚±‚ê’Ç‰Á
         Item click = item.GetComponent<Item>();
         click.panel = panel;
+
+        // š’Ç‰Á
+        click.quizManager = FindObjectOfType<QuizManager>();
     }
 }
