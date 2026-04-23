@@ -6,74 +6,69 @@ public class ItemController : MonoBehaviour
 {
     public GameObject itemPrefab;
     public float minTime = 1f;
-    public float maxTime = 3f;
-
-    public Transform canvas; // ← 追加
-    public RectTransform spawnArea; // 出現範囲
-    public RectTransform allowArea; // 表示OKエリア
-    public RectTransform denyArea;  // 表示NGエリア
-
-    void Start()
+    public float maxTime = 3f; 
+    public RectTransform spawnArea; 
+    // 出現範囲
+    public RectTransform allowArea; 
+    // 表示OKエリア
+    public RectTransform denyArea;
+    // 表示NGエリア]
+    public GameObject panel; // ← これ追加
+    void Start() 
     {
         StartCoroutine(SpawnLoop());
-    }
-
-    IEnumerator SpawnLoop()
-    {
-        while (true)
-        {
+    } 
+    IEnumerator SpawnLoop() 
+    { 
+        while (true) 
+        { 
             float waitTime = Random.Range(minTime, maxTime);
-            yield return new WaitForSeconds(waitTime);
-
-            SpawnItem();
-        }
-    }
-
-    void SpawnItem()
-    {
-        RectTransform rtSpawn = spawnArea;
-
-        float width = rtSpawn.rect.width;
-        float height = rtSpawn.rect.height;
-
+            yield return new WaitForSeconds(waitTime); 
+            SpawnItem(); 
+        } 
+    } 
+    void SpawnItem() 
+    { 
+        Vector3[] corners = new Vector3[4];
+        spawnArea.GetWorldCorners(corners); 
+        Vector3 bottomLeft = corners[0]; 
+        Vector3 topRight = corners[2];
         float x, y;
         int side = Random.Range(0, 4);
-
-        switch (side)
-        {
-            case 0: // 上
-                x = Random.Range(-width / 2, width / 2);
-                y = height / 2 + 50f;
+        switch (side) 
+        { 
+            case 0: 
+                // 上
+                x = Random.Range(bottomLeft.x, topRight.x);
+                y = topRight.y + 1f;
                 break;
-
-            case 1: // 下
-                x = Random.Range(-width / 2, width / 2);
-                y = -height / 2 - 50f;
-                break;
-
-            case 2: // 左
-                x = -width / 2 - 50f;
-                y = Random.Range(-height / 2, height / 2);
-                break;
-
-            default: // 右
-                x = width / 2 + 50f;
-                y = Random.Range(-height / 2, height / 2);
-                break;
+            case 1:
+                // 下
+                x = Random.Range(bottomLeft.x, topRight.x); 
+                y = bottomLeft.y - 1f; 
+                break; 
+            case 2: 
+                // 左
+                x = bottomLeft.x - 1f;
+                y = Random.Range(bottomLeft.y, topRight.y); 
+                break; 
+            default: 
+                // 右
+                x = topRight.x + 1f;
+                y = Random.Range(bottomLeft.y, topRight.y); 
+                break; 
         }
-
-        GameObject item = Instantiate(itemPrefab, spawnArea.parent);
-
-        RectTransform rt = item.GetComponent<RectTransform>();
-
-        // ★ ここが超重要
-        rt.anchoredPosition = new Vector2(x, y);
-
-        ItemMove move = item.GetComponent<ItemMove>();
-        move.spawnArea = spawnArea;
+        Vector2 spawnPos = new Vector2(x, y); 
+        GameObject item = Instantiate(itemPrefab, spawnPos, Quaternion.identity); 
+        // ★ ここでPrefabに渡す（重要）
+        ItemMove move = item.GetComponent<ItemMove>(); 
+        move.spawnArea = spawnArea; 
         move.allowArea = allowArea;
-        move.denyArea = denyArea;
-
+        move.denyArea = denyArea; 
         move.SetRandomDirection();
+
+        // ★ これ追加
+        Item click = item.GetComponent<Item>();
+        click.panel = panel;
     }
 }

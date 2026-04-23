@@ -5,9 +5,16 @@ using UnityEngine.EventSystems;
 
 public class Item : MonoBehaviour
 {
-    public void OnClick()
+    public GameObject panel;
+
+    public void SetPanel(GameObject p)
     {
-        Debug.Log("‰Ÿ‚µ‚½");
-        UIManager.Instance.ShowPanel();
+        panel = p;
     }
+
+    void OnMouseDown()
+    {
+        panel.SetActive(true);
+    }
+
 }
