@@ -156,8 +156,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -7.2, y: -2.485}
-  m_SizeDelta: {x: 321.05, y: 211.4}
+  m_AnchoredPosition: {x: -0.0014992, y: -0.000008285}
+  m_SizeDelta: {x: 446.1, y: 208.49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &44284346
 MonoBehaviour:
@@ -181,7 +181,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 07ef9a5f99570c14886a83cc4ebd090c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 416d468ce598c2c428e07f480e13da7e, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -206,13 +206,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -986,8 +986,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00000047684, y: 24.26}
-  m_SizeDelta: {x: 347.42, y: 165.31}
+  m_AnchoredPosition: {x: 0.00000095367, y: 47.6}
+  m_SizeDelta: {x: 446.1, y: 208.49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &411969496
 MonoBehaviour:
@@ -2964,7 +2964,6 @@ GameObject:
   - component: {fileID: 1864307003}
   - component: {fileID: 1864307002}
   - component: {fileID: 1864307001}
-  - component: {fileID: 1864307005}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -3056,41 +3055,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1864307005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1864307000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 764a341e6f1ab514bad10902a5fd7a2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  questions:
-  - question: "\u65E5\u672C\u306E\u6D88\u8CBB\u7A0E\u306F\u4F55\u30D1\u30FC\u30BB\u30F3\u30C8?"
-    choices:
-    - 1
-    - 2
-    - 10
-    - 20
-    correctIndex: 2
-  - question: 
-    choices: []
-    correctIndex: 0
-  - question: 
-    choices: []
-    correctIndex: 0
-  - question: 
-    choices: []
-    correctIndex: 0
-  questionText: {fileID: 0}
-  choiceButtons:
-  - {fileID: 199264106}
-  - {fileID: 730432448}
-  - {fileID: 1127479508}
-  - {fileID: 1038850700}
 --- !u!1 &1982591642
 GameObject:
   m_ObjectHideFlags: 0
