@@ -4,14 +4,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuizManager : MonoBehaviour
+public class Quiz1 : MonoBehaviour
 {
-    public List<QuestionData0> questions;
+    public List<QuestionData1> questions;
 
     public TextMeshProUGUI questionText;
     public Button[] choiceButtons;
 
-    private QuestionData0 currentQuestion;
+    private QuestionData1 currentQuestion;
 
     public GameObject panel;
 
@@ -33,7 +33,7 @@ public class QuizManager : MonoBehaviour
             return;
         }
 
-        questionText.text = currentQuestion.question0;
+        questionText.text = currentQuestion.question1;
 
         for (int i = 0; i < choiceButtons.Length; i++)
         {
@@ -48,7 +48,7 @@ public class QuizManager : MonoBehaviour
                 continue;
             }
 
-            txt.text = currentQuestion.choices0[i];
+            txt.text = currentQuestion.choices1[i];
 
             choiceButtons[i].onClick.RemoveAllListeners();
 
@@ -61,9 +61,9 @@ public class QuizManager : MonoBehaviour
 
     void CheckAnswer(int index)
     {
-        if (index == currentQuestion.correctIndex0)
+        if (index == currentQuestion.correctIndex1)
         {
-            
+
             StartCoroutine(OpenPanel());
             Debug.Log("³‰ðI");
 
@@ -91,11 +91,11 @@ public class QuizManager : MonoBehaviour
 
 
 [System.Serializable]
-public class QuestionData0
+public class QuestionData1
 {
     [TextArea]
-    public string question0;
+    public string question1;
 
-    public string[] choices0 = new string[4];
-    public int correctIndex0;
+    public string[] choices1 = new string[4];
+    public int correctIndex1;
 }
