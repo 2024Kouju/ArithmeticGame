@@ -12,6 +12,8 @@ public class QuizManager : MonoBehaviour
 
     private QuestionData currentQuestion;
 
+    public GameObject panel;
+
     public void ShowRandomQuestion()
     {
         if (questions == null || questions.Count == 0)
@@ -58,10 +60,13 @@ public class QuizManager : MonoBehaviour
     {
         if (index == currentQuestion.correctIndex)
         {
+            panel.SetActive(false);
             Debug.Log("ê≥âÅI");
+
         }
         else
         {
+            panel.SetActive(false);
             Debug.Log("ïsê≥âÅI");
         }
     }
