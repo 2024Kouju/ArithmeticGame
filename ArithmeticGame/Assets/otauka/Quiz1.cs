@@ -17,6 +17,10 @@ public class Quiz1 : MonoBehaviour
 
     public HPManager hpManager;
 
+    public GameObject Circle;
+
+    public GameObject Incorrect;
+
     // 表示までの時間
     public float interval = 0.5f;
    
@@ -67,7 +71,7 @@ public class Quiz1 : MonoBehaviour
     {
         if (index == currentQuestion.correctIndex1)
         {
-
+            Circle.SetActive(true);
             StartCoroutine(OpenPanel());
             Debug.Log("正解！");
             hpManager.AddPlayerHP(1);
@@ -75,6 +79,7 @@ public class Quiz1 : MonoBehaviour
         }
         else
         {
+            Incorrect.SetActive(true);
             StartCoroutine(OpenPanel());
             Debug.Log("不正解！");
             hpManager.AddEnemyHP(1);
@@ -88,7 +93,8 @@ public class Quiz1 : MonoBehaviour
         // 待機
         yield return new WaitForSeconds(interval);
 
-        // パネル表示
+        Circle.SetActive(false);
+        Incorrect.SetActive(false);
         panel.SetActive(false);
 
 
