@@ -15,8 +15,12 @@ public class Quiz1 : MonoBehaviour
 
     public GameObject panel;
 
+    public HPManager hpManager;
+
     // 表示までの時間
     public float interval = 0.5f;
+   
+
     public void ShowRandomQuestion()
     {
         if (questions == null || questions.Count == 0)
@@ -66,13 +70,17 @@ public class Quiz1 : MonoBehaviour
 
             StartCoroutine(OpenPanel());
             Debug.Log("正解！");
+            hpManager.AddPlayerHP(1);
 
         }
         else
         {
             StartCoroutine(OpenPanel());
             Debug.Log("不正解！");
+            hpManager.AddEnemyHP(1);
         }
+
+     
     }
 
     IEnumerator OpenPanel()
@@ -86,6 +94,8 @@ public class Quiz1 : MonoBehaviour
 
 
     }
+   
+
 }
 
 
