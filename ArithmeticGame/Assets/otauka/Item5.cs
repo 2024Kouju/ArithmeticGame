@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 
 
@@ -9,9 +10,13 @@ public class Item5 : MonoBehaviour
 {
     public GameObject panel;
     public Quiz5 quizManager;
+    static public bool HPFlag5 = false;
 
     // 表示までの時間
     public float interval = 0.5f;
+
+    // ジャンル選択
+
 
     public void SetPanel(GameObject p)
     {
@@ -23,7 +28,7 @@ public class Item5 : MonoBehaviour
 
     void OnMouseDown()
     {
-
+        HPFlag5 = true;
         StartCoroutine(OpenPanel());
 
 
@@ -37,11 +42,18 @@ public class Item5 : MonoBehaviour
         // パネル表示
         panel.SetActive(true);
 
+
+
+
+
         // 問題表示
         if (quizManager != null)
         {
             quizManager.ShowRandomQuestion();
         }
+
+
+
 
         // このオブジェクト削除
         Destroy(gameObject);

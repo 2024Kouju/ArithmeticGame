@@ -17,6 +17,10 @@ public class Quiz1 : MonoBehaviour
 
     public HPManager hpManager;
 
+    public SwordManager swordManager;
+
+    public ShieldManager shieldManager;
+
     public GameObject Circle;
 
     public GameObject Incorrect;
@@ -74,15 +78,42 @@ public class Quiz1 : MonoBehaviour
             Circle.SetActive(true);
             StartCoroutine(OpenPanel());
             Debug.Log("ê≥âÅI");
-            hpManager.AddPlayerHP(1);
-
+            if (Item1.HPFlag1 == true)
+            {
+                hpManager.AddPlayerHP(1);
+                Item1.HPFlag1 = false;
+            }
+            else if (SwordItem1.SwordFlag1 == true)
+            {
+                swordManager.AddPlayerSword(1);
+                SwordItem1.SwordFlag1 = false;
+            }
+            else if (ShieldItem1.ShieldFlag1 == true)
+            {
+                shieldManager.AddPlayerShield(1);
+                ShieldItem1.ShieldFlag1 = false;
+            }
         }
         else
         {
             Incorrect.SetActive(true);
             StartCoroutine(OpenPanel());
             Debug.Log("ïsê≥âÅI");
-            hpManager.AddEnemyHP(1);
+            if (Item1.HPFlag1 == true)
+            {
+                hpManager.AddEnemyHP(1);
+                Item1.HPFlag1 = false;
+            }
+            else if (SwordItem1.SwordFlag1 == true)
+            {
+                swordManager.AddEnemySword(1);
+                SwordItem1.SwordFlag1 = false;
+            }
+            else if (ShieldItem1.ShieldFlag1 == true)
+            {
+                shieldManager.AddEnemyShield(1);
+                ShieldItem1.ShieldFlag1 = false;
+            }
         }
 
      

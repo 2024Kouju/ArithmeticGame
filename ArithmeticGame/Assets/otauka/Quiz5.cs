@@ -15,6 +15,16 @@ public class Quiz5 : MonoBehaviour
 
     public GameObject panel;
 
+    public HPManager hpManager;
+
+    public SwordManager swordManager;
+
+    public ShieldManager shieldManager;
+
+    public GameObject Circle;
+
+    public GameObject Incorrect;
+
     // 表示までの時間
     public float interval = 0.5f;
     public void ShowRandomQuestion()
@@ -63,16 +73,51 @@ public class Quiz5 : MonoBehaviour
     {
         if (index == currentQuestion.correctIndex5)
         {
-
+            Circle.SetActive(true);
             StartCoroutine(OpenPanel());
             Debug.Log("正解！");
+            if (Item1.HPFlag1 == true)
+            {
+                hpManager.AddPlayerHP(5);
+                Item1.HPFlag1 = false;
+            }
+            else if (SwordItem1.SwordFlag1 == true)
+            {
+                swordManager.AddPlayerSword(5);
+                SwordItem1.SwordFlag1 = false;
+            }
+            else if (ShieldItem1.ShieldFlag1 == true)
+            {
+                shieldManager.AddPlayerShield(5);
+                ShieldItem1.ShieldFlag1 = false;
+            }
 
         }
         else
         {
+            Incorrect.SetActive(true);
             StartCoroutine(OpenPanel());
             Debug.Log("不正解！");
+         
+            if (Item1.HPFlag1 == true)
+            {
+                hpManager.AddEnemyHP(5);
+                Item1.HPFlag1 = false;
+            }
+            else if (SwordItem1.SwordFlag1 == true)
+            {
+                swordManager.AddEnemySword(5);
+                SwordItem1.SwordFlag1 = false;
+            }
+            else if (ShieldItem1.ShieldFlag1 == true)
+            {
+                shieldManager.AddEnemyShield(5);
+                ShieldItem1.ShieldFlag1 = false;
+            }
+
         }
+
+
     }
 
     IEnumerator OpenPanel()
@@ -80,7 +125,8 @@ public class Quiz5 : MonoBehaviour
         // 待機
         yield return new WaitForSeconds(interval);
 
-        // パネル表示
+        Circle.SetActive(false);
+        Incorrect.SetActive(false);
         panel.SetActive(false);
 
 

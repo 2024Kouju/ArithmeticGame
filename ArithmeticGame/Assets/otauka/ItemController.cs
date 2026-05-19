@@ -72,6 +72,6 @@ public class ItemController : MonoBehaviour
         click.panel = panel;
 
         // Åöí«â¡
-        click.quizManager = FindObjectOfType<QuizManager>();
+        click.quizManager = FindObjectOfType<Quiz5>();
     }
 }
