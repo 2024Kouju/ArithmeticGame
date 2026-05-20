@@ -76,20 +76,20 @@ public class Quiz5 : MonoBehaviour
             Circle.SetActive(true);
             StartCoroutine(OpenPanel());
             Debug.Log("ê≥âÅI");
-            if (Item1.HPFlag1 == true)
+            if (Item5.HPFlag5 == true)
             {
                 hpManager.AddPlayerHP(5);
-                Item1.HPFlag1 = false;
+                Item5.HPFlag5 = false;
             }
-            else if (SwordItem1.SwordFlag1 == true)
+            else if (SwordItem5.SwordFlag5 == true)
             {
                 swordManager.AddPlayerSword(5);
-                SwordItem1.SwordFlag1 = false;
+                SwordItem5.SwordFlag5 = false;
             }
-            else if (ShieldItem1.ShieldFlag1 == true)
+            else if (ShieldItem5.ShieldFlag5 == true)
             {
                 shieldManager.AddPlayerShield(5);
-                ShieldItem1.ShieldFlag1 = false;
+                ShieldItem5.ShieldFlag5 = false;
             }
 
         }
@@ -99,20 +99,20 @@ public class Quiz5 : MonoBehaviour
             StartCoroutine(OpenPanel());
             Debug.Log("ïsê≥âÅI");
          
-            if (Item1.HPFlag1 == true)
+            if (Item5.HPFlag5 == true)
             {
                 hpManager.AddEnemyHP(5);
-                Item1.HPFlag1 = false;
+                Item5.HPFlag5 = false;
             }
-            else if (SwordItem1.SwordFlag1 == true)
+            else if (SwordItem5.SwordFlag5 == true)
             {
                 swordManager.AddEnemySword(5);
-                SwordItem1.SwordFlag1 = false;
+                SwordItem5.SwordFlag5 = false;
             }
-            else if (ShieldItem1.ShieldFlag1 == true)
+            else if (ShieldItem5.ShieldFlag5 == true)
             {
                 shieldManager.AddEnemyShield(5);
-                ShieldItem1.ShieldFlag1 = false;
+                ShieldItem5.ShieldFlag5 = false;
             }
 
         }

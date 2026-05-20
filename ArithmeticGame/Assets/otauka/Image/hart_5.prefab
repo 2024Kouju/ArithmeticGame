@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3586081254821562511}
   - component: {fileID: 5758268908482485767}
   - component: {fileID: 2412262977619340476}
-  - component: {fileID: 6228758143191125561}
+  - component: {fileID: -4471903295518204522}
   m_Layer: 3
   m_Name: hart_5
   m_TagString: Item
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 865b391b1a0853b4bb61c21252fa66c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 25
   spawnArea: {fileID: 0}
   allowArea: {fileID: 0}
   denyArea: {fileID: 0}
@@ -176,7 +176,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6228758143191125561
+--- !u!114 &-4471903295518204522
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -185,7 +185,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2215618763125096306}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa8fefee58eec6459c211b98b89115c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0305d05b9cab0e247b0f9754f11ea098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 0}

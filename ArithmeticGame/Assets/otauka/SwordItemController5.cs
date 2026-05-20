@@ -14,6 +14,8 @@ public class SwordItemController5 : MonoBehaviour
 
     public GameObject panel;
 
+    public int maxItems = 10;
+
     void Start()
     {
         StartCoroutine(SpawnLoop());
@@ -24,9 +26,18 @@ public class SwordItemController5 : MonoBehaviour
         while (true)
         {
             float waitTime = Random.Range(minTime, maxTime);
+
             yield return new WaitForSeconds(waitTime);
 
-            SpawnItem();
+            // Itemƒ^ƒO‚Ì”‚ğæ“¾
+            GameObject[] items =
+                GameObject.FindGameObjectsWithTag("Item");
+
+            // ãŒÀ–¢–‚È‚ç¶¬
+            if (items.Length < maxItems)
+            {
+                SpawnItem();
+            }
         }
     }
 

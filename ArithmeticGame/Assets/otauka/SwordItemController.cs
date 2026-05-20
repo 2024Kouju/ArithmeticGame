@@ -14,6 +14,8 @@ public class SwordItemController : MonoBehaviour
     public RectTransform denyArea;
     // 表示NGエリア]
     public GameObject panel; // ← これ追加
+
+    public int maxItems = 10;
     void Start()
     {
         StartCoroutine(SpawnLoop());
@@ -23,8 +25,18 @@ public class SwordItemController : MonoBehaviour
         while (true)
         {
             float waitTime = Random.Range(minTime, maxTime);
+
             yield return new WaitForSeconds(waitTime);
-            SpawnItem();
+
+            // Itemタグの数を取得
+            GameObject[] items =
+                GameObject.FindGameObjectsWithTag("Item");
+
+            // 上限未満なら生成
+            if (items.Length < maxItems)
+            {
+                SpawnItem();
+            }
         }
     }
     void SpawnItem()

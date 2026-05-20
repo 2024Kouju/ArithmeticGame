@@ -12,6 +12,8 @@ public class ItemController1 : MonoBehaviour
     public RectTransform allowArea;
     // 表示OKエリア
     public RectTransform denyArea;
+
+    public int maxItems = 10;
     // 表示NGエリア]
     public GameObject panel; // ← これ追加
     void Start()
@@ -23,8 +25,18 @@ public class ItemController1 : MonoBehaviour
         while (true)
         {
             float waitTime = Random.Range(minTime, maxTime);
+
             yield return new WaitForSeconds(waitTime);
-            SpawnItem();
+
+            // Itemタグの数を取得
+            GameObject[] items =
+                GameObject.FindGameObjectsWithTag("Item");
+
+            // 上限未満なら生成
+            if (items.Length < maxItems)
+            {
+                SpawnItem();
+            }
         }
     }
     void SpawnItem()

@@ -12,21 +12,33 @@ public class ItemController : MonoBehaviour
     public RectTransform allowArea; 
     // 表示OKエリア
     public RectTransform denyArea;
+
+    public int maxItems = 10;
     // 表示NGエリア]
     public GameObject panel; // ← これ追加
     void Start() 
     {
         StartCoroutine(SpawnLoop());
-    } 
-    IEnumerator SpawnLoop() 
-    { 
-        while (true) 
-        { 
+    }
+    IEnumerator SpawnLoop()
+    {
+        while (true)
+        {
             float waitTime = Random.Range(minTime, maxTime);
-            yield return new WaitForSeconds(waitTime); 
-            SpawnItem(); 
-        } 
-    } 
+
+            yield return new WaitForSeconds(waitTime);
+
+            // Itemタグの数を取得
+            GameObject[] items =
+                GameObject.FindGameObjectsWithTag("Item");
+
+            // 上限未満なら生成
+            if (items.Length < maxItems)
+            {
+                SpawnItem();
+            }
+        }
+    }
     void SpawnItem() 
     { 
         Vector3[] corners = new Vector3[4];
@@ -68,7 +80,7 @@ public class ItemController : MonoBehaviour
         move.SetRandomDirection();
 
         // ★ これ追加
-        Item click = item.GetComponent<Item>();
+        Item5 click = item.GetComponent<Item5>();
         click.panel = panel;
 
         // ★追加
