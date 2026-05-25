@@ -28,6 +28,12 @@ public class Item25 : MonoBehaviour
 
     void OnMouseDown()
     {
+
+        // panelが表示中ならクリック無効
+        if (panel.activeSelf)
+        {
+            return;
+        }
         HPFlag25 = true;
         StartCoroutine(OpenPanel());
 

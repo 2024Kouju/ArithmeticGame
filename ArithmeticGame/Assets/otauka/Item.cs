@@ -23,7 +23,11 @@ public class Item : MonoBehaviour
 
     void OnMouseDown()
     {
-
+        // panelが表示中ならクリック無効
+        if (panel.activeSelf)
+        {
+            return;
+        }
         StartCoroutine(OpenPanel());
 
        

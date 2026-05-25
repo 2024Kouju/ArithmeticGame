@@ -28,6 +28,12 @@ public class SwordItem50 : MonoBehaviour
 
     void OnMouseDown()
     {
+
+        // panelが表示中ならクリック無効
+        if (panel.activeSelf)
+        {
+            return;
+        }
         SwordFlag50 = true;
         StartCoroutine(OpenPanel());
 

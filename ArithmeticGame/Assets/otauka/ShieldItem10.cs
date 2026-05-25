@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 public class ShieldItem10 : MonoBehaviour
 {
     public GameObject panel;
-    public Quiz1 quizManager;
+    public Quiz10 quizManager;
 
     static public bool ShieldFlag10 = false;
     // 表示までの時間
@@ -28,6 +28,12 @@ public class ShieldItem10 : MonoBehaviour
 
     void OnMouseDown()
     {
+
+        // panelが表示中ならクリック無効
+        if (panel.activeSelf)
+        {
+            return;
+        }
         ShieldFlag10 = true;
         StartCoroutine(OpenPanel());
 

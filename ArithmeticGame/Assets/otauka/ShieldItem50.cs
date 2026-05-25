@@ -28,6 +28,12 @@ public class ShieldItem50 : MonoBehaviour
 
     void OnMouseDown()
     {
+
+        // panelが表示中ならクリック無効
+        if (panel.activeSelf)
+        {
+            return;
+        }
         ShieldFlag50 = true;
         StartCoroutine(OpenPanel());
 

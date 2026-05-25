@@ -6,12 +6,12 @@ using UnityEngine.UIElements;
 
 
 
-public class SwordItem10 : MonoBehaviour
+public class ShieldItem100 : MonoBehaviour
 {
     public GameObject panel;
-    public Quiz1 quizManager;
+    public Quiz100 quizManager;
 
-    static public bool SwordFlag10 = false;
+    static public bool ShieldFlag100 = false;
     // •\Ž¦‚Ü‚Å‚ÌŽžŠÔ
     public float interval = 0.5f;
 
@@ -34,7 +34,7 @@ public class SwordItem10 : MonoBehaviour
         {
             return;
         }
-        SwordFlag10 = true;
+        ShieldFlag100 = true;
         StartCoroutine(OpenPanel());
 
 
