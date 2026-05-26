@@ -8,12 +8,14 @@ public class ChangeScene : MonoBehaviour
 {
     public string NextSceneText;
 
-    void Start()
-    {
-        Invoke("NextScene", 3f);
-    }
+
 
      public void NextScene()
+    {
+        Invoke("Change", 1f);
+    }
+
+    public void Change()
     {
         SceneManager.LoadScene(NextSceneText);
     }

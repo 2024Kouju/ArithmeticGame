@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+using UnityEngine.SceneManagement;
 
 public class HPManager : MonoBehaviour
 {
@@ -18,18 +18,32 @@ public class HPManager : MonoBehaviour
     public void AddPlayerHP(int value)
     {
         playerHP += value;
+
         UpdateHPUI();
+
+        // ƒvƒŒƒCƒ„[€–S
+        if (playerHP <= 0)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
     }
 
     public void AddEnemyHP(int value)
     {
         enemyHP += value;
+
         UpdateHPUI();
+
+        // “G€–S
+        if (enemyHP <= 0)
+        {
+            SceneManager.LoadScene("GameClear");
+        }
     }
 
     void UpdateHPUI()
     {
         playerHPText.text = "HP : " + playerHP;
-        enemyHPText.text =  "HP : " + enemyHP;
+        enemyHPText.text = "HP : " + enemyHP;
     }
 }
