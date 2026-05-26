@@ -49,7 +49,8 @@ public class ShieldItem5 : MonoBehaviour
 
 
 
-
+        // このオブジェクト削除
+        Destroy(gameObject);
 
         // 問題表示
         if (quizManager != null)
@@ -60,7 +61,6 @@ public class ShieldItem5 : MonoBehaviour
 
 
 
-        // このオブジェクト削除
-        Destroy(gameObject);
+        
     }
 }
