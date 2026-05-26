@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemController : MonoBehaviour
+public class ShieldItemController : MonoBehaviour
 {
     public enum QuizType
     {
@@ -115,7 +115,7 @@ public class ItemController : MonoBehaviour
         {
             case QuizType.Quiz1:
                 {
-                    Item1 click = item.GetComponent<Item1>();
+                    ShieldItem1 click = item.GetComponent<ShieldItem1>();
 
                     click.panel = panel;
                     click.quizManager = FindObjectOfType<Quiz1>();
@@ -125,7 +125,7 @@ public class ItemController : MonoBehaviour
 
             case QuizType.Quiz5:
                 {
-                    Item5 click = item.GetComponent<Item5>();
+                    ShieldItem5 click = item.GetComponent<ShieldItem5>();
 
                     click.panel = panel;
                     click.quizManager = FindObjectOfType<Quiz5>();
@@ -135,7 +135,7 @@ public class ItemController : MonoBehaviour
 
             case QuizType.Quiz10:
                 {
-                    Item10 click = item.GetComponent<Item10>();
+                    ShieldItem10 click = item.GetComponent<ShieldItem10>();
 
                     click.panel = panel;
                     click.quizManager = FindObjectOfType<Quiz10>();
@@ -144,7 +144,7 @@ public class ItemController : MonoBehaviour
                 }
             case QuizType.Quiz25:
                 {
-                    Item25 click = item.GetComponent<Item25>();
+                    ShieldItem25 click = item.GetComponent<ShieldItem25>();
 
                     click.panel = panel;
                     click.quizManager = FindObjectOfType<Quiz25>();
@@ -153,10 +153,19 @@ public class ItemController : MonoBehaviour
                 }
             case QuizType.Quiz50:
                 {
-                    Item50 click = item.GetComponent<Item50>();
+                    ShieldItem50 click = item.GetComponent<ShieldItem50>();
 
                     click.panel = panel;
                     click.quizManager = FindObjectOfType<Quiz50>();
+
+                    break;
+                }
+            case QuizType.Quiz100:
+                {
+                    ShieldItem100 click = item.GetComponent<ShieldItem100>();
+
+                    click.panel = panel;
+                    click.quizManager = FindObjectOfType<Quiz100>();
 
                     break;
                 }

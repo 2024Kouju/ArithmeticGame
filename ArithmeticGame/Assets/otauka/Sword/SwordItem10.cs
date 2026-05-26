@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 public class SwordItem10 : MonoBehaviour
 {
     public GameObject panel;
-    public Quiz1 quizManager;
+    public Quiz10 quizManager;
 
     static public bool SwordFlag10 = false;
     // •\Ž¦‚Ü‚Å‚ÌŽžŠÔ
