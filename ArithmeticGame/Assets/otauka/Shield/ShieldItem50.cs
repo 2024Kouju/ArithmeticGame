@@ -55,6 +55,7 @@ public class ShieldItem50 : MonoBehaviour
         // –â‘è•\Ž¦
         if (quizManager != null)
         {
+       
             quizManager.ShowRandomQuestion();
         }
 

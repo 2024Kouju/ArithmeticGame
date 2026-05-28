@@ -16,7 +16,7 @@ public class Item1 : MonoBehaviour
     public float interval = 0.5f;
 
     // ƒWƒƒƒ“ƒ‹‘I‘ð
-
+    public QuestionCount question;
 
     public void SetPanel(GameObject p)
     {
@@ -55,6 +55,7 @@ public class Item1 : MonoBehaviour
         // –â‘è•\Ž¦
         if (quizManager != null)
         {
+           
             quizManager.ShowRandomQuestion();
         }
 

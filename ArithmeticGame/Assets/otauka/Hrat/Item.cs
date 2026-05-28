@@ -9,7 +9,7 @@ public class Item : MonoBehaviour
 {
     public GameObject panel;
     public Quiz5 quizManager;
-
+   
     // •\Ž¦‚Ü‚Å‚ÌŽžŠÔ
     public float interval = 0.5f;
 
@@ -35,6 +35,7 @@ public class Item : MonoBehaviour
 
     IEnumerator OpenPanel()
     {
+
         // ‘Ò‹@
         yield return new WaitForSeconds(interval);
 
@@ -44,6 +45,7 @@ public class Item : MonoBehaviour
         // –â‘è•\Ž¦
         if (quizManager != null)
         {
+
             quizManager.ShowRandomQuestion();
         }
 

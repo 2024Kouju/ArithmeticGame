@@ -55,6 +55,7 @@ public class Item25 : MonoBehaviour
         // –â‘è•\Ž¦
         if (quizManager != null)
         {
+           
             quizManager.ShowRandomQuestion();
         }
 

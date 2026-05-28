@@ -55,6 +55,7 @@ public class SwordItem50 : MonoBehaviour
         // –â‘è•\Ž¦
         if (quizManager != null)
         {
+            
             quizManager.ShowRandomQuestion();
         }
 

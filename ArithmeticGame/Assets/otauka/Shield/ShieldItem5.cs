@@ -10,7 +10,7 @@ public class ShieldItem5 : MonoBehaviour
 {
     public GameObject panel;
     public Quiz5 quizManager;
-
+   
     static public bool ShieldFlag5  = false;
     // •\Ž¦‚Ü‚Å‚ÌŽžŠÔ
     public float interval = 0.5f;
@@ -55,6 +55,7 @@ public class ShieldItem5 : MonoBehaviour
         // –â‘è•\Ž¦
         if (quizManager != null)
         {
+            
             quizManager.ShowRandomQuestion();
         }
 

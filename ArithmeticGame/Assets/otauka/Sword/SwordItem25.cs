@@ -11,7 +11,7 @@ public class SwordItem25 : MonoBehaviour
     public GameObject panel;
     public Quiz25 quizManager;
     static public bool SwordFlag25 = false;
-
+ 
     // •\Ž¦‚Ü‚Å‚ÌŽžŠÔ
     public float interval = 0.5f;
 
@@ -55,6 +55,7 @@ public class SwordItem25 : MonoBehaviour
         // –â‘è•\Ž¦
         if (quizManager != null)
         {
+       
             quizManager.ShowRandomQuestion();
         }
 

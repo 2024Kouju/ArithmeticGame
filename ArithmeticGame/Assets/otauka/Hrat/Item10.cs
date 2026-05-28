@@ -11,7 +11,7 @@ public class Item10 : MonoBehaviour
     public GameObject panel;
     public Quiz10 quizManager;
     static public bool HPFlag10 = false;
-
+    
     // •\Ž¦‚Ü‚Å‚ÌŽžŠÔ
     public float interval = 0.5f;
 
@@ -55,6 +55,7 @@ public class Item10 : MonoBehaviour
         // –â‘è•\Ž¦
         if (quizManager != null)
         {
+           
             quizManager.ShowRandomQuestion();
         }
 
