@@ -25,9 +25,15 @@ public class Quiz100 : MonoBehaviour
 
     public GameObject Incorrect;
 
+    public QuestionCount questionCount;
+
+    public ComboManager comboManager;
+
     // 表示までの時間
     public float interval = 0.5f;
 
+    // シャッフル後の選択肢
+    private List<ChoiceData100> shuffledChoices = new List<ChoiceData100>();
 
     public void ShowRandomQuestion()
     {
@@ -36,6 +42,9 @@ public class Quiz100 : MonoBehaviour
             Debug.LogError("questionsが空");
             return;
         }
+
+        // 問題数を増やす
+        questionCount.AddQuestion(1);
 
         currentQuestion = questions[Random.Range(0, questions.Count)];
 
@@ -47,6 +56,24 @@ public class Quiz100 : MonoBehaviour
 
         questionText.text = currentQuestion.question100;
 
+        // 選択肢を作成
+        shuffledChoices.Clear();
+
+        for (int i = 0; i < currentQuestion.choices100.Length; i++)
+        {
+            ChoiceData100 data = new ChoiceData100();
+
+            data.choiceText = currentQuestion.choices100[i];
+
+            data.isCorrect = (i == currentQuestion.correctIndex100);
+
+            shuffledChoices.Add(data);
+        }
+
+        // シャッフル
+        ShuffleChoices();
+
+        // ボタンに設定
         for (int i = 0; i < choiceButtons.Length; i++)
         {
             int index = i;
@@ -60,7 +87,7 @@ public class Quiz100 : MonoBehaviour
                 continue;
             }
 
-            txt.text = currentQuestion.choices100[i];
+            txt.text = shuffledChoices[i].choiceText;
 
             choiceButtons[i].onClick.RemoveAllListeners();
 
@@ -71,13 +98,30 @@ public class Quiz100 : MonoBehaviour
         }
     }
 
+    void ShuffleChoices()
+    {
+        for (int i = 0; i < shuffledChoices.Count; i++)
+        {
+            int randomIndex = Random.Range(i, shuffledChoices.Count);
+
+            ChoiceData100 temp = shuffledChoices[i];
+            shuffledChoices[i] = shuffledChoices[randomIndex];
+            shuffledChoices[randomIndex] = temp;
+        }
+    }
+
     void CheckAnswer(int index)
     {
-        if (index == currentQuestion.correctIndex100)
+        if (shuffledChoices[index].isCorrect)
         {
             Circle.SetActive(true);
+
             StartCoroutine(OpenPanel());
+
+            comboManager.AddCombo();
+
             Debug.Log("正解！");
+
             if (Item100.HPFlag100 == true)
             {
                 hpManager.AddPlayerHP(100);
@@ -97,8 +141,13 @@ public class Quiz100 : MonoBehaviour
         else
         {
             Incorrect.SetActive(true);
+
             StartCoroutine(OpenPanel());
+
             Debug.Log("不正解！");
+
+            comboManager.ResetCombo();
+
             if (Item100.HPFlag100 == true)
             {
                 hpManager.AddEnemyHP(100);
@@ -115,8 +164,6 @@ public class Quiz100 : MonoBehaviour
                 ShieldItem100.ShieldFlag100 = false;
             }
         }
-
-
     }
 
     IEnumerator OpenPanel()
@@ -125,17 +172,12 @@ public class Quiz100 : MonoBehaviour
         yield return new WaitForSeconds(interval);
 
         Circle.SetActive(false);
+
         Incorrect.SetActive(false);
+
         panel.SetActive(false);
-
-
-
     }
-
-
 }
-
-
 
 [System.Serializable]
 public class QuestionData100
@@ -144,5 +186,14 @@ public class QuestionData100
     public string question100;
 
     public string[] choices100 = new string[4];
+
     public int correctIndex100;
+}
+
+// 選択肢データ
+public class ChoiceData100
+{
+    public string choiceText;
+
+    public bool isCorrect;
 }

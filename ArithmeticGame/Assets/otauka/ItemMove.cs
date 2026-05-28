@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class ItemMove : MonoBehaviour
@@ -13,6 +12,8 @@ public class ItemMove : MonoBehaviour
     private SpriteRenderer sr;
     private Camera mainCam;
 
+    private Rigidbody2D rb;
+
     private bool isVisible = true;
 
     void Start()
@@ -20,25 +21,29 @@ public class ItemMove : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         mainCam = Camera.main;
 
+        rb = GetComponent<Rigidbody2D>();
+
         // 最初は表示
         SetAlpha(1f);
         isVisible = true;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        transform.Translate(moveDir * speed * Time.deltaTime);
+        rb.velocity = moveDir * speed;
+
         CheckArea();
     }
 
     public void SetRandomDirection()
     {
         Vector3 center = spawnArea.position;
+
         moveDir = (center - transform.position).normalized;
     }
 
     // =========================
-    // エリア判定（即表示/非表示）
+    // エリア判定
     // =========================
     void CheckArea()
     {
@@ -46,14 +51,21 @@ public class ItemMove : MonoBehaviour
             RectTransformUtility.WorldToScreenPoint(mainCam, transform.position);
 
         bool inAllow =
-            RectTransformUtility.RectangleContainsScreenPoint(allowArea, screenPos, mainCam);
+            RectTransformUtility.RectangleContainsScreenPoint(
+                allowArea,
+                screenPos,
+                mainCam
+            );
 
         bool inDeny =
-            RectTransformUtility.RectangleContainsScreenPoint(denyArea, screenPos, mainCam);
+            RectTransformUtility.RectangleContainsScreenPoint(
+                denyArea,
+                screenPos,
+                mainCam
+            );
 
         bool shouldBeVisible = inAllow && !inDeny;
 
-        // 状態が変わったときだけ更新（無駄処理＆チカつき防止）
         if (shouldBeVisible != isVisible)
         {
             isVisible = shouldBeVisible;

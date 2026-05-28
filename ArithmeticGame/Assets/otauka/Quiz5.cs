@@ -25,8 +25,15 @@ public class Quiz5 : MonoBehaviour
 
     public GameObject Incorrect;
 
+    public ComboManager comboManager;
+    public QuestionCount questionCount;
+
     // 表示までの時間
     public float interval = 0.5f;
+
+    // シャッフル後の選択肢
+    private List<ChoiceData5> shuffledChoices = new List<ChoiceData5>();
+
     public void ShowRandomQuestion()
     {
         if (questions == null || questions.Count == 0)
@@ -34,6 +41,9 @@ public class Quiz5 : MonoBehaviour
             Debug.LogError("questionsが空");
             return;
         }
+
+        // 問題数を増やす
+        questionCount.AddQuestion(1);
 
         currentQuestion = questions[Random.Range(0, questions.Count)];
 
@@ -45,6 +55,24 @@ public class Quiz5 : MonoBehaviour
 
         questionText.text = currentQuestion.question5;
 
+        // 選択肢を作成
+        shuffledChoices.Clear();
+
+        for (int i = 0; i < currentQuestion.choices5.Length; i++)
+        {
+            ChoiceData5 data = new ChoiceData5();
+
+            data.choiceText = currentQuestion.choices5[i];
+
+            data.isCorrect = (i == currentQuestion.correctIndex5);
+
+            shuffledChoices.Add(data);
+        }
+
+        // シャッフル
+        ShuffleChoices();
+
+        // ボタンに設定
         for (int i = 0; i < choiceButtons.Length; i++)
         {
             int index = i;
@@ -58,7 +86,7 @@ public class Quiz5 : MonoBehaviour
                 continue;
             }
 
-            txt.text = currentQuestion.choices5[i];
+            txt.text = shuffledChoices[i].choiceText;
 
             choiceButtons[i].onClick.RemoveAllListeners();
 
@@ -69,13 +97,30 @@ public class Quiz5 : MonoBehaviour
         }
     }
 
+    void ShuffleChoices()
+    {
+        for (int i = 0; i < shuffledChoices.Count; i++)
+        {
+            int randomIndex = Random.Range(i, shuffledChoices.Count);
+
+            ChoiceData5 temp = shuffledChoices[i];
+            shuffledChoices[i] = shuffledChoices[randomIndex];
+            shuffledChoices[randomIndex] = temp;
+        }
+    }
+
     void CheckAnswer(int index)
     {
-        if (index == currentQuestion.correctIndex5)
+        if (shuffledChoices[index].isCorrect)
         {
             Circle.SetActive(true);
+
             StartCoroutine(OpenPanel());
+
+            comboManager.AddCombo();
+
             Debug.Log("正解！");
+
             if (Item5.HPFlag5 == true)
             {
                 hpManager.AddPlayerHP(5);
@@ -91,14 +136,17 @@ public class Quiz5 : MonoBehaviour
                 shieldManager.AddPlayerShield(5);
                 ShieldItem5.ShieldFlag5 = false;
             }
-
         }
         else
         {
             Incorrect.SetActive(true);
+
             StartCoroutine(OpenPanel());
+
             Debug.Log("不正解！");
-         
+
+            comboManager.ResetCombo();
+
             if (Item5.HPFlag5 == true)
             {
                 hpManager.AddEnemyHP(5);
@@ -114,10 +162,7 @@ public class Quiz5 : MonoBehaviour
                 shieldManager.AddEnemyShield(5);
                 ShieldItem5.ShieldFlag5 = false;
             }
-
         }
-
-
     }
 
     IEnumerator OpenPanel()
@@ -126,15 +171,12 @@ public class Quiz5 : MonoBehaviour
         yield return new WaitForSeconds(interval);
 
         Circle.SetActive(false);
+
         Incorrect.SetActive(false);
+
         panel.SetActive(false);
-
-
-
     }
 }
-
-
 
 [System.Serializable]
 public class QuestionData5
@@ -143,5 +185,14 @@ public class QuestionData5
     public string question5;
 
     public string[] choices5 = new string[4];
+
     public int correctIndex5;
+}
+
+// 選択肢データ
+public class ChoiceData5
+{
+    public string choiceText;
+
+    public bool isCorrect;
 }

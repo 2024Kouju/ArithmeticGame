@@ -10,6 +10,9 @@ public class AutoBattle : MonoBehaviour
     // 攻撃間隔
     public float attackInterval = 10f;
 
+    // 最低速度
+    public float minAttackInterval = 0f;
+
     private float timer;
 
     // 攻撃ゲージ
@@ -17,10 +20,7 @@ public class AutoBattle : MonoBehaviour
 
     void Start()
     {
-        // ゲージ最大値
         attackGauge.maxValue = attackInterval;
-
-        // 初期値
         attackGauge.value = 0;
     }
 
@@ -28,10 +28,8 @@ public class AutoBattle : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        // ゲージ更新
         attackGauge.value = timer;
 
-        // 時間になったら攻撃
         if (timer >= attackInterval)
         {
             timer = 0f;
@@ -54,5 +52,22 @@ public class AutoBattle : MonoBehaviour
         hpManager.AddEnemyHP(-damage);
 
         Debug.Log("自動攻撃！");
+    }
+
+    // ★追加
+    public void SpeedUpAttack(float value)
+    {
+        attackInterval -= value;
+
+        // 速くなりすぎ防止
+        if (attackInterval < minAttackInterval)
+        {
+            attackInterval = minAttackInterval;
+        }
+
+        // ゲージ最大値更新
+        attackGauge.maxValue = attackInterval;
+
+        Debug.Log("攻撃速度UP！ 現在:" + attackInterval);
     }
 }

@@ -1,14 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class QuestionCount : MonoBehaviour
 {
     public int Questioncount = 0;
- 
 
     public Text QuestionCountText;
- 
 
     void Start()
     {
@@ -21,10 +18,8 @@ public class QuestionCount : MonoBehaviour
         UpdateQuestionUI();
     }
 
-
     void UpdateQuestionUI()
     {
-        QuestionCountText.text = Questioncount+ "–â–Ú";
-        
+        QuestionCountText.text = Questioncount + "–â–Ú";
     }
 }
