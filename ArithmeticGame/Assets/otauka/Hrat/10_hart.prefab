@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -7939820634445810898}
   - component: {fileID: -6635206547363674881}
   - component: {fileID: 1234068480397775395}
+  - component: {fileID: -5240559914090535395}
   m_Layer: 3
   m_Name: 10_hart
   m_TagString: Item
@@ -102,7 +103,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -127,10 +128,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 865b391b1a0853b4bb61c21252fa66c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 25
+  speed: 20
   spawnArea: {fileID: 0}
   allowArea: {fileID: 0}
   denyArea: {fileID: 0}
+  bouncePower: 0.01
 --- !u!114 &-6635206547363674881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,7 +157,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 6851051302190755125}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 651848275698dbd4c84d79f4f1dc38ac, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -181,3 +183,16 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2.2500002
+--- !u!114 &-5240559914090535395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6851051302190755125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacedda44cac8ff43bb3507b3555c7c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bouncePower: 3

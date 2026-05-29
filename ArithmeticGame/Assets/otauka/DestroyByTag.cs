@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class DestroyByTag : MonoBehaviour
 {
-   
 
-    void OnCollisionEnter2D(Collision2D collision)
+
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.gameObject.CompareTag("Item"))
+        if (other.CompareTag("Item"))
         {
-            Destroy(collision.gameObject);
+            Destroy(other.gameObject);
         }
     }
 }
