@@ -13,6 +13,9 @@ public class ShieldManager : MonoBehaviour
     void Start()
     {
         UpdateShieldUI();
+
+        // 10•b‚²‚Æ‚É“G‚Ì–hŒä—Í‚ð10ƒAƒbƒv
+        InvokeRepeating(nameof(IncreaseEnemyShield), 10f, 10f);
     }
 
     public void AddPlayerShield(int value)
@@ -24,6 +27,12 @@ public class ShieldManager : MonoBehaviour
     public void AddEnemyShield(int value)
     {
         enemyShield += value;
+        UpdateShieldUI();
+    }
+
+    void IncreaseEnemyShield()
+    {
+        enemyShield += 10;
         UpdateShieldUI();
     }
 

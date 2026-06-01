@@ -13,6 +13,9 @@ public class HPManager : MonoBehaviour
     void Start()
     {
         UpdateHPUI();
+
+        // 10•b‚²‚Æ‚É“GHP‚ğ10‰ñ•œ
+        InvokeRepeating(nameof(HealEnemy), 10f, 10f);
     }
 
     public void AddPlayerHP(int value)
@@ -21,7 +24,6 @@ public class HPManager : MonoBehaviour
 
         UpdateHPUI();
 
-        // ƒvƒŒƒCƒ„[€–S
         if (playerHP <= 0)
         {
             SceneManager.LoadScene("GameOver");
@@ -34,11 +36,17 @@ public class HPManager : MonoBehaviour
 
         UpdateHPUI();
 
-        // “G€–S
         if (enemyHP <= 0)
         {
+            CancelInvoke(nameof(HealEnemy)); // “G€–S‚Í‰ñ•œ’â~
             SceneManager.LoadScene("GameClear");
         }
+    }
+
+    void HealEnemy()
+    {
+        enemyHP += 10;
+        UpdateHPUI();
     }
 
     void UpdateHPUI()
