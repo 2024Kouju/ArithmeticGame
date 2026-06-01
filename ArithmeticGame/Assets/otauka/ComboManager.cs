@@ -32,7 +32,7 @@ public class ComboManager : MonoBehaviour
         if (comboCount % 5 == 0)
         {
             // 0.5秒速くする
-            autoBattle.SpeedUpAttack(5f);
+            autoBattle.SpeedUpAttack(1f);
         }
     }
 
@@ -41,7 +41,11 @@ public class ComboManager : MonoBehaviour
     {
         comboCount = 0;
 
+     
+
         UpdateComboUI();
+
+        AutoBattle.attackInterval = 10f;
 
         Debug.Log("コンボリセット");
     }

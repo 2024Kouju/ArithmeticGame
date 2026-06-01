@@ -8,10 +8,10 @@ public class AutoBattle : MonoBehaviour
     public ShieldManager shieldManager;
 
     // UŒ‚ŠÔŠu
-    public float attackInterval = 10f;
+   static public float attackInterval = 10f;
 
     // Å’á‘¬“x
-    public float minAttackInterval = 0f;
+    public float minAttackInterval = 3f;
 
     private float timer;
 

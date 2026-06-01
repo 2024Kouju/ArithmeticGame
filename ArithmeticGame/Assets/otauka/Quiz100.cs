@@ -125,6 +125,7 @@ public class Quiz100 : MonoBehaviour
             if (Item100.HPFlag100 == true)
             {
                 hpManager.AddPlayerHP(100);
+                
                 Item100.HPFlag100 = false;
             }
             else if (SwordItem100.SwordFlag100 == true)

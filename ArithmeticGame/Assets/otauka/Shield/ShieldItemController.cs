@@ -28,8 +28,7 @@ public class ShieldItemController : MonoBehaviour
     public float maxTime = 3f;
 
     public RectTransform spawnArea;
-    public RectTransform allowArea;
-    public RectTransform denyArea;
+
 
     public int maxItems = 10;
 
@@ -38,6 +37,32 @@ public class ShieldItemController : MonoBehaviour
     void Start()
     {
         StartCoroutine(SpawnLoop());
+    }
+
+    bool CanSpawn()
+    {
+        switch (quizType)
+        {
+            case QuizType.Quiz1:
+                return true;
+
+            case QuizType.Quiz5:
+                return QuizUnlockManager.Shield1Clear;
+
+            case QuizType.Quiz10:
+                return QuizUnlockManager.Shield5Clear;
+
+            case QuizType.Quiz25:
+                return QuizUnlockManager.Shield10Clear;
+
+            case QuizType.Quiz50:
+                return QuizUnlockManager.Shield25Clear;
+
+            case QuizType.Quiz100:
+                return QuizUnlockManager.Shield50Clear;
+        }
+
+        return false;
     }
 
     IEnumerator SpawnLoop()
@@ -51,7 +76,7 @@ public class ShieldItemController : MonoBehaviour
             GameObject[] items =
                 GameObject.FindGameObjectsWithTag("Item");
 
-            if (items.Length < maxItems)
+            if (items.Length < maxItems && CanSpawn())
             {
                 SpawnItem();
             }
@@ -105,8 +130,6 @@ public class ShieldItemController : MonoBehaviour
         ItemMove move = item.GetComponent<ItemMove>();
 
         move.spawnArea = spawnArea;
-        move.allowArea = allowArea;
-        move.denyArea = denyArea;
 
         move.SetRandomDirection();
 

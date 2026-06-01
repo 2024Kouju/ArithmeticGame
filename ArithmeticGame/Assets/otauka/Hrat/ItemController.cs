@@ -28,8 +28,6 @@ public class ItemController : MonoBehaviour
     public float maxTime = 3f;
 
     public RectTransform spawnArea;
-    public RectTransform allowArea;
-    public RectTransform denyArea;
 
     public int maxItems = 10;
 
@@ -39,6 +37,32 @@ public class ItemController : MonoBehaviour
     {
         StartCoroutine(SpawnLoop());
     }
+    bool CanSpawn()
+    {
+        switch (quizType)
+        {
+            case QuizType.Quiz1:
+                return true;
+
+            case QuizType.Quiz5:
+                return QuizUnlockManager.Heart1Clear;
+
+            case QuizType.Quiz10:
+                return QuizUnlockManager.Heart5Clear;
+
+            case QuizType.Quiz25:
+                return QuizUnlockManager.Heart10Clear;
+
+            case QuizType.Quiz50:
+                return QuizUnlockManager.Heart25Clear;
+
+            case QuizType.Quiz100:
+                return QuizUnlockManager.Heart50Clear;
+        }
+
+        return false;
+    }
+
 
     IEnumerator SpawnLoop()
     {
@@ -51,7 +75,7 @@ public class ItemController : MonoBehaviour
             GameObject[] items =
                 GameObject.FindGameObjectsWithTag("Item");
 
-            if (items.Length < maxItems)
+            if (items.Length < maxItems&&CanSpawn())
             {
                 SpawnItem();
             }
@@ -101,14 +125,16 @@ public class ItemController : MonoBehaviour
         GameObject item =
             Instantiate(prefab, spawnPos, Quaternion.identity);
 
-        // à⁄ìÆê›íË
         ItemMove move = item.GetComponent<ItemMove>();
 
         move.spawnArea = spawnArea;
-        move.allowArea = allowArea;
-        move.denyArea = denyArea;
 
-        move.SetRandomDirection();
+
+        // íÜâõï˚å¸Ç÷à⁄ìÆ
+        Vector2 center = spawnArea.position;
+        Vector2 dir = (center - spawnPos).normalized;
+
+        move.SetDirection(dir);
 
         // Quizê›íË
         switch (quizType)

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SwordItemController : MonoBehaviour
@@ -28,8 +27,7 @@ public class SwordItemController : MonoBehaviour
     public float maxTime = 3f;
 
     public RectTransform spawnArea;
-    public RectTransform allowArea;
-    public RectTransform denyArea;
+
 
     public int maxItems = 10;
 
@@ -38,6 +36,32 @@ public class SwordItemController : MonoBehaviour
     void Start()
     {
         StartCoroutine(SpawnLoop());
+    }
+
+    bool CanSpawn()
+    {
+        switch (quizType)
+        {
+            case QuizType.Quiz1:
+                return true;
+
+            case QuizType.Quiz5:
+                return QuizUnlockManager.Sword1Clear;
+
+            case QuizType.Quiz10:
+                return QuizUnlockManager.Sword5Clear;
+
+            case QuizType.Quiz25:
+                return QuizUnlockManager.Sword10Clear;
+
+            case QuizType.Quiz50:
+                return QuizUnlockManager.Sword25Clear;
+
+            case QuizType.Quiz100:
+                return QuizUnlockManager.Sword50Clear;
+        }
+
+        return false;
     }
 
     IEnumerator SpawnLoop()
@@ -51,7 +75,7 @@ public class SwordItemController : MonoBehaviour
             GameObject[] items =
                 GameObject.FindGameObjectsWithTag("Item");
 
-            if (items.Length < maxItems)
+            if (items.Length < maxItems && CanSpawn())
             {
                 SpawnItem();
             }
@@ -95,78 +119,65 @@ public class SwordItemController : MonoBehaviour
 
         Vector2 spawnPos = new Vector2(x, y);
 
-        // QuizタイプごとにPrefab変更
         GameObject prefab = GetPrefab();
 
         GameObject item =
             Instantiate(prefab, spawnPos, Quaternion.identity);
 
-        // 移動設定
         ItemMove move = item.GetComponent<ItemMove>();
 
         move.spawnArea = spawnArea;
-        move.allowArea = allowArea;
-        move.denyArea = denyArea;
+  
 
         move.SetRandomDirection();
 
-        // Quiz設定
         switch (quizType)
         {
             case QuizType.Quiz1:
                 {
                     SwordItem1 click = item.GetComponent<SwordItem1>();
-
                     click.panel = panel;
                     click.quizManager = FindObjectOfType<Quiz1>();
-
                     break;
                 }
 
             case QuizType.Quiz5:
                 {
                     SwordItem5 click = item.GetComponent<SwordItem5>();
-
                     click.panel = panel;
                     click.quizManager = FindObjectOfType<Quiz5>();
-
                     break;
                 }
 
             case QuizType.Quiz10:
                 {
                     SwordItem10 click = item.GetComponent<SwordItem10>();
-
                     click.panel = panel;
                     click.quizManager = FindObjectOfType<Quiz10>();
-
                     break;
                 }
+
             case QuizType.Quiz25:
                 {
                     SwordItem25 click = item.GetComponent<SwordItem25>();
-
                     click.panel = panel;
                     click.quizManager = FindObjectOfType<Quiz25>();
-
                     break;
                 }
+
             case QuizType.Quiz50:
                 {
                     SwordItem50 click = item.GetComponent<SwordItem50>();
-
                     click.panel = panel;
                     click.quizManager = FindObjectOfType<Quiz50>();
-
                     break;
                 }
+
             case QuizType.Quiz100:
                 {
                     SwordItem100 click = item.GetComponent<SwordItem100>();
-
                     click.panel = panel;
                     click.quizManager = FindObjectOfType<Quiz100>();
-
                     break;
                 }
         }

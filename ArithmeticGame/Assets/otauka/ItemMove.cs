@@ -7,8 +7,7 @@ public class ItemMove : MonoBehaviour
     private Vector2 moveDir;
 
     public RectTransform spawnArea;
-    public RectTransform allowArea;
-    public RectTransform denyArea;
+
 
     private SpriteRenderer sr;
     private Camera mainCam;
@@ -31,12 +30,15 @@ public class ItemMove : MonoBehaviour
 
         rb.AddForce(moveDir * speed, ForceMode2D.Impulse);
     }
-
+    public void SetDirection(Vector2 dir)
+    {
+        moveDir = dir.normalized;
+    }
     void FixedUpdate()
     {
 
 
-        CheckArea();
+        
     }
 
     public void SetRandomDirection()
@@ -73,28 +75,10 @@ public class ItemMove : MonoBehaviour
                 transform.position
             );
 
-        bool inAllow =
-            RectTransformUtility.RectangleContainsScreenPoint(
-                allowArea,
-                screenPos,
-                mainCam
-            );
+ 
 
-        bool inDeny =
-            RectTransformUtility.RectangleContainsScreenPoint(
-                denyArea,
-                screenPos,
-                mainCam
-            );
 
-        bool shouldBeVisible = inAllow && !inDeny;
-
-        if (shouldBeVisible != isVisible)
-        {
-            isVisible = shouldBeVisible;
-
-            SetAlpha(isVisible ? 1f : 0f);
-        }
+      
     }
 
     void SetAlpha(float alpha)

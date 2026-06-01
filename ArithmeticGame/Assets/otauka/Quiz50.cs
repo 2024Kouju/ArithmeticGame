@@ -125,16 +125,19 @@ public class Quiz50 : MonoBehaviour
             if (Item50.HPFlag50 == true)
             {
                 hpManager.AddPlayerHP(50);
+                QuizUnlockManager.Heart50Clear = true;
                 Item50.HPFlag50 = false;
             }
             else if (SwordItem50.SwordFlag50 == true)
             {
                 swordManager.AddPlayerSword(50);
+                QuizUnlockManager.Sword50Clear = true;
                 SwordItem50.SwordFlag50 = false;
             }
             else if (ShieldItem50.ShieldFlag50 == true)
             {
                 shieldManager.AddPlayerShield(50);
+                QuizUnlockManager.Shield50Clear = true;
                 ShieldItem50.ShieldFlag50 = false;
             }
         }

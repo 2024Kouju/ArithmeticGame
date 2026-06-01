@@ -125,16 +125,19 @@ public class Quiz10 : MonoBehaviour
             if (Item10.HPFlag10 == true)
             {
                 hpManager.AddPlayerHP(10);
+                QuizUnlockManager.Heart10Clear = true;
                 Item10.HPFlag10 = false;
             }
             else if (SwordItem10.SwordFlag10 == true)
             {
                 swordManager.AddPlayerSword(10);
+                QuizUnlockManager.Sword10Clear = true;
                 SwordItem10.SwordFlag10 = false;
             }
             else if (ShieldItem10.ShieldFlag10 == true)
             {
                 shieldManager.AddPlayerShield(10);
+                QuizUnlockManager.Shield10Clear = true;
                 ShieldItem10.ShieldFlag10 = false;
             }
         }
