@@ -8,10 +8,21 @@ public class ChangeScene : MonoBehaviour
 {
     public string NextSceneText;
 
+    private AudioSource audioSource;
 
+    public AudioClip ButtonSound;
 
-     public void NextScene()
+    void Start()
     {
+        // AudioSourceコンポーネントを取得
+        audioSource = GetComponent<AudioSource>();
+    }
+
+
+    public void NextScene()
+    {
+        audioSource.PlayOneShot(ButtonSound);
+
         Invoke("Change", 1f);
     }
 

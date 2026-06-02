@@ -6,6 +6,12 @@ using UnityEngine.UI;
 
 public class Quiz1 : MonoBehaviour
 {
+    private AudioSource audioSource;
+
+    public AudioClip CirclesoundEffect;
+
+    public AudioClip IncorrectsoundEffect;
+
     public List<QuestionData1> questions;
 
     public TextMeshProUGUI questionText;
@@ -34,6 +40,12 @@ public class Quiz1 : MonoBehaviour
 
     // シャッフル後の選択肢
     private List<ChoiceData> shuffledChoices = new List<ChoiceData>();
+
+    void Start()
+    {
+        // AudioSourceコンポーネントを取得
+        audioSource = GetComponent<AudioSource>();
+    }
 
     public void ShowRandomQuestion()
     {
@@ -116,6 +128,9 @@ public class Quiz1 : MonoBehaviour
         // 正解
         if (shuffledChoices[index].isCorrect)
         {
+            // 効果音を一回だけ再生
+            audioSource.PlayOneShot(CirclesoundEffect);
+
             Circle.SetActive(true);
 
             StartCoroutine(OpenPanel());
@@ -146,6 +161,9 @@ public class Quiz1 : MonoBehaviour
         // 不正解
         else
         {
+            // 効果音を一回だけ再生
+            audioSource.PlayOneShot(IncorrectsoundEffect);
+
             Incorrect.SetActive(true);
 
             StartCoroutine(OpenPanel());

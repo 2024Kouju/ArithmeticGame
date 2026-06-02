@@ -6,6 +6,13 @@ using UnityEngine.UI;
 
 public class Quiz100 : MonoBehaviour
 {
+
+    private AudioSource audioSource;
+
+    public AudioClip CirclesoundEffect;
+
+    public AudioClip IncorrectsoundEffect;
+
     public List<QuestionData100> questions;
 
     public TextMeshProUGUI questionText;
@@ -34,6 +41,11 @@ public class Quiz100 : MonoBehaviour
 
     // シャッフル後の選択肢
     private List<ChoiceData100> shuffledChoices = new List<ChoiceData100>();
+    void Start()
+    {
+        // AudioSourceコンポーネントを取得
+        audioSource = GetComponent<AudioSource>();
+    }
 
     public void ShowRandomQuestion()
     {

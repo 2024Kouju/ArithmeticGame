@@ -4,6 +4,9 @@ using TMPro;
 
 public class SwordManager : MonoBehaviour
 {
+    public static int FinalPlayerSword;
+    public static int FinalEnemySword;
+
     public int playerSword = 100;
     public int enemySword = 100;
 
@@ -32,10 +35,14 @@ public class SwordManager : MonoBehaviour
 
     void IncreaseEnemySword()
     {
-        enemySword += 10;
+        enemySword += 5;
         UpdateSwordUI();
     }
-
+    public void SaveFinalStatus()
+    {
+        FinalPlayerSword = playerSword;
+        FinalEnemySword = enemySword;
+    }
     void UpdateSwordUI()
     {
         playerSwordText.text = "çUåÇóÕ : " + playerSword;

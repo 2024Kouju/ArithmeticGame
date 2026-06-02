@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class ShieldManager : MonoBehaviour
 {
+    public static int FinalPlayerShield;
+    public static int FinalEnemyShield;
+
     public int playerShield = 100;
     public int enemyShield = 100;
 
@@ -14,7 +16,6 @@ public class ShieldManager : MonoBehaviour
     {
         UpdateShieldUI();
 
-        // 10•b‚²‚Æ‚É“G‚Ì–hŒä—Í‚ð10ƒAƒbƒv
         InvokeRepeating(nameof(IncreaseEnemyShield), 10f, 10f);
     }
 
@@ -32,13 +33,22 @@ public class ShieldManager : MonoBehaviour
 
     void IncreaseEnemyShield()
     {
-        enemyShield += 10;
+        enemyShield += 5;
         UpdateShieldUI();
+    }
+
+    public void SaveFinalStatus()
+    {
+        FinalPlayerShield = playerShield;
+        FinalEnemyShield = enemyShield;
     }
 
     void UpdateShieldUI()
     {
-        playerShieldText.text = "–hŒä—Í : " + playerShield;
-        enemyShieldText.text = "–hŒä—Í : " + enemyShield;
+        if (playerShieldText != null)
+            playerShieldText.text = "–hŒä—Í : " + playerShield;
+
+        if (enemyShieldText != null)
+            enemyShieldText.text = "–hŒä—Í : " + enemyShield;
     }
 }

@@ -4,28 +4,46 @@ using UnityEngine.SceneManagement;
 
 public class HPManager : MonoBehaviour
 {
+    public static int FinalPlayerHP;
+    public static int FinalEnemyHP;
+    public static float FinalTime;
+
     public int playerHP = 100;
     public int enemyHP = 100;
 
     public Text playerHPText;
     public Text enemyHPText;
 
+
+    private float elapsedTime;
+
     void Start()
     {
         UpdateHPUI();
-
-        // 10•b‚²‚Æ‚É“GHP‚ð10‰ñ•œ
         InvokeRepeating(nameof(HealEnemy), 10f, 10f);
     }
-
+    void Update()
+    {
+        elapsedTime += Time.deltaTime;
+       
+    }
     public void AddPlayerHP(int value)
     {
         playerHP += value;
-
         UpdateHPUI();
 
         if (playerHP <= 0)
         {
+            playerHP = 0; 
+
+            FinalPlayerHP = playerHP;
+            FinalEnemyHP = enemyHP;
+
+            FinalTime = elapsedTime;  // ’Ç‰Á
+
+            FindObjectOfType<SwordManager>()?.SaveFinalStatus();
+            FindObjectOfType<ShieldManager>()?.SaveFinalStatus();
+
             SceneManager.LoadScene("GameOver");
         }
     }
@@ -33,19 +51,28 @@ public class HPManager : MonoBehaviour
     public void AddEnemyHP(int value)
     {
         enemyHP += value;
-
         UpdateHPUI();
 
         if (enemyHP <= 0)
         {
-            CancelInvoke(nameof(HealEnemy)); // “GŽ€–SŽž‚Í‰ñ•œ’âŽ~
+           
+            enemyHP = 0;
+
+            FinalPlayerHP = playerHP;
+            FinalEnemyHP = enemyHP;
+            FinalTime = elapsedTime;
+
+            FindObjectOfType<SwordManager>()?.SaveFinalStatus();
+            FindObjectOfType<ShieldManager>()?.SaveFinalStatus();
+
+            CancelInvoke(nameof(HealEnemy));
             SceneManager.LoadScene("GameClear");
         }
     }
 
     void HealEnemy()
     {
-        enemyHP += 10;
+        enemyHP += 3;
         UpdateHPUI();
     }
 
