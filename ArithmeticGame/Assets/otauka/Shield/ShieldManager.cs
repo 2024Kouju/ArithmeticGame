@@ -16,7 +16,7 @@ public class ShieldManager : MonoBehaviour
     {
         UpdateShieldUI();
 
-        InvokeRepeating(nameof(IncreaseEnemyShield), 10f, 10f);
+        InvokeRepeating(nameof(IncreaseEnemyShield), 15f, 15f);
     }
 
     public void AddPlayerShield(int value)

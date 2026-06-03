@@ -18,7 +18,7 @@ public class SwordManager : MonoBehaviour
         UpdateSwordUI();
 
         // 10•b‚²‚Æ‚É“GUŒ‚—Í+10
-        InvokeRepeating(nameof(IncreaseEnemySword), 10f, 10f);
+        InvokeRepeating(nameof(IncreaseEnemySword), 15f, 15f);
     }
 
     public void AddPlayerSword(int value)

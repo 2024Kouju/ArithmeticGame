@@ -20,7 +20,7 @@ public class HPManager : MonoBehaviour
     void Start()
     {
         UpdateHPUI();
-        InvokeRepeating(nameof(HealEnemy), 10f, 10f);
+        InvokeRepeating(nameof(HealEnemy), 15f, 15f);
     }
     void Update()
     {
@@ -72,7 +72,7 @@ public class HPManager : MonoBehaviour
 
     void HealEnemy()
     {
-        enemyHP += 3;
+        enemyHP += 5;
         UpdateHPUI();
     }
 
