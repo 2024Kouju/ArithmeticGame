@@ -130,7 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   spawnArea: {fileID: 0}
-  bouncePower: 0.01
+  bouncePower: 1
 --- !u!114 &7644836946882400676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,4 +193,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eacedda44cac8ff43bb3507b3555c7c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bouncePower: 3
+  bouncePower: 5
