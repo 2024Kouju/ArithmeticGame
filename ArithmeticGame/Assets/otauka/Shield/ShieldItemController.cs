@@ -74,7 +74,7 @@ public class ShieldItemController : MonoBehaviour
             yield return new WaitForSeconds(waitTime);
 
             GameObject[] items =
-                GameObject.FindGameObjectsWithTag("Item");
+                GameObject.FindGameObjectsWithTag("Shield");
 
             if (items.Length < maxItems && CanSpawn())
             {

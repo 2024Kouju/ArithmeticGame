@@ -73,7 +73,7 @@ public class ItemController : MonoBehaviour
             yield return new WaitForSeconds(waitTime);
 
             GameObject[] items =
-                GameObject.FindGameObjectsWithTag("Item");
+                GameObject.FindGameObjectsWithTag("Hart");
 
             if (items.Length < maxItems&&CanSpawn())
             {

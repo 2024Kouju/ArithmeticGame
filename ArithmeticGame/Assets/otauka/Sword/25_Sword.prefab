@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3131142642431155662}
   m_Layer: 3
   m_Name: 25_Sword
-  m_TagString: Item
+  m_TagString: Sword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -193,4 +193,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eacedda44cac8ff43bb3507b3555c7c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bouncePower: 5
+  bouncePower: 3

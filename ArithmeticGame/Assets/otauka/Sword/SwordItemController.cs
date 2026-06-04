@@ -73,7 +73,7 @@ public class SwordItemController : MonoBehaviour
             yield return new WaitForSeconds(waitTime);
 
             GameObject[] items =
-                GameObject.FindGameObjectsWithTag("Item");
+                GameObject.FindGameObjectsWithTag("Sword");
 
             if (items.Length < maxItems && CanSpawn())
             {

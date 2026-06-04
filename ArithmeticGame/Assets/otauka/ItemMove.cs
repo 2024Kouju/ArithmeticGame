@@ -54,14 +54,15 @@ public class ItemMove : MonoBehaviour
     // =========================
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Item"))
+        if (collision.gameObject.CompareTag("Hart") ||
+            collision.gameObject.CompareTag("Shield") ||
+            collision.gameObject.CompareTag("Sword"))
         {
-            Vector2 normal =
-                collision.contacts[0].normal;
+            Vector2 normal = collision.contacts[0].normal;
 
-            // •ûŒü‚¾‚¯”½ŽË
-            moveDir =
-                Vector2.Reflect(moveDir, normal).normalized;
+            moveDir = Vector2.Reflect(moveDir, normal).normalized;
+
+            rb.velocity = moveDir * speed;
         }
     }
     // =========================

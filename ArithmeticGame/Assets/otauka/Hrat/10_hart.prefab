@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -5240559914090535395}
   m_Layer: 3
   m_Name: 10_hart
-  m_TagString: Item
+  m_TagString: Hart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
