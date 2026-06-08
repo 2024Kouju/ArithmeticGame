@@ -32,9 +32,11 @@ public class ScoreAttackHP : MonoBehaviour
 
         if (remainTime <= 0)
         {
+            score += playerHP * 10;
+
             playerHP = 0;
 
-            score += playerHP * 10;
+            
 
             FinalPlayerHP = playerHP;
             FinalScore = score;

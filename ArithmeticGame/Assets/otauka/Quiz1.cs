@@ -38,7 +38,9 @@ public class Quiz1 : MonoBehaviour
     // 表示までの時間
     public float interval = 0.5f;
 
+    static public bool Score = false;
 
+    static public bool Boss = false;
 
     // シャッフル後の選択肢
     private List<ChoiceData> shuffledChoices = new List<ChoiceData>();
@@ -138,8 +140,18 @@ public class Quiz1 : MonoBehaviour
             StartCoroutine(OpenPanel());
 
             Debug.Log("正解！");
-            comboManager.AddCombo();
 
+
+
+            if (Boss == true)
+            {
+                comboManager.AddCombo();
+            }
+
+            if (Score == true)
+            {
+                comboManager.AddScoreCombo();
+            }
             // アイテム効果
             if (Item1.HPFlag1 == true)
             {

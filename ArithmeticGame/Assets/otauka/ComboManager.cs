@@ -14,6 +14,7 @@ public class ComboManager : MonoBehaviour
     // AutoBattle参照
     public AutoBattle autoBattle;
 
+    public ScoreAutoBattle scoreAutoBattle;
     void Start()
     {
         UpdateComboUI();
@@ -35,7 +36,21 @@ public class ComboManager : MonoBehaviour
             autoBattle.SpeedUpAttack(1f);
         }
     }
+    public void AddScoreCombo()
+    {
+        comboCount++;
 
+        UpdateComboUI();
+
+        Debug.Log("現在コンボ : " + comboCount);
+
+        // 5コンボごと
+        if (comboCount % 5 == 0)
+        {
+            // 0.5秒速くする
+            scoreAutoBattle.SpeedUpAttack(1f);
+        }
+    }
     // ミス時
     public void ResetCombo()
     {
