@@ -38,6 +38,8 @@ public class Quiz1 : MonoBehaviour
     // 表示までの時間
     public float interval = 0.5f;
 
+
+
     // シャッフル後の選択肢
     private List<ChoiceData> shuffledChoices = new List<ChoiceData>();
 

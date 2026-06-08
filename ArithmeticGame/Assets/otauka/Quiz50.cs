@@ -35,6 +35,9 @@ public class Quiz50 : MonoBehaviour
 
     public QuestionCount questionCount;
 
+    public float normalFontSize = 36f;
+    public float smallFontSize = 24f;
+
     // 表示までの時間
     public float interval = 0.5f;
 
@@ -65,6 +68,16 @@ public class Quiz50 : MonoBehaviour
         }
 
         questionText.text = currentQuestion.question50;
+
+        // 23文字以上なら文字サイズを変更
+        if (currentQuestion.question50.Length >= 23)
+        {
+            questionText.fontSize = smallFontSize;
+        }
+        else
+        {
+            questionText.fontSize = normalFontSize;
+        }
 
         // 選択肢を作成
         shuffledChoices.Clear();
