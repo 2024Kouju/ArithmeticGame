@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class Quiz100 : MonoBehaviour
@@ -24,6 +25,8 @@ public class Quiz100 : MonoBehaviour
 
     public HPManager hpManager;
 
+    public ScoreAttackHP attackHP;
+
     public SwordManager swordManager;
 
     public ShieldManager shieldManager;
@@ -36,6 +39,9 @@ public class Quiz100 : MonoBehaviour
 
     public ComboManager comboManager;
 
+    static public bool Score100 = false;
+
+    static public bool Boss100 = false;
     // 表示までの時間
     public float interval = 0.5f;
 
@@ -130,25 +136,56 @@ public class Quiz100 : MonoBehaviour
 
             StartCoroutine(OpenPanel());
 
-            comboManager.AddCombo();
+          
 
             Debug.Log("正解！");
 
-            if (Item100.HPFlag100 == true)
+            if (Boss100 == true)
             {
-                hpManager.AddPlayerHP(100);
-                
-                Item100.HPFlag100 = false;
+                comboManager.AddCombo();
+                // アイテム効果
+                if (Item100.HPFlag100 == true)
+                {
+                    hpManager.AddPlayerHP(100);
+                  
+                    Item100.HPFlag100 = false;
+                }
+                else if (SwordItem100.SwordFlag100 == true)
+                {
+                    swordManager.AddPlayerSword(100);
+                    
+                    SwordItem100.SwordFlag100 = false;
+                }
+                else if (ShieldItem100.ShieldFlag100 == true)
+                {
+                    shieldManager.AddPlayerShield(100);
+                   
+                    ShieldItem100.ShieldFlag100 = false;
+                }
             }
-            else if (SwordItem100.SwordFlag100 == true)
+
+            if (Score100 == true)
             {
-                swordManager.AddPlayerSword(100);
-                SwordItem100.SwordFlag100 = false;
-            }
-            else if (ShieldItem100.ShieldFlag100 == true)
-            {
-                shieldManager.AddPlayerShield(100);
-                ShieldItem100.ShieldFlag100 = false;
+                comboManager.AddScoreCombo();
+                // アイテム効果
+                if (Item100.HPFlag100 == true)
+                {
+                    attackHP.AddPlayerHP(100);
+                    
+                    Item100.HPFlag100 = false;
+                }
+                else if (SwordItem100.SwordFlag100 == true)
+                {
+                    swordManager.AddPlayerSword(100);
+                  
+                    SwordItem100.SwordFlag100 = false;
+                }
+                else if (ShieldItem100.ShieldFlag100 == true)
+                {
+                    shieldManager.AddPlayerShield(100);
+                    
+                    ShieldItem100.ShieldFlag100 = false;
+                }
             }
         }
         else
@@ -161,20 +198,48 @@ public class Quiz100 : MonoBehaviour
 
             comboManager.ResetCombo();
 
-            if (Item100.HPFlag100 == true)
+            if (Boss100 == true)
             {
-                hpManager.AddEnemyHP(100);
-                Item100.HPFlag100 = false;
+
+                // アイテム効果
+                if (Item100.HPFlag100 == true)
+                {
+                    hpManager.AddEnemyHP(100);
+                    Item100.HPFlag100 = false;
+                }
+                else if (SwordItem100.SwordFlag100 == true)
+                {
+                    swordManager.AddEnemySword(100);
+                    SwordItem100.SwordFlag100 = false;
+                }
+                else if (ShieldItem100.ShieldFlag100 == true)
+                {
+                    shieldManager.AddEnemyShield(100);
+                    ShieldItem100.ShieldFlag100 = false;
+                }
             }
-            else if (SwordItem100.SwordFlag100 == true)
+
+
+            if (Score100 == true)
             {
-                swordManager.AddEnemySword(100);
-                SwordItem100.SwordFlag100 = false;
-            }
-            else if (ShieldItem100.ShieldFlag100 == true)
-            {
-                shieldManager.AddEnemyShield(100);
-                ShieldItem100.ShieldFlag100 = false;
+
+                // アイテム効果
+                if (Item100.HPFlag100 == true)
+                {
+                    Item100.HPFlag100 = false;
+                }
+                else if (SwordItem100.SwordFlag100 == true)
+                {
+                    swordManager.AddEnemySword(100);
+                  
+                    SwordItem100.SwordFlag100 = false;
+                }
+                else if (ShieldItem100.ShieldFlag100 == true)
+                {
+                    shieldManager.AddEnemyShield(100);
+                    
+                    ShieldItem100.ShieldFlag100 = false;
+                }
             }
         }
     }

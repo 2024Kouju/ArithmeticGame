@@ -23,6 +23,8 @@ public class Quiz1 : MonoBehaviour
 
     public HPManager hpManager;
 
+    public ScoreAttackHP attackHP;
+
     public SwordManager swordManager;
 
     public ShieldManager shieldManager;
@@ -146,31 +148,51 @@ public class Quiz1 : MonoBehaviour
             if (Boss == true)
             {
                 comboManager.AddCombo();
+                // アイテム効果
+                if (Item1.HPFlag1 == true)
+                {
+                    hpManager.AddPlayerHP(1);
+                    QuizUnlockManager.Heart1Clear = true;
+                    Item1.HPFlag1 = false;
+                }
+                else if (SwordItem1.SwordFlag1 == true)
+                {
+                    swordManager.AddPlayerSword(1);
+                    QuizUnlockManager.Sword1Clear = true;
+                    SwordItem1.SwordFlag1 = false;
+                }
+                else if (ShieldItem1.ShieldFlag1 == true)
+                {
+                    shieldManager.AddPlayerShield(1);
+                    QuizUnlockManager.Shield1Clear = true;
+                    ShieldItem1.ShieldFlag1 = false;
+                }
             }
 
             if (Score == true)
             {
                 comboManager.AddScoreCombo();
+                // アイテム効果
+                if (Item1.HPFlag1 == true)
+                {
+                    attackHP.AddPlayerHP(1);
+                    QuizUnlockManager.Heart1Clear = true;
+                    Item1.HPFlag1 = false;
+                }
+                else if (SwordItem1.SwordFlag1 == true)
+                {
+                    swordManager.AddPlayerSword(1);
+                    QuizUnlockManager.Sword1Clear = true;
+                    SwordItem1.SwordFlag1 = false;
+                }
+                else if (ShieldItem1.ShieldFlag1 == true)
+                {
+                    shieldManager.AddPlayerShield(1);
+                    QuizUnlockManager.Shield1Clear = true;
+                    ShieldItem1.ShieldFlag1 = false;
+                }
             }
-            // アイテム効果
-            if (Item1.HPFlag1 == true)
-            {
-                hpManager.AddPlayerHP(1);
-                QuizUnlockManager.Heart1Clear = true;
-                Item1.HPFlag1 = false;
-            }
-            else if (SwordItem1.SwordFlag1 == true)
-            {
-                swordManager.AddPlayerSword(1);
-                QuizUnlockManager.Sword1Clear = true;
-                SwordItem1.SwordFlag1 = false;
-            }
-            else if (ShieldItem1.ShieldFlag1 == true)
-            {
-                shieldManager.AddPlayerShield(1);
-                QuizUnlockManager.Shield1Clear = true;
-                ShieldItem1.ShieldFlag1 = false;
-            }
+ 
         }
         // 不正解
         else
@@ -186,22 +208,51 @@ public class Quiz1 : MonoBehaviour
 
             comboManager.ResetCombo();
 
-            // アイテム効果
-            if (Item1.HPFlag1 == true)
+            if (Boss == true)
             {
-                hpManager.AddEnemyHP(1);
-                Item1.HPFlag1 = false;
+                // アイテム効果
+                if (Item1.HPFlag1 == true)
+                {
+                    hpManager.AddEnemyHP(1);
+                    Item1.HPFlag1 = false;
+                }
+                else if (SwordItem1.SwordFlag1 == true)
+                {
+                    swordManager.AddEnemySword(1);
+                    SwordItem1.SwordFlag1 = false;
+                }
+                else if (ShieldItem1.ShieldFlag1 == true)
+                {
+                    shieldManager.AddEnemyShield(1);
+                    ShieldItem1.ShieldFlag1 = false;
+                }
             }
-            else if (SwordItem1.SwordFlag1 == true)
+           
+
+            if (Score == true)
             {
-                swordManager.AddEnemySword(1);
-                SwordItem1.SwordFlag1 = false;
+                
+                // アイテム効果
+                if (Item1.HPFlag1 == true)
+                {
+                    
+                    QuizUnlockManager.Heart1Clear = true;
+                    Item1.HPFlag1 = false;
+                }
+                else if (SwordItem1.SwordFlag1 == true)
+                {
+                    swordManager.AddEnemySword(1);
+                    QuizUnlockManager.Sword1Clear = true;
+                    SwordItem1.SwordFlag1 = false;
+                }
+                else if (ShieldItem1.ShieldFlag1 == true)
+                {
+                    shieldManager.AddEnemyShield(1);
+                    QuizUnlockManager.Shield1Clear = true;
+                    ShieldItem1.ShieldFlag1 = false;
+                }
             }
-            else if (ShieldItem1.ShieldFlag1 == true)
-            {
-                shieldManager.AddEnemyShield(1);
-                ShieldItem1.ShieldFlag1 = false;
-            }
+
         }
     }
 

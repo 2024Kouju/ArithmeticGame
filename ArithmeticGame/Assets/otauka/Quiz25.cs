@@ -23,6 +23,8 @@ public class Quiz25 : MonoBehaviour
 
     public HPManager hpManager;
 
+    public ScoreAttackHP attackHP;
+
     public SwordManager swordManager;
 
     public ShieldManager shieldManager;
@@ -35,6 +37,9 @@ public class Quiz25 : MonoBehaviour
 
     public QuestionCount questionCount;
 
+    static public bool Score25 = false;
+
+    static public bool Boss25 = false;
     // 表示までの時間
     public float interval = 0.5f;
 
@@ -128,27 +133,56 @@ public class Quiz25 : MonoBehaviour
 
             StartCoroutine(OpenPanel());
 
-            comboManager.AddCombo();
+        
 
             Debug.Log("正解！");
 
-            if (Item25.HPFlag25 == true)
+            if (Boss25 == true)
             {
-                hpManager.AddPlayerHP(25);
-                QuizUnlockManager.Heart25Clear = true;
-                Item25.HPFlag25 = false;
+                comboManager.AddCombo();
+                // アイテム効果
+                if (Item25.HPFlag25 == true)
+                {
+                    hpManager.AddPlayerHP(25);
+                    QuizUnlockManager.Heart25Clear = true;
+                    Item25.HPFlag25 = false;
+                }
+                else if (SwordItem25.SwordFlag25 == true)
+                {
+                    swordManager.AddPlayerSword(25);
+                    QuizUnlockManager.Sword25Clear = true;
+                    SwordItem25.SwordFlag25 = false;
+                }
+                else if (ShieldItem25.ShieldFlag25 == true)
+                {
+                    shieldManager.AddPlayerShield(25);
+                    QuizUnlockManager.Shield25Clear = true;
+                    ShieldItem25.ShieldFlag25 = false;
+                }
             }
-            else if (SwordItem25.SwordFlag25 == true)
+
+            if (Score25 == true)
             {
-                swordManager.AddPlayerSword(25);
-                QuizUnlockManager.Sword25Clear = true;
-                SwordItem25.SwordFlag25 = false;
-            }
-            else if (ShieldItem25.ShieldFlag25 == true)
-            {
-                shieldManager.AddPlayerShield(25);
-                QuizUnlockManager.Shield25Clear = true;
-                ShieldItem25.ShieldFlag25 = false;
+                comboManager.AddScoreCombo();
+                // アイテム効果
+                if (Item25.HPFlag25 == true)
+                {
+                    attackHP.AddPlayerHP(25);
+                    QuizUnlockManager.Heart25Clear = true;
+                    Item25.HPFlag25 = false;
+                }
+                else if (SwordItem25.SwordFlag25 == true)
+                {
+                    swordManager.AddPlayerSword(25);
+                    QuizUnlockManager.Sword5Clear = true;
+                    SwordItem25.SwordFlag25 = false;
+                }
+                else if (ShieldItem25.ShieldFlag25 == true)
+                {
+                    shieldManager.AddPlayerShield(25);
+                    QuizUnlockManager.Shield25Clear = true;
+                    ShieldItem25.ShieldFlag25 = false;
+                }
             }
         }
         else
@@ -161,20 +195,50 @@ public class Quiz25 : MonoBehaviour
 
             comboManager.ResetCombo();
 
-            if (Item25.HPFlag25 == true)
+            if (Boss25 == true)
             {
-                hpManager.AddEnemyHP(25);
-                Item25.HPFlag25 = false;
+
+                // アイテム効果
+                if (Item25.HPFlag25 == true)
+                {
+                    hpManager.AddEnemyHP(25);
+                    Item25.HPFlag25 = false;
+                }
+                else if (SwordItem25.SwordFlag25 == true)
+                {
+                    swordManager.AddEnemySword(25);
+                    SwordItem25.SwordFlag25 = false;
+                }
+                else if (ShieldItem25.ShieldFlag25 == true)
+                {
+                    shieldManager.AddEnemyShield(25);
+                    ShieldItem25.ShieldFlag25 = false;
+                }
             }
-            else if (SwordItem25.SwordFlag25 == true)
+
+
+            if (Score25 == true)
             {
-                swordManager.AddEnemySword(25);
-                SwordItem25.SwordFlag25 = false;
-            }
-            else if (ShieldItem25.ShieldFlag25 == true)
-            {
-                shieldManager.AddEnemyShield(25);
-                ShieldItem25.ShieldFlag25 = false;
+
+                // アイテム効果
+                if (Item25.HPFlag25 == true)
+                {
+
+                    QuizUnlockManager.Heart25Clear = true;
+                    Item25.HPFlag25 = false;
+                }
+                else if (SwordItem25.SwordFlag25 == true)
+                {
+                    swordManager.AddEnemySword(25);
+                    QuizUnlockManager.Sword25Clear = true;
+                    SwordItem25.SwordFlag25 = false;
+                }
+                else if (ShieldItem25.ShieldFlag25 == true)
+                {
+                    shieldManager.AddEnemyShield(25);
+                    QuizUnlockManager.Shield25Clear = true;
+                    ShieldItem25.ShieldFlag25 = false;
+                }
             }
         }
     }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class Quiz5 : MonoBehaviour
@@ -23,6 +24,8 @@ public class Quiz5 : MonoBehaviour
 
     public HPManager hpManager;
 
+    public ScoreAttackHP attackHP;
+
     public SwordManager swordManager;
 
     public ShieldManager shieldManager;
@@ -34,6 +37,9 @@ public class Quiz5 : MonoBehaviour
     public ComboManager comboManager;
     public QuestionCount questionCount;
 
+    static public bool Score5 = false;
+
+    static public bool Boss5 = false;
     // 表示までの時間
     public float interval = 0.5f;
 
@@ -127,27 +133,56 @@ public class Quiz5 : MonoBehaviour
 
             StartCoroutine(OpenPanel());
 
-            comboManager.AddCombo();
+            
 
             Debug.Log("正解！");
 
-            if (Item5.HPFlag5 == true)
+            if (Boss5 == true)
             {
-                hpManager.AddPlayerHP(5);
-                QuizUnlockManager.Heart5Clear = true;
-                Item5.HPFlag5 = false;
+                comboManager.AddCombo();
+                // アイテム効果
+                if (Item5.HPFlag5 == true)
+                {
+                    hpManager.AddPlayerHP(5);
+                    QuizUnlockManager.Heart5Clear = true;
+                    Item5.HPFlag5 = false;
+                }
+                else if (SwordItem5.SwordFlag5 == true)
+                {
+                    swordManager.AddPlayerSword(5);
+                    QuizUnlockManager.Sword5Clear = true;
+                    SwordItem5.SwordFlag5 = false;
+                }
+                else if (ShieldItem5.ShieldFlag5 == true)
+                {
+                    shieldManager.AddPlayerShield(5);
+                    QuizUnlockManager.Shield5Clear = true;
+                    ShieldItem5.ShieldFlag5 = false;
+                }
             }
-            else if (SwordItem5.SwordFlag5 == true)
+
+            if (Score5 == true)
             {
-                swordManager.AddPlayerSword(5);
-                QuizUnlockManager.Sword5Clear = true;
-                SwordItem5.SwordFlag5 = false;
-            }
-            else if (ShieldItem5.ShieldFlag5 == true)
-            {
-                shieldManager.AddPlayerShield(5);
-                QuizUnlockManager.Shield5Clear = true;
-                ShieldItem5.ShieldFlag5 = false;
+                comboManager.AddScoreCombo();
+                // アイテム効果
+                if (Item5.HPFlag5 == true)
+                {
+                    attackHP.AddPlayerHP(5);
+                    QuizUnlockManager.Heart5Clear = true;
+                    Item5.HPFlag5 = false;
+                }
+                else if (SwordItem5.SwordFlag5 == true)
+                {
+                    swordManager.AddPlayerSword(5);
+                    QuizUnlockManager.Sword5Clear = true;
+                    SwordItem5.SwordFlag5 = false;
+                }
+                else if (ShieldItem5.ShieldFlag5 == true)
+                {
+                    shieldManager.AddPlayerShield(5);
+                    QuizUnlockManager.Shield5Clear = true;
+                    ShieldItem5.ShieldFlag5 = false;
+                }
             }
         }
         else
@@ -160,20 +195,50 @@ public class Quiz5 : MonoBehaviour
 
             comboManager.ResetCombo();
 
-            if (Item5.HPFlag5 == true)
+            if (Boss5 == true)
             {
-                hpManager.AddEnemyHP(5);
-                Item5.HPFlag5 = false;
+                
+                // アイテム効果
+                if (Item5.HPFlag5 == true)
+                {
+                    hpManager.AddEnemyHP(5);
+                    Item5.HPFlag5 = false;
+                }
+                else if (SwordItem5.SwordFlag5 == true)
+                {
+                    swordManager.AddEnemySword(5);
+                    SwordItem5.SwordFlag5 = false;
+                }
+                else if (ShieldItem5.ShieldFlag5 == true)
+                {
+                    shieldManager.AddEnemyShield(5);
+                    ShieldItem5.ShieldFlag5 = false;
+                }
             }
-            else if (SwordItem5.SwordFlag5 == true)
+
+
+            if (Score5 == true)
             {
-                swordManager.AddEnemySword(5);
-                SwordItem5.SwordFlag5 = false;
-            }
-            else if (ShieldItem5.ShieldFlag5 == true)
-            {
-                shieldManager.AddEnemyShield(5);
-                ShieldItem5.ShieldFlag5 = false;
+                
+                // アイテム効果
+                if (Item5.HPFlag5 == true)
+                {
+
+                    QuizUnlockManager.Heart1Clear = true;
+                    Item5.HPFlag5 = false;
+                }
+                else if (SwordItem5.SwordFlag5 == true)
+                {
+                    swordManager.AddEnemySword(5);
+                    QuizUnlockManager.Sword5Clear = true;
+                    SwordItem5.SwordFlag5 = false;
+                }
+                else if (ShieldItem5.ShieldFlag5 == true)
+                {
+                    shieldManager.AddEnemyShield(5);
+                    QuizUnlockManager.Shield5Clear = true;
+                    ShieldItem5.ShieldFlag5 = false;
+                }
             }
         }
     }

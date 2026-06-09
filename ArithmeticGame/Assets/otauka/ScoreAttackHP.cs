@@ -26,6 +26,11 @@ public class ScoreAttackHP : MonoBehaviour
 
     void Update()
     {
+        if (Quiz1.Boss == true)
+        {
+            return;
+        }
+
         elapsedTime += Time.deltaTime;
 
         float remainTime = limitTime - elapsedTime;
@@ -50,6 +55,11 @@ public class ScoreAttackHP : MonoBehaviour
     // ÉvÉåÉCÉÑÅ[HPëùå∏
     public void AddPlayerHP(int value)
     {
+        if(Quiz1.Boss == true)
+        {
+            return;
+        }
+
         playerHP += value;
 
         if (playerHP <= 0)

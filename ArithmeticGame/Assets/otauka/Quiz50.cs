@@ -19,9 +19,17 @@ public class Quiz50 : MonoBehaviour
 
     private QuestionData50 currentQuestion;
 
+    [SerializeField]
+    private int questionIndex = 0;
+
+
     public GameObject panel;
 
+
+
     public HPManager hpManager;
+
+    public ScoreAttackHP attackHP;
 
     public SwordManager swordManager;
 
@@ -34,6 +42,10 @@ public class Quiz50 : MonoBehaviour
     public ComboManager comboManager;
 
     public QuestionCount questionCount;
+
+    static public bool Score50 = false;
+
+    static public bool Boss50 = false;
 
     public float normalFontSize = 36f;
     public float smallFontSize = 24f;
@@ -50,6 +62,16 @@ public class Quiz50 : MonoBehaviour
     }
     public void ShowRandomQuestion()
     {
+        //if (questionIndex < 0 || questionIndex >= questions.Count)
+        //{
+        //    Debug.LogError("問題番号が範囲外です");
+        //    return;
+        //}
+
+        //currentQuestion = questions[questionIndex];
+
+        //questionText.text = currentQuestion.question50;
+
         if (questions == null || questions.Count == 0)
         {
             Debug.LogError("questionsが空");
@@ -141,27 +163,56 @@ public class Quiz50 : MonoBehaviour
 
             StartCoroutine(OpenPanel());
 
-            comboManager.AddCombo();
+          
 
             Debug.Log("正解！");
 
-            if (Item50.HPFlag50 == true)
+            if (Boss50 == true)
             {
-                hpManager.AddPlayerHP(50);
-                QuizUnlockManager.Heart50Clear = true;
-                Item50.HPFlag50 = false;
+                comboManager.AddCombo();
+                // アイテム効果
+                if (Item50.HPFlag50 == true)
+                {
+                    hpManager.AddPlayerHP(50);
+                    QuizUnlockManager.Heart50Clear = true;
+                    Item50.HPFlag50 = false;
+                }
+                else if (SwordItem50.SwordFlag50 == true)
+                {
+                    swordManager.AddPlayerSword(50);
+                    QuizUnlockManager.Sword50Clear = true;
+                    SwordItem50.SwordFlag50 = false;
+                }
+                else if (ShieldItem50.ShieldFlag50 == true)
+                {
+                    shieldManager.AddPlayerShield(50);
+                    QuizUnlockManager.Shield50Clear = true;
+                    ShieldItem50.ShieldFlag50 = false;
+                }
             }
-            else if (SwordItem50.SwordFlag50 == true)
+
+            if (Score50 == true)
             {
-                swordManager.AddPlayerSword(50);
-                QuizUnlockManager.Sword50Clear = true;
-                SwordItem50.SwordFlag50 = false;
-            }
-            else if (ShieldItem50.ShieldFlag50 == true)
-            {
-                shieldManager.AddPlayerShield(50);
-                QuizUnlockManager.Shield50Clear = true;
-                ShieldItem50.ShieldFlag50 = false;
+                comboManager.AddScoreCombo();
+                // アイテム効果
+                if (Item50.HPFlag50 == true)
+                {
+                    attackHP.AddPlayerHP(50);
+                    QuizUnlockManager.Heart50Clear = true;
+                    Item50.HPFlag50 = false;
+                }
+                else if (SwordItem50.SwordFlag50 == true)
+                {
+                    swordManager.AddPlayerSword(50);
+                    QuizUnlockManager.Sword50Clear = true;
+                    SwordItem50.SwordFlag50 = false;
+                }
+                else if (ShieldItem50.ShieldFlag50 == true)
+                {
+                    shieldManager.AddPlayerShield(50);
+                    QuizUnlockManager.Shield50Clear = true;
+                    ShieldItem50.ShieldFlag50 = false;
+                }
             }
         }
         else
@@ -174,20 +225,50 @@ public class Quiz50 : MonoBehaviour
 
             comboManager.ResetCombo();
 
-            if (Item50.HPFlag50 == true)
+            if (Boss50 == true)
             {
-                hpManager.AddEnemyHP(50);
-                Item50.HPFlag50 = false;
+
+                // アイテム効果
+                if (Item50.HPFlag50 == true)
+                {
+                    hpManager.AddEnemyHP(50);
+                    Item50.HPFlag50 = false;
+                }
+                else if (SwordItem50.SwordFlag50 == true)
+                {
+                    swordManager.AddEnemySword(50);
+                    SwordItem50.SwordFlag50 = false;
+                }
+                else if (ShieldItem50.ShieldFlag50 == true)
+                {
+                    shieldManager.AddEnemyShield(50);
+                    ShieldItem50.ShieldFlag50 = false;
+                }
             }
-            else if (SwordItem50.SwordFlag50 == true)
+
+
+            if (Score50 == true)
             {
-                swordManager.AddEnemySword(50);
-                SwordItem50.SwordFlag50 = false;
-            }
-            else if (ShieldItem50.ShieldFlag50 == true)
-            {
-                shieldManager.AddEnemyShield(50);
-                ShieldItem50.ShieldFlag50 = false;
+
+                // アイテム効果
+                if (Item50.HPFlag50 == true)
+                {
+
+                    QuizUnlockManager.Heart10Clear = true;
+                    Item50.HPFlag50 = false;
+                }
+                else if (SwordItem50.SwordFlag50 == true)
+                {
+                    swordManager.AddEnemySword(50);
+                    QuizUnlockManager.Sword50Clear = true;
+                    SwordItem50.SwordFlag50 = false;
+                }
+                else if (ShieldItem50.ShieldFlag50 == true)
+                {
+                    shieldManager.AddEnemyShield(50);
+                    QuizUnlockManager.Shield50Clear = true;
+                    ShieldItem50.ShieldFlag50 = false;
+                }
             }
         }
     }
