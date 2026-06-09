@@ -58,9 +58,10 @@ public class ItemMove : MonoBehaviour
             collision.gameObject.CompareTag("Shield") ||
             collision.gameObject.CompareTag("Sword"))
         {
-            Vector2 normal = collision.contacts[0].normal;
+            Vector2 dir =
+          (transform.position - collision.transform.position).normalized;
 
-            moveDir = Vector2.Reflect(moveDir, normal).normalized;
+            moveDir = dir;
 
             rb.velocity = moveDir * speed;
         }

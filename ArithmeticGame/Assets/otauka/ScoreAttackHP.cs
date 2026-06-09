@@ -37,6 +37,8 @@ public class ScoreAttackHP : MonoBehaviour
 
         if (remainTime <= 0)
         {
+            remainTime = 0;
+
             score += playerHP * 10;
 
             playerHP = 0;
@@ -49,7 +51,7 @@ public class ScoreAttackHP : MonoBehaviour
             SceneManager.LoadScene("Result");
         }
 
-        timerText.text = "TIME : " + remainTime.ToString("F1");
+        timerText.text = "残り時間 : " + Mathf.FloorToInt(remainTime) + "秒";
     }
 
     // プレイヤーHP増減
