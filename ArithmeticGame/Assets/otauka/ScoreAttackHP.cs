@@ -7,6 +7,7 @@ public class ScoreAttackHP : MonoBehaviour
     public static int FinalPlayerHP;
     public static int FinalScore;
     public static float FinalTime;
+    public static int DefultScore;
 
     public int playerHP = 100;
     public int score = 0;
@@ -39,19 +40,26 @@ public class ScoreAttackHP : MonoBehaviour
         {
             remainTime = 0;
 
-            score += playerHP * 10;
 
-            playerHP = 0;
+            score += playerHP * 10;
+            FinalPlayerHP = playerHP;
+
+           
 
             
 
-            FinalPlayerHP = playerHP;
+            
+
+           
             FinalScore = score;
 
             SceneManager.LoadScene("Result");
         }
 
-        timerText.text = "残り時間 : " + Mathf.FloorToInt(remainTime) + "秒";
+        int minutes = Mathf.FloorToInt(remainTime / 60);
+        int seconds = Mathf.FloorToInt(remainTime % 60);
+
+        timerText.text = $"残り時間 : {minutes}分{seconds}秒";
     }
 
     // プレイヤーHP増減
@@ -85,6 +93,7 @@ public class ScoreAttackHP : MonoBehaviour
     public void AddScore(int value)
     {
         score += value;
+        DefultScore += value;
 
         if (score < 0)
             score = 0;

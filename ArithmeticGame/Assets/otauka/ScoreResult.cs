@@ -4,12 +4,20 @@ using UnityEngine.UI;
 public class ScoreResult : MonoBehaviour
 {
     public Text hpText;
+    public Text Addition;
+    public Text Defult;
 
     void Start()
     {
         int score = ScoreAttackHP.FinalScore;
+        int PlayerHP = ScoreAttackHP.FinalPlayerHP;
+        int Defultscore = ScoreAttackHP.DefultScore;
 
-        hpText.text = "スコア : " + score + "点";
+        Defult.text = "スコア : " + Defultscore + "点";
+        Addition.text = "残りHP :"+PlayerHP + "× 10";
+        hpText.text = "合計スコア : " + score  + "点";
+        
+
 
         SaveRanking(score);
     }
