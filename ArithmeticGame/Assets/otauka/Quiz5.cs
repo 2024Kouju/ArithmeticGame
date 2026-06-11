@@ -7,11 +7,9 @@ using UnityEngine.UI;
 
 public class Quiz5 : MonoBehaviour
 {
-    private AudioSource audioSource;
+    public AudioSource CirclesoundEffect;
 
-    public AudioClip CirclesoundEffect;
-
-    public AudioClip IncorrectsoundEffect;
+    public AudioSource IncorrectsoundEffect;
 
     public List<QuestionData5> questions;
 
@@ -45,11 +43,7 @@ public class Quiz5 : MonoBehaviour
 
     // シャッフル後の選択肢
     private List<ChoiceData5> shuffledChoices = new List<ChoiceData5>();
-    void Start()
-    {
-        // AudioSourceコンポーネントを取得
-        audioSource = GetComponent<AudioSource>();
-    }
+
     public void ShowRandomQuestion()
     {
         if (questions == null || questions.Count == 0)
@@ -129,11 +123,13 @@ public class Quiz5 : MonoBehaviour
     {
         if (shuffledChoices[index].isCorrect)
         {
+            CirclesoundEffect.Play();
+
             Circle.SetActive(true);
 
             StartCoroutine(OpenPanel());
 
-            
+           
 
             Debug.Log("正解！");
 
@@ -187,6 +183,8 @@ public class Quiz5 : MonoBehaviour
         }
         else
         {
+            IncorrectsoundEffect.Play();
+
             Incorrect.SetActive(true);
 
             StartCoroutine(OpenPanel());
