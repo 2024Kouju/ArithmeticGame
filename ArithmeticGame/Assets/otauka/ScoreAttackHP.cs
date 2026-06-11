@@ -104,6 +104,6 @@ public class ScoreAttackHP : MonoBehaviour
     void UpdateUI()
     {
         playerHPText.text = "HP : " + playerHP;
-        scoreText.text = "SCORE : " + score;
+        scoreText.text = "ÉXÉRÉA : " + score;
     }
 }
