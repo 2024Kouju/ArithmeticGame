@@ -200,17 +200,17 @@ public class Quiz5 : MonoBehaviour
                 // ƒAƒCƒeƒ€Œø‰Ê
                 if (Item5.HPFlag5 == true)
                 {
-                    hpManager.AddEnemyHP(5);
+                    hpManager.AddEnemyHP(3);
                     Item5.HPFlag5 = false;
                 }
                 else if (SwordItem5.SwordFlag5 == true)
                 {
-                    swordManager.AddEnemySword(5);
+                    swordManager.AddEnemySword(3);
                     SwordItem5.SwordFlag5 = false;
                 }
                 else if (ShieldItem5.ShieldFlag5 == true)
                 {
-                    shieldManager.AddEnemyShield(5);
+                    shieldManager.AddEnemyShield(3);
                     ShieldItem5.ShieldFlag5 = false;
                 }
             }
@@ -228,13 +228,13 @@ public class Quiz5 : MonoBehaviour
                 }
                 else if (SwordItem5.SwordFlag5 == true)
                 {
-                    swordManager.AddEnemySword(5);
+                    swordManager.AddEnemySword(3);
                     QuizUnlockManager.Sword5Clear = true;
                     SwordItem5.SwordFlag5 = false;
                 }
                 else if (ShieldItem5.ShieldFlag5 == true)
                 {
-                    shieldManager.AddEnemyShield(5);
+                    shieldManager.AddEnemyShield(3);
                     QuizUnlockManager.Shield5Clear = true;
                     ShieldItem5.ShieldFlag5 = false;
                 }

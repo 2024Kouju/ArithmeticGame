@@ -230,17 +230,17 @@ public class Quiz50 : MonoBehaviour
                 // ƒAƒCƒeƒ€Œø‰Ê
                 if (Item50.HPFlag50 == true)
                 {
-                    hpManager.AddEnemyHP(50);
+                    hpManager.AddEnemyHP(25);
                     Item50.HPFlag50 = false;
                 }
                 else if (SwordItem50.SwordFlag50 == true)
                 {
-                    swordManager.AddEnemySword(50);
+                    swordManager.AddEnemySword(25);
                     SwordItem50.SwordFlag50 = false;
                 }
                 else if (ShieldItem50.ShieldFlag50 == true)
                 {
-                    shieldManager.AddEnemyShield(50);
+                    shieldManager.AddEnemyShield(25);
                     ShieldItem50.ShieldFlag50 = false;
                 }
             }
@@ -258,13 +258,13 @@ public class Quiz50 : MonoBehaviour
                 }
                 else if (SwordItem50.SwordFlag50 == true)
                 {
-                    swordManager.AddEnemySword(50);
+                    swordManager.AddEnemySword(25);
                     QuizUnlockManager.Sword50Clear = true;
                     SwordItem50.SwordFlag50 = false;
                 }
                 else if (ShieldItem50.ShieldFlag50 == true)
                 {
-                    shieldManager.AddEnemyShield(50);
+                    shieldManager.AddEnemyShield(25);
                     QuizUnlockManager.Shield50Clear = true;
                     ShieldItem50.ShieldFlag50 = false;
                 }

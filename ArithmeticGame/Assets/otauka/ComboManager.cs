@@ -78,7 +78,7 @@ public class ComboManager : MonoBehaviour
         // 2コンボ以上で表示
         if (comboCount >= 2)
         {
-            comboText.text = comboCount + " Combo";
+            comboText.text = comboCount + " コンボ";
         }
         else
         {

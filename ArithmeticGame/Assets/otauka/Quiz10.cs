@@ -201,17 +201,17 @@ public class Quiz10 : MonoBehaviour
                 // ƒAƒCƒeƒ€Œø‰Ê
                 if (Item10.HPFlag10 == true)
                 {
-                    hpManager.AddEnemyHP(10);
+                    hpManager.AddEnemyHP(5);
                     Item10.HPFlag10 = false;
                 }
                 else if (SwordItem10.SwordFlag10 == true)
                 {
-                    swordManager.AddEnemySword(10);
+                    swordManager.AddEnemySword(5);
                     SwordItem10.SwordFlag10 = false;
                 }
                 else if (ShieldItem10.ShieldFlag10 == true)
                 {
-                    shieldManager.AddEnemyShield(10);
+                    shieldManager.AddEnemyShield(5);
                     ShieldItem10.ShieldFlag10 = false;
                 }
             }
@@ -229,13 +229,13 @@ public class Quiz10 : MonoBehaviour
                 }
                 else if (SwordItem10.SwordFlag10 == true)
                 {
-                    swordManager.AddEnemySword(10);
+                    swordManager.AddEnemySword(5);
                     QuizUnlockManager.Sword10Clear = true;
                     SwordItem10.SwordFlag10 = false;
                 }
                 else if (ShieldItem10.ShieldFlag10 == true)
                 {
-                    shieldManager.AddEnemyShield(10);
+                    shieldManager.AddEnemyShield(5);
                     QuizUnlockManager.Shield10Clear = true;
                     ShieldItem10.ShieldFlag10 = false;
                 }
