@@ -13,6 +13,8 @@ public class Quiz10 : MonoBehaviour
 
     public List<QuestionData10> questions;
 
+    private List<QuestionData10> remainingQuestions;
+
     public TextMeshProUGUI questionText;
     public Button[] choiceButtons;
 
@@ -46,6 +48,15 @@ public class Quiz10 : MonoBehaviour
     // シャッフル後の選択肢
     private List<ChoiceData10> shuffledChoices = new List<ChoiceData10>();
 
+    void Start()
+    {
+        ResetQuestionList();
+    }
+    void ResetQuestionList()
+    {
+        remainingQuestions = new List<QuestionData10>(questions);
+    }
+
     public void ShowRandomQuestion()
     {
         if (questions == null || questions.Count == 0)
@@ -54,10 +65,26 @@ public class Quiz10 : MonoBehaviour
             return;
         }
 
+        // 全問出題したらリセット
+        if (remainingQuestions.Count == 0)
+        {
+            Debug.Log("全問出題したのでリセット");
+            ResetQuestionList();
+        }
+
+        // ランダム選択
+        int randomIndex = Random.Range(0, remainingQuestions.Count);
+
+        currentQuestion = remainingQuestions[randomIndex];
+
+        // 出題済み問題を除外
+        remainingQuestions.RemoveAt(randomIndex);
+
+        Debug.Log("出題: " + currentQuestion.question10);
+        Debug.Log("残り問題数: " + remainingQuestions.Count);
+
         // 問題数を増やす
         questionCount.AddQuestion(1);
-
-        currentQuestion = questions[Random.Range(0, questions.Count)];
 
         if (questionText == null)
         {
@@ -125,6 +152,8 @@ public class Quiz10 : MonoBehaviour
     {
         if (shuffledChoices[index].isCorrect)
         {
+            Rightorwrong.Right++;
+
             CirclesoundEffect.Play();
 
             Circle.SetActive(true);
@@ -185,6 +214,7 @@ public class Quiz10 : MonoBehaviour
         }
         else
         {
+            Rightorwrong.Wrong++;
             IncorrectsoundEffect.Play();
 
             Incorrect.SetActive(true);

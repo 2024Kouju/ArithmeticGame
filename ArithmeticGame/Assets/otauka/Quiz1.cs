@@ -19,6 +19,8 @@ public class Quiz1 : MonoBehaviour
 
     private QuestionData1 currentQuestion;
 
+    private List<QuestionData1> remainingQuestions;
+
     public GameObject panel;
 
     public HPManager hpManager;
@@ -49,7 +51,14 @@ public class Quiz1 : MonoBehaviour
     private List<ChoiceData> shuffledChoices = new List<ChoiceData>();
 
 
-
+    void Start()
+    {
+        ResetQuestionList();
+    }
+    void ResetQuestionList()
+    {
+        remainingQuestions = new List<QuestionData1>(questions);
+    }
     public void ShowRandomQuestion()
     {
         if (questions == null || questions.Count == 0)
@@ -58,10 +67,26 @@ public class Quiz1 : MonoBehaviour
             return;
         }
 
+        // 全問出題したらリセット
+        if (remainingQuestions.Count == 0)
+        {
+            Debug.Log("全問出題したのでリセット");
+            ResetQuestionList();
+        }
+
+        // ランダム選択
+        int randomIndex = Random.Range(0, remainingQuestions.Count);
+
+        currentQuestion = remainingQuestions[randomIndex];
+
+        // 出題済みリストから削除
+        remainingQuestions.RemoveAt(randomIndex);
+
+        Debug.Log("出題: " + currentQuestion.question1);
+        Debug.Log("残り問題数: " + remainingQuestions.Count);
+
         // 問題数を増やす
         questionCount.AddQuestion(1);
-
-        currentQuestion = questions[Random.Range(0, questions.Count)];
 
         if (questionText == null)
         {
@@ -79,8 +104,6 @@ public class Quiz1 : MonoBehaviour
             ChoiceData data = new ChoiceData();
 
             data.choiceText = currentQuestion.choices1[i];
-
-            // 元の正解番号と一致しているか
             data.isCorrect = (i == currentQuestion.correctIndex1);
 
             shuffledChoices.Add(data);
@@ -131,6 +154,8 @@ public class Quiz1 : MonoBehaviour
         // 正解
         if (shuffledChoices[index].isCorrect)
         {
+            Rightorwrong.Right++;
+
             CirclesoundEffect.Play();
 
             Circle.SetActive(true);
@@ -193,6 +218,7 @@ public class Quiz1 : MonoBehaviour
         // 不正解
         else
         {
+            Rightorwrong.Wrong++;
             IncorrectsoundEffect.Play();
 
             Incorrect.SetActive(true);

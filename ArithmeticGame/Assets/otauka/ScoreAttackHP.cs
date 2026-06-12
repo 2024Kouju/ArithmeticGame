@@ -20,6 +20,9 @@ public class ScoreAttackHP : MonoBehaviour
 
     private float elapsedTime;
 
+    public static int FinalRight;
+    public static int FinalWorng;
+    public static int FinalRW;
     void Start()
     {
         UpdateUI();
@@ -43,15 +46,17 @@ public class ScoreAttackHP : MonoBehaviour
 
             score += playerHP * 10;
             FinalPlayerHP = playerHP;
+            FinalRight = Rightorwrong.Right * 10;
+            FinalWorng = Rightorwrong.Wrong * 10;
 
-           
+            FinalRW = FinalRight - FinalWorng;
 
-            
+            if(FinalRW < 0)
+            {
+                FinalRW = 0;
+            }
 
-            
-
-           
-            FinalScore = score;
+            FinalScore = score + FinalRW;
 
             SceneManager.LoadScene("Result");
         }
