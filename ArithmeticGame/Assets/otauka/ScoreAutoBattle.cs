@@ -55,7 +55,7 @@ public class ScoreAutoBattle : MonoBehaviour
     }
 
     // Åöí«â¡
-    public void SpeedUpAttack(float value)
+    public void speedUpAttack(float value)
     {
         attackInterval -= value;
 

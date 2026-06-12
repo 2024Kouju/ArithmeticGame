@@ -37,6 +37,7 @@ public class Quiz1 : MonoBehaviour
 
     public ComboManager comboManager;
 
+
     // 表示までの時間
     public float interval = 0.5f;
 
@@ -166,7 +167,7 @@ public class Quiz1 : MonoBehaviour
 
             if (Score == true)
             {
-                comboManager.AddScoreCombo();
+                 comboManager.AddScoreCombo();
                 // アイテム効果
                 if (Item1.HPFlag1 == true)
                 {

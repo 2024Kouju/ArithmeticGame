@@ -14,7 +14,9 @@ public class ComboManager : MonoBehaviour
     // AutoBattleéQè∆
     public AutoBattle autoBattle;
 
-    public ScoreAutoBattle scoreAutoBattle;
+    public ScoreAutoBattle scoreautoBattle;
+
+   
     void Start()
     {
         UpdateComboUI();
@@ -23,6 +25,8 @@ public class ComboManager : MonoBehaviour
     // ê≥âéû
     public void AddCombo()
     {
+
+
         comboCount++;
 
         UpdateComboUI();
@@ -36,8 +40,11 @@ public class ComboManager : MonoBehaviour
             autoBattle.SpeedUpAttack(1f);
         }
     }
+
     public void AddScoreCombo()
     {
+
+
         comboCount++;
 
         UpdateComboUI();
@@ -48,9 +55,10 @@ public class ComboManager : MonoBehaviour
         if (comboCount % 5 == 0)
         {
             // 0.5ïbë¨Ç≠Ç∑ÇÈ
-            scoreAutoBattle.SpeedUpAttack(1f);
+            scoreautoBattle.speedUpAttack(1f);
         }
     }
+
     // É~ÉXéû
     public void ResetCombo()
     {

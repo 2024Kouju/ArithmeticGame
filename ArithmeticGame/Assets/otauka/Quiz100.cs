@@ -37,6 +37,7 @@ public class Quiz100 : MonoBehaviour
 
     public ComboManager comboManager;
 
+
     static public bool Score100 = false;
 
     static public bool Boss100 = false;

@@ -35,11 +35,12 @@ public class Quiz50 : MonoBehaviour
 
     public GameObject Circle;
 
-    public GameObject Incorrect;
+    public QuestionCount questionCount;
 
     public ComboManager comboManager;
+ 
 
-    public QuestionCount questionCount;
+    public GameObject Incorrect;
 
     static public bool Score50 = false;
 

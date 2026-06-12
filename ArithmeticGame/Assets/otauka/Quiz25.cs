@@ -31,9 +31,9 @@ public class Quiz25 : MonoBehaviour
 
     public GameObject Incorrect;
 
-    public ComboManager comboManager;
-
     public QuestionCount questionCount;
+
+    public ComboManager comboManager;
 
     static public bool Score25 = false;
 
