@@ -25,6 +25,10 @@ public class ScoreAttackHP : MonoBehaviour
     public static int FinalRW;
     void Start()
     {
+             FinalPlayerHP = 0;
+             FinalScore = 0;
+         FinalTime = 0;
+        DefultScore = 0;
         UpdateUI();
     }
 
@@ -39,27 +43,35 @@ public class ScoreAttackHP : MonoBehaviour
 
         float remainTime = limitTime - elapsedTime;
 
+
         if (remainTime <= 0)
         {
             remainTime = 0;
 
-
+            // HPボーナス
             score += playerHP * 10;
+
             FinalPlayerHP = playerHP;
-            FinalRight = Rightorwrong.Right * 10;
-            FinalWorng = Rightorwrong.Wrong * 10;
 
-            FinalRW = FinalRight - FinalWorng;
+            // 正解数・不正解数を保存
+            FinalRight = Rightorwrong.Right;
+            FinalWorng = Rightorwrong.Wrong;
 
-            if(FinalRW < 0)
-            {
-                FinalRW = 0;
-            }
+            // (正解数 - 不正解数) × 10
+            FinalRW = (FinalRight - FinalWorng) * 10;
 
+            // 最終スコア
             FinalScore = score + FinalRW;
+
+            // マイナスにならないようにする
+            if (FinalScore < 0)
+            {
+                FinalScore = 0;
+            }
 
             SceneManager.LoadScene("Result");
         }
+
 
         int minutes = Mathf.FloorToInt(remainTime / 60);
         int seconds = Mathf.FloorToInt(remainTime % 60);
@@ -74,19 +86,24 @@ public class ScoreAttackHP : MonoBehaviour
         {
             return;
         }
-
         playerHP += value;
 
         if (playerHP <= 0)
         {
             playerHP = 0;
 
-           
-
             FinalPlayerHP = playerHP;
-            FinalScore = score;
-         
 
+            FinalRight = Rightorwrong.Right;
+            FinalWorng = Rightorwrong.Wrong;
+            FinalRW = (FinalRight - FinalWorng) * 10;
+
+            FinalScore = score + FinalRW;
+
+            if (FinalScore < 0)
+            {
+                FinalScore = 0;
+            }
 
             SceneManager.LoadScene("Result");
         }

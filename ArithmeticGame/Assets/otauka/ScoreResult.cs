@@ -6,7 +6,9 @@ public class ScoreResult : MonoBehaviour
     public Text hpText;
     public Text Addition;
     public Text Defult;
-    public Text RightWrong;
+    public Text right;
+    public Text wrong;
+  
     void Start()
     {
         int score = ScoreAttackHP.FinalScore;
@@ -16,9 +18,11 @@ public class ScoreResult : MonoBehaviour
         int Wrong = ScoreAttackHP.FinalWorng;
         int RW = ScoreAttackHP.FinalRW;
 
-        Defult.text = "スコア : " + Defultscore + "点";
-        Addition.text = "残りHP :"+PlayerHP + "× 10";
-        RightWrong.text =RW +"=正解数:"+ Right + "不正解数:"+Wrong ;
+        Defult.text ="スコア : " + Defultscore + "点";
+        Addition.text = "+" + "残りHP :" +PlayerHP + "× 10";
+        right.text = "+" + "正解数:" + Right + "× 10";
+        wrong.text = "-" + "不正解数:" + Wrong + "× 10";
+
         hpText.text = "合計スコア : " + score  + "点";
         
 
