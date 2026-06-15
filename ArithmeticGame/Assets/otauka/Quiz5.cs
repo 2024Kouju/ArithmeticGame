@@ -252,19 +252,19 @@ public class Quiz5 : MonoBehaviour
                 if (Item5.HPFlag5 == true)
                 {
 
-                    QuizUnlockManager.Heart1Clear = true;
+              
                     Item5.HPFlag5 = false;
                 }
                 else if (SwordItem5.SwordFlag5 == true)
                 {
                     swordManager.AddEnemySword(3);
-                    QuizUnlockManager.Sword5Clear = true;
+     
                     SwordItem5.SwordFlag5 = false;
                 }
                 else if (ShieldItem5.ShieldFlag5 == true)
                 {
                     shieldManager.AddEnemyShield(3);
-                    QuizUnlockManager.Shield5Clear = true;
+                
                     ShieldItem5.ShieldFlag5 = false;
                 }
             }

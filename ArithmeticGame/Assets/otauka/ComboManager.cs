@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ComboManager : MonoBehaviour
 {
@@ -16,46 +16,46 @@ public class ComboManager : MonoBehaviour
 
     public ScoreAutoBattle scoreautoBattle;
 
-   
     void Start()
     {
         UpdateComboUI();
     }
 
-    // 正解時
+    // 正解時（通常バトル）
     public void AddCombo()
     {
-
-
         comboCount++;
 
         UpdateComboUI();
 
         Debug.Log("現在コンボ : " + comboCount);
 
-        // 5コンボごと
+        // 5コンボごとに攻撃速度UP
         if (comboCount % 5 == 0)
         {
-            // 0.5秒速くする
-            autoBattle.SpeedUpAttack(1f);
+            if (autoBattle != null)
+            {
+                autoBattle.SpeedUpAttack(1f);
+            }
         }
     }
 
+    // 正解時（スコアアタック）
     public void AddScoreCombo()
     {
-
-
         comboCount++;
 
         UpdateComboUI();
 
         Debug.Log("現在コンボ : " + comboCount);
 
-        // 5コンボごと
+        // 5コンボごとに攻撃速度UP
         if (comboCount % 5 == 0)
         {
-            // 0.5秒速くする
-            scoreautoBattle.speedUpAttack(1f);
+            if (scoreautoBattle != null)
+            {
+                scoreautoBattle.speedUpAttack(1f);
+            }
         }
     }
 
@@ -64,18 +64,22 @@ public class ComboManager : MonoBehaviour
     {
         comboCount = 0;
 
-     
-
         UpdateComboUI();
 
-        AutoBattle.attackInterval = 10f;
+        if (autoBattle != null)
+        {
+            autoBattle.ResetAttackSpeed();
+        }
+
+        if (scoreautoBattle != null)
+        {
+            scoreautoBattle.ResetAttackSpeed();
+        }
 
         Debug.Log("コンボリセット");
     }
-
     void UpdateComboUI()
     {
-        // 2コンボ以上で表示
         if (comboCount >= 2)
         {
             comboText.text = comboCount + " コンボ";

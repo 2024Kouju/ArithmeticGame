@@ -8,7 +8,10 @@ public class ScoreAutoBattle : MonoBehaviour
     public ShieldManager shieldManager;
 
     // 攻撃間隔
-    static public float attackInterval = 10f;
+    public static float attackInterval = 10f;
+
+    // 初期値
+    private const float defaultAttackInterval = 10f;
 
     // 最低速度
     public float minAttackInterval = 3f;
@@ -20,6 +23,8 @@ public class ScoreAutoBattle : MonoBehaviour
 
     void Start()
     {
+        attackInterval = defaultAttackInterval;
+
         attackGauge.maxValue = attackInterval;
         attackGauge.value = 0;
     }
@@ -54,20 +59,32 @@ public class ScoreAutoBattle : MonoBehaviour
         Debug.Log("自動攻撃！");
     }
 
-    // ★追加
+    // 攻撃速度UP
     public void speedUpAttack(float value)
     {
         attackInterval -= value;
 
-        // 速くなりすぎ防止
         if (attackInterval < minAttackInterval)
         {
             attackInterval = minAttackInterval;
         }
 
-        // ゲージ最大値更新
         attackGauge.maxValue = attackInterval;
 
-        Debug.Log("攻撃速度UP！ 現在:" + attackInterval);
+        Debug.Log("攻撃速度UP！ 現在 : " + attackInterval);
+    }
+
+    // コンボ切れ時に呼ぶ
+    public void ResetAttackSpeed()
+    {
+        attackInterval = defaultAttackInterval;
+
+        attackGauge.maxValue = attackInterval;
+
+        // ゲージもリセット
+        timer = 0f;
+        attackGauge.value = 0f;
+
+        Debug.Log("攻撃速度リセット！");
     }
 }

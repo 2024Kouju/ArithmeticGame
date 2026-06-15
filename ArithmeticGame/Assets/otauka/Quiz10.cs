@@ -254,19 +254,19 @@ public class Quiz10 : MonoBehaviour
                 if (Item10.HPFlag10 == true)
                 {
 
-                    QuizUnlockManager.Heart10Clear = true;
+             
                     Item10.HPFlag10 = false;
                 }
                 else if (SwordItem10.SwordFlag10 == true)
                 {
                     swordManager.AddEnemySword(5);
-                    QuizUnlockManager.Sword10Clear = true;
+               
                     SwordItem10.SwordFlag10 = false;
                 }
                 else if (ShieldItem10.ShieldFlag10 == true)
                 {
                     shieldManager.AddEnemyShield(5);
-                    QuizUnlockManager.Shield10Clear = true;
+                  
                     ShieldItem10.ShieldFlag10 = false;
                 }
             }

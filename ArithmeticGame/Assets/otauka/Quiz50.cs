@@ -90,12 +90,12 @@ public class Quiz50 : MonoBehaviour
             ResetQuestionList();
         }
 
-        // ランダム選択
+       // ランダム選択
         int randomIndex = Random.Range(0, remainingQuestions.Count);
 
         currentQuestion = remainingQuestions[randomIndex];
 
-        // 出題済み問題を除外
+        //出題済み問題を除外
         remainingQuestions.RemoveAt(randomIndex);
 
         Debug.Log("出題: " + currentQuestion.question50);
@@ -283,19 +283,19 @@ public class Quiz50 : MonoBehaviour
                 if (Item50.HPFlag50 == true)
                 {
 
-                    QuizUnlockManager.Heart10Clear = true;
+                   
                     Item50.HPFlag50 = false;
                 }
                 else if (SwordItem50.SwordFlag50 == true)
                 {
                     swordManager.AddEnemySword(25);
-                    QuizUnlockManager.Sword50Clear = true;
+                 
                     SwordItem50.SwordFlag50 = false;
                 }
                 else if (ShieldItem50.ShieldFlag50 == true)
                 {
                     shieldManager.AddEnemyShield(25);
-                    QuizUnlockManager.Shield50Clear = true;
+               
                     ShieldItem50.ShieldFlag50 = false;
                 }
             }
