@@ -252,8 +252,8 @@ public class Quiz25 : MonoBehaviour
                 // ƒAƒCƒeƒ€Œø‰Ê
                 if (Item25.HPFlag25 == true)
                 {
+                    attackHP.SubScore(25);
 
-                  
                     Item25.HPFlag25 = false;
                 }
                 else if (SwordItem25.SwordFlag25 == true)

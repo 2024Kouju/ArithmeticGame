@@ -282,8 +282,7 @@ public class Quiz50 : MonoBehaviour
                 // ƒAƒCƒeƒ€Œø‰Ê
                 if (Item50.HPFlag50 == true)
                 {
-
-                   
+                    attackHP.SubScore(50);
                     Item50.HPFlag50 = false;
                 }
                 else if (SwordItem50.SwordFlag50 == true)

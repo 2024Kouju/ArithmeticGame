@@ -254,6 +254,7 @@ public class Quiz100 : MonoBehaviour
                 // ƒAƒCƒeƒ€Œø‰Ê
                 if (Item100.HPFlag100 == true)
                 {
+                    attackHP.SubScore(100);
                     Item100.HPFlag100 = false;
                 }
                 else if (SwordItem100.SwordFlag100 == true)

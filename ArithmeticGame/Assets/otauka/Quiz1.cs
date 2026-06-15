@@ -256,7 +256,7 @@ public class Quiz1 : MonoBehaviour
                 // ƒAƒCƒeƒ€Œø‰Ê
                 if (Item1.HPFlag1 == true)
                 {
-                    
+                    attackHP.SubScore(1);
             
                     Item1.HPFlag1 = false;
                 }

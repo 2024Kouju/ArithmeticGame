@@ -12,18 +12,25 @@ public class Goingtoschool : MonoBehaviour
 
     public AudioClip ButtonSound;
 
+    // 操作禁止にしたいボタン
+    public Button[] buttons;
+
     void Start()
     {
-        // AudioSourceコンポーネントを取得
         audioSource = GetComponent<AudioSource>();
     }
 
-
     public void NextScene()
     {
+        // 全ボタンを無効化
+        foreach (Button btn in buttons)
+        {
+            btn.interactable = false;
+        }
+
         audioSource.PlayOneShot(ButtonSound);
 
-        Invoke("Change", 5.5f);
+        Invoke(nameof(Change), 5.5f);
     }
 
     public void Change()

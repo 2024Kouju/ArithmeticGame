@@ -251,8 +251,8 @@ public class Quiz5 : MonoBehaviour
                 // ƒAƒCƒeƒ€Œø‰Ê
                 if (Item5.HPFlag5 == true)
                 {
+                    attackHP.SubScore(5);
 
-              
                     Item5.HPFlag5 = false;
                 }
                 else if (SwordItem5.SwordFlag5 == true)

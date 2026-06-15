@@ -253,8 +253,8 @@ public class Quiz10 : MonoBehaviour
                 // ƒAƒCƒeƒ€Œø‰Ê
                 if (Item10.HPFlag10 == true)
                 {
+                    attackHP.SubScore(10);
 
-             
                     Item10.HPFlag10 = false;
                 }
                 else if (SwordItem10.SwordFlag10 == true)

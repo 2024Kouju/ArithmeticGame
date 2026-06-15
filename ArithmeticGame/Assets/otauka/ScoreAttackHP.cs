@@ -122,7 +122,20 @@ public class ScoreAttackHP : MonoBehaviour
 
         UpdateUI();
     }
+    public void SubScore(int value)
+    {
+        score -= value;
+        DefultScore -= value;
 
+        if (score < 0)
+        {
+            score = 0;
+            DefultScore = 0;
+        }
+           
+
+        UpdateUI();
+    }
     void UpdateUI()
     {
         playerHPText.text = "HP : " + playerHP;
