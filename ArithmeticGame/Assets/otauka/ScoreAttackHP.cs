@@ -23,17 +23,36 @@ public class ScoreAttackHP : MonoBehaviour
     public static int FinalRight;
     public static int FinalWorng;
     public static int FinalRW;
+
+    // 開始までの待機時間
+    public float startDelay = 3f;
+
+    // タイマー開始フラグ
+    private bool isStarted = false;
     void Start()
     {
-             FinalPlayerHP = 0;
-             FinalScore = 0;
-         FinalTime = 0;
+        FinalPlayerHP = 0;
+        FinalScore = 0;
+        FinalTime = 0;
         DefultScore = 0;
+
         UpdateUI();
+
+        Invoke(nameof(StartTimer), startDelay);
+    }
+
+    void StartTimer()
+    {
+        isStarted = true;
     }
 
     void Update()
     {
+        if (!isStarted)
+        {
+            return;
+        }
+
         if (Quiz1.Boss == true)
         {
             return;

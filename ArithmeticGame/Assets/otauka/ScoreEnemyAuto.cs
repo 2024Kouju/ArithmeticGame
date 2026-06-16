@@ -12,6 +12,12 @@ public class ScoreEnemyAuto : MonoBehaviour
 
     private float timer;
 
+    // 攻撃開始までの待機時間
+    public float startDelay = 3f;
+
+    // 攻撃開始フラグ
+    private bool isStarted = false;
+
     // 敵攻撃ゲージ
     public Slider enemyAttackGauge;
 
@@ -21,11 +27,25 @@ public class ScoreEnemyAuto : MonoBehaviour
         enemyAttackGauge.maxValue = attackInterval;
 
         // 初期値
-        enemyAttackGauge.value = 0;
+        enemyAttackGauge.value = 0f;
+
+        // 一定時間後に攻撃開始
+        Invoke(nameof(StartEnemyAttack), startDelay);
+    }
+
+    void StartEnemyAttack()
+    {
+        isStarted = true;
     }
 
     void Update()
     {
+        // 開始前は何もしない
+        if (!isStarted)
+        {
+            return;
+        }
+
         timer += Time.deltaTime;
 
         // ゲージ更新

@@ -33,8 +33,18 @@ public class SwordItemController : MonoBehaviour
 
     public GameObject panel;
 
+    // ê∂ê¨äJénÇ‹Ç≈ÇÃë“ã@éûä‘
+    public float startDelay = 3f;
+
     void Start()
     {
+        StartCoroutine(StartSpawn());
+    }
+
+    IEnumerator StartSpawn()
+    {
+        yield return new WaitForSeconds(startDelay);
+
         StartCoroutine(SpawnLoop());
     }
 

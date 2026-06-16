@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -15,6 +15,8 @@ public class Quiz50 : MonoBehaviour
     private List<QuestionData50> remainingQuestions;
 
     public TextMeshProUGUI questionText;
+    public TextMeshProUGUI answerText;
+
     public Button[] choiceButtons;
 
     private QuestionData50 currentQuestion;
@@ -51,15 +53,21 @@ public class Quiz50 : MonoBehaviour
     public float normalFontSize = 36f;
     public float smallFontSize = 24f;
 
-    // •\¦‚Ü‚Å‚ÌŠÔ
-    public float interval = 0.5f;
+    // âœ•è¡¨ç¤ºæ™‚é–“
+    public float incorrectInterval = 0.5f;
 
-    // ƒVƒƒƒbƒtƒ‹Œã‚Ì‘I‘ğˆ
+    // æ­£è§£è¡¨ç¤ºæ™‚é–“
+    public float answerInterval = 2f;
+
+    // ã‚·ãƒ£ãƒƒãƒ•ãƒ«å¾Œã®é¸æŠè‚¢
     private List<ChoiceData50> shuffledChoices = new List<ChoiceData50>();
 
     void Start()
     {
         ResetQuestionList();
+
+        answerText.text = "";
+        answerText.gameObject.SetActive(false);
     }
     void ResetQuestionList()
     {
@@ -69,7 +77,7 @@ public class Quiz50 : MonoBehaviour
     {
         //if (questionIndex < 0 || questionIndex >= questions.Count)
         //{
-        //    Debug.LogError("–â‘è”Ô†‚ª”ÍˆÍŠO‚Å‚·");
+        //    Debug.LogError("å•é¡Œç•ªå·ãŒç¯„å›²å¤–ã§ã™");
         //    return;
         //}
 
@@ -77,42 +85,50 @@ public class Quiz50 : MonoBehaviour
 
         //questionText.text = currentQuestion.question50;
 
+        answerText.text = "";
+        answerText.gameObject.SetActive(false);
+
         if (questions == null || questions.Count == 0)
         {
-            Debug.LogError("questions‚ª‹ó");
+            Debug.LogError("questionsãŒç©º");
             return;
         }
 
-        // ‘S–âo‘è‚µ‚½‚çƒŠƒZƒbƒg
+        // å…¨å•å‡ºé¡Œã—ãŸã‚‰ãƒªã‚»ãƒƒãƒˆ
         if (remainingQuestions.Count == 0)
         {
-            Debug.Log("‘S–âo‘è‚µ‚½‚Ì‚ÅƒŠƒZƒbƒg");
+            Debug.Log("å…¨å•å‡ºé¡Œã—ãŸã®ã§ãƒªã‚»ãƒƒãƒˆ");
             ResetQuestionList();
         }
 
-       // ƒ‰ƒ“ƒ_ƒ€‘I‘ğ
+       // ãƒ©ãƒ³ãƒ€ãƒ é¸æŠ
         int randomIndex = Random.Range(0, remainingQuestions.Count);
 
         currentQuestion = remainingQuestions[randomIndex];
 
-        //o‘èÏ‚İ–â‘è‚ğœŠO
+        //å‡ºé¡Œæ¸ˆã¿å•é¡Œã‚’é™¤å¤–
         remainingQuestions.RemoveAt(randomIndex);
 
-        Debug.Log("o‘è: " + currentQuestion.question50);
-        Debug.Log("c‚è–â‘è”: " + remainingQuestions.Count);
+        Debug.Log("å‡ºé¡Œ: " + currentQuestion.question50);
+        Debug.Log("æ®‹ã‚Šå•é¡Œæ•°: " + remainingQuestions.Count);
 
-        // –â‘è”‚ğ‘‚â‚·
+        // å•é¡Œæ•°ã‚’å¢—ã‚„ã™
         questionCount.AddQuestion(1);
 
         if (questionText == null)
         {
-            Debug.LogError("questionText–¢İ’è");
+            Debug.LogError("questionTextæœªè¨­å®š");
             return;
         }
 
         questionText.text = currentQuestion.question50;
 
-        // 23•¶šˆÈã‚È‚ç•¶šƒTƒCƒY‚ğ•ÏX
+        // ãƒœã‚¿ãƒ³ã‚’å†ã³æŠ¼ã›ã‚‹ã‚ˆã†ã«ã™ã‚‹
+        foreach (Button button in choiceButtons)
+        {
+            button.interactable = true;
+        }
+        // 23æ–‡å­—ä»¥ä¸Šãªã‚‰æ–‡å­—ã‚µã‚¤ã‚ºã‚’å¤‰æ›´
         if (currentQuestion.question50.Length >= 23)
         {
             questionText.fontSize = smallFontSize;
@@ -122,7 +138,7 @@ public class Quiz50 : MonoBehaviour
             questionText.fontSize = normalFontSize;
         }
 
-        // ‘I‘ğˆ‚ğì¬
+        // é¸æŠè‚¢ã‚’ä½œæˆ
         shuffledChoices.Clear();
 
         for (int i = 0; i < currentQuestion.choices50.Length; i++)
@@ -136,10 +152,10 @@ public class Quiz50 : MonoBehaviour
             shuffledChoices.Add(data);
         }
 
-        // ƒVƒƒƒbƒtƒ‹
+        // ã‚·ãƒ£ãƒƒãƒ•ãƒ«
         ShuffleChoices();
 
-        // ƒ{ƒ^ƒ“‚Éİ’è
+        // ãƒœã‚¿ãƒ³ã«è¨­å®š
         for (int i = 0; i < choiceButtons.Length; i++)
         {
             int index = i;
@@ -149,7 +165,7 @@ public class Quiz50 : MonoBehaviour
 
             if (txt == null)
             {
-                Debug.LogError("Button‚ÉTMP‚ª‚È‚¢: " + i);
+                Debug.LogError("Buttonã«TMPãŒãªã„: " + i);
                 continue;
             }
 
@@ -178,6 +194,11 @@ public class Quiz50 : MonoBehaviour
 
     void CheckAnswer(int index)
     {
+        foreach (Button button in choiceButtons)
+        {
+            button.interactable = false;
+        }
+
         if (shuffledChoices[index].isCorrect)
         {
             Rightorwrong.Right++;
@@ -190,12 +211,12 @@ public class Quiz50 : MonoBehaviour
 
           
 
-            Debug.Log("³‰ğI");
+            Debug.Log("æ­£è§£ï¼");
 
             if (Boss50 == true)
             {
                 comboManager.AddCombo();
-                // ƒAƒCƒeƒ€Œø‰Ê
+                // ã‚¢ã‚¤ãƒ†ãƒ åŠ¹æœ
                 if (Item50.HPFlag50 == true)
                 {
                     hpManager.AddPlayerHP(50);
@@ -219,7 +240,7 @@ public class Quiz50 : MonoBehaviour
             if (Score50 == true)
             {
                 comboManager.AddScoreCombo();
-                // ƒAƒCƒeƒ€Œø‰Ê
+                // ã‚¢ã‚¤ãƒ†ãƒ åŠ¹æœ
                 if (Item50.HPFlag50 == true)
                 {
                     attackHP.AddPlayerHP(50);
@@ -248,16 +269,20 @@ public class Quiz50 : MonoBehaviour
 
             Incorrect.SetActive(true);
 
-            StartCoroutine(OpenPanel());
+            // æ­£è§£ã‚’å–å¾—
+            string correctAnswer =
+                currentQuestion.choices50[currentQuestion.correctIndex50];
 
-            Debug.Log("•s³‰ğI");
+            StartCoroutine(ShowCorrectAnswer(correctAnswer));
+
+            Debug.Log("ä¸æ­£è§£ï¼");
 
             comboManager.ResetCombo();
 
             if (Boss50 == true)
             {
 
-                // ƒAƒCƒeƒ€Œø‰Ê
+                // ã‚¢ã‚¤ãƒ†ãƒ åŠ¹æœ
                 if (Item50.HPFlag50 == true)
                 {
                     hpManager.AddEnemyHP(25);
@@ -279,7 +304,7 @@ public class Quiz50 : MonoBehaviour
             if (Score50 == true)
             {
 
-                // ƒAƒCƒeƒ€Œø‰Ê
+                // ã‚¢ã‚¤ãƒ†ãƒ åŠ¹æœ
                 if (Item50.HPFlag50 == true)
                 {
                     attackHP.SubScore(50);
@@ -303,12 +328,51 @@ public class Quiz50 : MonoBehaviour
 
     IEnumerator OpenPanel()
     {
-        // ‘Ò‹@
-        yield return new WaitForSeconds(interval);
+        yield return new WaitForSeconds(incorrectInterval);
 
         Circle.SetActive(false);
 
         Incorrect.SetActive(false);
+
+        answerText.gameObject.SetActive(false);
+
+        panel.SetActive(false);
+    }
+
+    IEnumerator ShowCorrectAnswer(string correctAnswer)
+    {
+        // âœ•ã‚’è¡¨ç¤º
+        yield return new WaitForSeconds(incorrectInterval);
+
+        // âœ•ã¨å•é¡Œãƒ»é¸æŠè‚¢ã‚’æ¶ˆã™
+        Incorrect.SetActive(false);
+
+        questionText.gameObject.SetActive(false);
+
+        foreach (Button button in choiceButtons)
+        {
+            button.gameObject.SetActive(false);
+        }
+
+        // â‘¢ æ­£è§£ã‚’è¡¨ç¤º
+        answerText.text = "æ­£è§£ã¯\nã€Œ" + correctAnswer + "ã€ã§ã™";
+        answerText.gameObject.SetActive(true);
+
+        answerText.gameObject.SetActive(true);
+
+        // æ­£è§£ã‚’è¡¨ç¤º
+        yield return new WaitForSeconds(answerInterval);
+
+        // æ­£è§£ã‚’æ¶ˆã™
+        answerText.gameObject.SetActive(false);
+
+        // å•é¡ŒUIã‚’æˆ»ã™
+        questionText.gameObject.SetActive(true);
+
+        foreach (Button button in choiceButtons)
+        {
+            button.gameObject.SetActive(true);
+        }
 
         panel.SetActive(false);
     }
@@ -325,7 +389,7 @@ public class QuestionData50
     public int correctIndex50;
 }
 
-// ‘I‘ğˆƒf[ƒ^
+// é¸æŠè‚¢ãƒ‡ãƒ¼ã‚¿
 public class ChoiceData50
 {
     public string choiceText;

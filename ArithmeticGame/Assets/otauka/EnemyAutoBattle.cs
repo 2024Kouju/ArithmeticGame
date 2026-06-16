@@ -12,6 +12,13 @@ public class EnemyAutoBattle : MonoBehaviour
 
     private float timer;
 
+    // 開始までの待機時間
+    public float startDelay = 3f;
+
+    // 開始フラグ
+    private bool isStarted = false;
+
+
     // 敵攻撃ゲージ
     public Slider enemyAttackGauge;
 
@@ -22,10 +29,22 @@ public class EnemyAutoBattle : MonoBehaviour
 
         // 初期値
         enemyAttackGauge.value = 0;
+        // 3秒後に攻撃開始
+        Invoke(nameof(StartEnemyBattle), startDelay);
     }
 
+    void StartEnemyBattle()
+    {
+        isStarted = true;
+    }
     void Update()
     {
+        // 開始前は停止
+        if (!isStarted)
+        {
+            return;
+        }
+
         timer += Time.deltaTime;
 
         // ゲージ更新

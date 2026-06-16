@@ -13,20 +13,48 @@ public class HPManager : MonoBehaviour
 
     public Text playerHPText;
     public Text enemyHPText;
-
+    public Text timerText;
 
     private float elapsedTime;
+
+    // ŠJŽnƒtƒ‰ƒO
+    private bool isStarted = false;
+
+    // ’âŽ~ŽžŠÔ
+    public float startDelay = 3f;
 
     void Start()
     {
         UpdateHPUI();
+
+        // 3•bŒã‚ÉŠJŽn
+        Invoke(nameof(StartGame), startDelay);
+    }
+
+    void StartGame()
+    {
+        isStarted = true;
+
+        // “G‚Ì‰ñ•œ‚à‚±‚±‚©‚çŠJŽn
         InvokeRepeating(nameof(HealEnemy), 15f, 15f);
     }
+
     void Update()
     {
+        // 3•bŠÔ’âŽ~
+        if (!isStarted)
+        {
+            return;
+        }
+
         elapsedTime += Time.deltaTime;
-       
+
+        int minutes = Mathf.FloorToInt(elapsedTime / 60);
+        int seconds = Mathf.FloorToInt(elapsedTime % 60);
+
+        timerText.text = $"Œo‰ßŽžŠÔ : {minutes}•ª{seconds}•b";
     }
+
     public void AddPlayerHP(int value)
     {
         playerHP += value;
@@ -34,12 +62,11 @@ public class HPManager : MonoBehaviour
 
         if (playerHP <= 0)
         {
-            playerHP = 0; 
+            playerHP = 0;
 
             FinalPlayerHP = playerHP;
             FinalEnemyHP = enemyHP;
-
-            FinalTime = elapsedTime;  // ’Ç‰Á
+            FinalTime = elapsedTime;
 
             FindObjectOfType<SwordManager>()?.SaveFinalStatus();
             FindObjectOfType<ShieldManager>()?.SaveFinalStatus();
@@ -55,7 +82,6 @@ public class HPManager : MonoBehaviour
 
         if (enemyHP <= 0)
         {
-           
             enemyHP = 0;
 
             FinalPlayerHP = playerHP;

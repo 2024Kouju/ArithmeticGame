@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -17,6 +17,8 @@ public class Quiz100 : MonoBehaviour
     private List<QuestionData100> remainingQuestions;
 
     public TextMeshProUGUI questionText;
+    public TextMeshProUGUI answerText;
+
     public Button[] choiceButtons;
 
     private QuestionData100 currentQuestion;
@@ -43,15 +45,21 @@ public class Quiz100 : MonoBehaviour
     static public bool Score100 = false;
 
     static public bool Boss100 = false;
-    // •\¦‚Ü‚Å‚ÌŠÔ
-    public float interval = 0.5f;
+    // âœ•ã‚’è¡¨ç¤ºã™ã‚‹æ™‚é–“
+    public float incorrectInterval = 0.5f;
 
-    // ƒVƒƒƒbƒtƒ‹Œã‚Ì‘I‘ğˆ
+    // æ­£è§£ã‚’è¡¨ç¤ºã™ã‚‹æ™‚é–“
+    public float answerInterval = 2f;
+
+    // ã‚·ãƒ£ãƒƒãƒ•ãƒ«å¾Œã®é¸æŠè‚¢
     private List<ChoiceData100> shuffledChoices = new List<ChoiceData100>();
 
     void Start()
     {
         ResetQuestionList();
+
+        answerText.text = "";
+        answerText.gameObject.SetActive(false);
     }
     void ResetQuestionList()
     {
@@ -59,42 +67,48 @@ public class Quiz100 : MonoBehaviour
     }
     public void ShowRandomQuestion()
     {
+        answerText.text = "";
+        answerText.gameObject.SetActive(false);
+
         if (questions == null || questions.Count == 0)
         {
-            Debug.LogError("questions‚ª‹ó");
+            Debug.LogError("questionsãŒç©º");
             return;
         }
 
-        // ‘S–âo‘è‚µ‚½‚çƒŠƒZƒbƒg
+        // å…¨å•å‡ºé¡Œã—ãŸã‚‰ãƒªã‚»ãƒƒãƒˆ
         if (remainingQuestions.Count == 0)
         {
-            Debug.Log("‘S–âo‘è‚µ‚½‚Ì‚ÅƒŠƒZƒbƒg");
+            Debug.Log("å…¨å•å‡ºé¡Œã—ãŸã®ã§ãƒªã‚»ãƒƒãƒˆ");
             ResetQuestionList();
         }
 
-        // ƒ‰ƒ“ƒ_ƒ€‘I‘ğ
+        // ãƒ©ãƒ³ãƒ€ãƒ é¸æŠ
         int randomIndex = Random.Range(0, remainingQuestions.Count);
 
         currentQuestion = remainingQuestions[randomIndex];
 
-        // o‘èÏ‚İ–â‘è‚ğœŠO
+        // å‡ºé¡Œæ¸ˆã¿å•é¡Œã‚’é™¤å¤–
         remainingQuestions.RemoveAt(randomIndex);
 
-        Debug.Log("o‘è: " + currentQuestion.question100);
-        Debug.Log("c‚è–â‘è”: " + remainingQuestions.Count);
+        Debug.Log("å‡ºé¡Œ: " + currentQuestion.question100);
+        Debug.Log("æ®‹ã‚Šå•é¡Œæ•°: " + remainingQuestions.Count);
 
-        // –â‘è”‚ğ‘‚â‚·
+        // å•é¡Œæ•°ã‚’å¢—ã‚„ã™
         questionCount.AddQuestion(1);
 
         if (questionText == null)
         {
-            Debug.LogError("questionText–¢İ’è");
+            Debug.LogError("questionTextæœªè¨­å®š");
             return;
         }
 
         questionText.text = currentQuestion.question100;
-
-        // ‘I‘ğˆ‚ğì¬
+        foreach (Button button in choiceButtons)
+        {
+            button.interactable = true;
+        }
+        // é¸æŠè‚¢ã‚’ä½œæˆ
         shuffledChoices.Clear();
 
         for (int i = 0; i < currentQuestion.choices100.Length; i++)
@@ -108,10 +122,10 @@ public class Quiz100 : MonoBehaviour
             shuffledChoices.Add(data);
         }
 
-        // ƒVƒƒƒbƒtƒ‹
+        // ã‚·ãƒ£ãƒƒãƒ•ãƒ«
         ShuffleChoices();
 
-        // ƒ{ƒ^ƒ“‚Éİ’è
+        // ãƒœã‚¿ãƒ³ã«è¨­å®š
         for (int i = 0; i < choiceButtons.Length; i++)
         {
             int index = i;
@@ -121,7 +135,7 @@ public class Quiz100 : MonoBehaviour
 
             if (txt == null)
             {
-                Debug.LogError("Button‚ÉTMP‚ª‚È‚¢: " + i);
+                Debug.LogError("Buttonã«TMPãŒãªã„: " + i);
                 continue;
             }
 
@@ -150,6 +164,12 @@ public class Quiz100 : MonoBehaviour
 
     void CheckAnswer(int index)
     {
+        foreach (Button button in choiceButtons)
+        {
+            button.interactable = false;
+        }
+
+
         if (shuffledChoices[index].isCorrect)
         {
             Rightorwrong.Right++;
@@ -162,12 +182,12 @@ public class Quiz100 : MonoBehaviour
 
           
 
-            Debug.Log("³‰ğI");
+            Debug.Log("æ­£è§£ï¼");
 
             if (Boss100 == true)
             {
                 comboManager.AddCombo();
-                // ƒAƒCƒeƒ€Œø‰Ê
+                // ã‚¢ã‚¤ãƒ†ãƒ åŠ¹æœ
                 if (Item100.HPFlag100 == true)
                 {
                     hpManager.AddPlayerHP(100);
@@ -191,7 +211,7 @@ public class Quiz100 : MonoBehaviour
             if (Score100 == true)
             {
                 comboManager.AddScoreCombo();
-                // ƒAƒCƒeƒ€Œø‰Ê
+                // ã‚¢ã‚¤ãƒ†ãƒ åŠ¹æœ
                 if (Item100.HPFlag100 == true)
                 {
                     attackHP.AddPlayerHP(100);
@@ -219,17 +239,20 @@ public class Quiz100 : MonoBehaviour
             IncorrectsoundEffect.Play();
 
             Incorrect.SetActive(true);
+            // æ­£è§£ã‚’å–å¾—
+            string correctAnswer =
+                currentQuestion.choices100[currentQuestion.correctIndex100];
 
-            StartCoroutine(OpenPanel());
+            StartCoroutine(ShowCorrectAnswer(correctAnswer));
 
-            Debug.Log("•s³‰ğI");
+            Debug.Log("ä¸æ­£è§£ï¼");
 
             comboManager.ResetCombo();
 
             if (Boss100 == true)
             {
 
-                // ƒAƒCƒeƒ€Œø‰Ê
+                // ã‚¢ã‚¤ãƒ†ãƒ åŠ¹æœ
                 if (Item100.HPFlag100 == true)
                 {
                     hpManager.AddEnemyHP(50);
@@ -251,7 +274,7 @@ public class Quiz100 : MonoBehaviour
             if (Score100 == true)
             {
 
-                // ƒAƒCƒeƒ€Œø‰Ê
+                // ã‚¢ã‚¤ãƒ†ãƒ åŠ¹æœ
                 if (Item100.HPFlag100 == true)
                 {
                     attackHP.SubScore(100);
@@ -275,12 +298,49 @@ public class Quiz100 : MonoBehaviour
 
     IEnumerator OpenPanel()
     {
-        // ‘Ò‹@
-        yield return new WaitForSeconds(interval);
+        yield return new WaitForSeconds(incorrectInterval);
 
         Circle.SetActive(false);
 
         Incorrect.SetActive(false);
+
+        answerText.gameObject.SetActive(false);
+
+        panel.SetActive(false);
+    }
+    IEnumerator ShowCorrectAnswer(string correctAnswer)
+    {
+        // â‘  âœ•ã‚’è¡¨ç¤º
+        yield return new WaitForSeconds(incorrectInterval);
+
+        // â‘¡ âœ•ã¨å•é¡Œãƒ»é¸æŠè‚¢ã‚’æ¶ˆã™
+        Incorrect.SetActive(false);
+
+        questionText.gameObject.SetActive(false);
+
+        foreach (Button button in choiceButtons)
+        {
+            button.gameObject.SetActive(false);
+        }
+        // â‘¢ æ­£è§£ã‚’è¡¨ç¤º
+        answerText.text = "æ­£è§£ã¯\nã€Œ" + correctAnswer + "ã€ã§ã™";
+        answerText.gameObject.SetActive(true);
+
+        answerText.gameObject.SetActive(true);
+
+        // â‘£ æ­£è§£ã‚’è¡¨ç¤º
+        yield return new WaitForSeconds(answerInterval);
+
+        // â‘¤ æ­£è§£ã‚’æ¶ˆã™
+        answerText.gameObject.SetActive(false);
+
+        // â‘¥ å•é¡ŒUIã‚’æˆ»ã™
+        questionText.gameObject.SetActive(true);
+
+        foreach (Button button in choiceButtons)
+        {
+            button.gameObject.SetActive(true);
+        }
 
         panel.SetActive(false);
     }
@@ -297,7 +357,7 @@ public class QuestionData100
     public int correctIndex100;
 }
 
-// ‘I‘ğˆƒf[ƒ^
+// é¸æŠè‚¢ãƒ‡ãƒ¼ã‚¿
 public class ChoiceData100
 {
     public string choiceText;

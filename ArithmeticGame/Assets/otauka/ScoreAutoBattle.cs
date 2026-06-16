@@ -18,6 +18,12 @@ public class ScoreAutoBattle : MonoBehaviour
 
     private float timer;
 
+    // 攻撃開始までの待機時間
+    public float startDelay = 3f;
+
+    // 自動攻撃開始フラグ
+    private bool isStarted = false;
+
     // 攻撃ゲージ
     public Slider attackGauge;
 
@@ -27,10 +33,24 @@ public class ScoreAutoBattle : MonoBehaviour
 
         attackGauge.maxValue = attackInterval;
         attackGauge.value = 0;
+
+        // 一定時間後に開始
+        Invoke(nameof(StartAutoBattle), startDelay);
+    }
+
+    void StartAutoBattle()
+    {
+        isStarted = true;
     }
 
     void Update()
     {
+        // 開始前なら何もしない
+        if (!isStarted)
+        {
+            return;
+        }
+
         timer += Time.deltaTime;
 
         attackGauge.value = timer;

@@ -3,20 +3,12 @@ using UnityEngine;
 
 public class GameStartManager : MonoBehaviour
 {
-    // ’â~‚µ‚½‚¢ƒXƒNƒŠƒvƒg‚ğ“o˜^
     public MonoBehaviour[] stopScripts;
-
-    // ’â~ŠÔ
     public float stopTime = 3f;
 
-    void Start()
+    IEnumerator Start()
     {
-        StartCoroutine(StopScriptsTemporarily());
-    }
-
-    IEnumerator StopScriptsTemporarily()
-    {
-        // ’â~
+        // ŠJn’¼Œã‚É’â~
         foreach (MonoBehaviour script in stopScripts)
         {
             if (script != null)
@@ -27,7 +19,6 @@ public class GameStartManager : MonoBehaviour
 
         yield return new WaitForSeconds(stopTime);
 
-        // ÄŠJ
         foreach (MonoBehaviour script in stopScripts)
         {
             if (script != null)
