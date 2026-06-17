@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
     public GameObject pausePanel;
-
+    
+    public string NextSceneText;
     // ˆêŽž’âŽ~
     public void PauseGame()
     {
@@ -24,5 +26,11 @@ public class PauseManager : MonoBehaviour
         {
             pausePanel.SetActive(false);
         }
+    }
+    public void EndGame()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(NextSceneText);
+
     }
 }
