@@ -54,7 +54,7 @@ public class ComboManager : MonoBehaviour
         {
             if (scoreautoBattle != null)
             {
-                scoreautoBattle.speedUpAttack(1f);
+                scoreautoBattle.speedUpAttack(2f);
             }
         }
     }
