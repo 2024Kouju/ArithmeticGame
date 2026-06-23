@@ -7,9 +7,8 @@ public class VideoPlayerManager : MonoBehaviour
     public GameObject openVideoButton;
     public GameObject videoPanel;
     public GameObject controls;
-
+    public GameObject darkOverlay;
     public VideoPlayer videoPlayer;
-
     public Image playPauseImage;
     public Sprite playSprite;
     public Sprite pauseSprite;
@@ -20,12 +19,14 @@ public class VideoPlayerManager : MonoBehaviour
     {
         videoPanel.SetActive(false);
         controls.SetActive(false);
+        darkOverlay.SetActive(false);
 
         videoPlayer.loopPointReached += OnVideoFinished;
 
         UpdateIcon();
     }
 
+    // 「動画を見る」
     // 「動画を見る」
     public void OpenVideo()
     {
@@ -36,7 +37,8 @@ public class VideoPlayerManager : MonoBehaviour
         videoPlayer.time = 0;
         videoPlayer.Play();
 
-        UpdateIcon();
+        // 最初は停止ボタン（⏸）を表示
+        playPauseImage.sprite = pauseSprite;
     }
 
     // ×ボタン
@@ -45,6 +47,9 @@ public class VideoPlayerManager : MonoBehaviour
         videoPlayer.Stop();
 
         videoPanel.SetActive(false);
+
+        controls.SetActive(false);
+        darkOverlay.SetActive(false);
 
         openVideoButton.SetActive(true);
 
@@ -69,7 +74,24 @@ public class VideoPlayerManager : MonoBehaviour
     // 動画画面タップ
     public void ShowControls()
     {
+        // 表示中なら非表示
+        if (controls.activeSelf)
+        {
+            controls.SetActive(false);
+            darkOverlay.SetActive(false);
+
+            if (hideCoroutine != null)
+            {
+                StopCoroutine(hideCoroutine);
+                hideCoroutine = null;
+            }
+
+            return;
+        }
+
+        // 非表示なら表示
         controls.SetActive(true);
+        darkOverlay.SetActive(true);
 
         if (hideCoroutine != null)
         {
@@ -81,9 +103,12 @@ public class VideoPlayerManager : MonoBehaviour
 
     System.Collections.IEnumerator HideControls()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(6f);
 
         controls.SetActive(false);
+        darkOverlay.SetActive(false);
+
+        hideCoroutine = null;
     }
 
     void UpdateIcon()
