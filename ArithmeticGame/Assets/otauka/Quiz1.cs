@@ -68,16 +68,18 @@ public class Quiz1 : MonoBehaviour
     }
     public void ShowRandomQuestion()
     {
-        if (questionIndex < 0 || questionIndex >= questions.Count)
-        {
-            Debug.LogError("問題番号が範囲外です");
-            return;
-        }
+    
 
-        currentQuestion = questions[questionIndex];
+        //if (questionIndex < 0 || questionIndex >= questions.Count)
+        //{
+        //    Debug.LogError("問題番号が範囲外です");
+        //    return;
+        //}
 
-        questionText.text = currentQuestion.question1;
-        // 前回の答え表示を消す
+        //currentQuestion = questions[questionIndex];
+
+        //questionText.text = currentQuestion.question1;
+        //// 前回の答え表示を消す
         answerText.text = "";
         answerText.gameObject.SetActive(false);
 
@@ -94,13 +96,13 @@ public class Quiz1 : MonoBehaviour
             ResetQuestionList();
         }
 
-        // ランダム選択
-        //int randomIndex = Random.Range(0, remainingQuestions.Count);
+        //ランダム選択
+        int randomIndex = Random.Range(0, remainingQuestions.Count);
 
-        //currentQuestion = remainingQuestions[randomIndex];
+        currentQuestion = remainingQuestions[randomIndex];
 
-        // 出題済みリストから削除
-        //remainingQuestions.RemoveAt(randomIndex);
+        //出題済みリストから削除
+        remainingQuestions.RemoveAt(randomIndex);
 
         Debug.Log("出題: " + currentQuestion.question1);
         Debug.Log("残り問題数: " + remainingQuestions.Count);
