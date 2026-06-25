@@ -2,8 +2,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
-
-public class VideoPlayerManager : MonoBehaviour
+using UnityEngine.EventSystems;
+public class VideoPlayerManager : MonoBehaviour,
+    IPointerEnterHandler,
+    IPointerExitHandler
 {
     [Header("UI")]
     public GameObject openVideoButton;
@@ -22,16 +24,35 @@ public class VideoPlayerManager : MonoBehaviour
 
     [Header("Video")]
     public VideoPlayer videoPlayer;
+    [Header("枠演出")]
+    public Image frameImage;
+
+    public Color hoverColor = Color.yellow;
+    public Color clickColor = Color.red;
+    [Header("Sound")]
+    public AudioSource audioSource;
+    public AudioClip buttonSound;
+
+    [Header("動画を開くまでの待機時間")]
+    public float openDelay = 1f;
+
+    [Header("無効化するボタン")]
+    public Button[] buttons;
 
     private bool isDragging = false;
+    private bool isProcessing = false;
     private Coroutine iconCoroutine;
 
+    public HoverFrame hoverFrame;
     void Start()
     {
         videoPanel.SetActive(false);
         darkOverlay.SetActive(false);
         centerIconObject.SetActive(false);
-
+        if (frameImage != null)
+        {
+            frameImage.gameObject.SetActive(false);
+        }
         videoPlayer.loopPointReached += OnVideoFinished;
 
         seekSlider.onValueChanged.AddListener(OnSliderValueChanged);
@@ -39,7 +60,6 @@ public class VideoPlayerManager : MonoBehaviour
 
     void Update()
     {
-        // 動画の再生位置をシークバーへ反映
         if (videoPlayer.isPrepared &&
             videoPlayer.length > 0 &&
             !isDragging)
@@ -48,10 +68,58 @@ public class VideoPlayerManager : MonoBehaviour
                 (float)(videoPlayer.time / videoPlayer.length);
         }
     }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (frameImage == null || isProcessing) return;
 
+        frameImage.gameObject.SetActive(false);
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (frameImage == null || isProcessing) return;
+
+        frameImage.gameObject.SetActive(true);
+        frameImage.color = hoverColor;
+    }
     // 「動画を見る」
     public void OpenVideo()
     {
+        hoverFrame.Click();
+
+        if (isProcessing) return;
+
+        isProcessing = true;
+
+        // 全ボタンを無効化
+        foreach (Button btn in buttons)
+        {
+            btn.interactable = false;
+        }
+
+        // 赤枠表示
+        if (frameImage != null)
+        {
+            frameImage.gameObject.SetActive(true);
+            frameImage.color = clickColor;
+        }
+
+        if (audioSource != null && buttonSound != null)
+        {
+            audioSource.PlayOneShot(buttonSound);
+        }
+
+        StartCoroutine(OpenVideoAfterDelay());
+    }
+
+    IEnumerator OpenVideoAfterDelay()
+    {
+        yield return new WaitForSeconds(openDelay);
+
+        if (frameImage != null)
+        {
+            hoverFrame.ResetFrame();
+        }
+
         openVideoButton.SetActive(false);
 
         videoPanel.SetActive(true);
@@ -61,9 +129,10 @@ public class VideoPlayerManager : MonoBehaviour
 
         videoPlayer.time = 0;
         videoPlayer.Play();
+
+        isProcessing = false;
     }
 
-    // ×ボタン
     public void CloseVideo()
     {
         videoPlayer.Stop();
@@ -73,23 +142,29 @@ public class VideoPlayerManager : MonoBehaviour
         centerIconObject.SetActive(false);
 
         openVideoButton.SetActive(true);
+
+        // 全ボタンを有効化
+        foreach (Button btn in buttons)
+        {
+            btn.interactable = true;
+        }
+
+        isProcessing = false;
     }
 
-    // 動画画面タップ
+    // 動画タップ
     public void TogglePlayPause()
     {
         if (videoPlayer.isPlaying)
         {
             videoPlayer.Pause();
 
-            // 停止したので▶表示
             ShowCenterIcon(playSprite);
         }
         else
         {
             videoPlayer.Play();
 
-            // 再生したので⏸表示
             ShowCenterIcon(pauseSprite);
         }
     }
@@ -99,10 +174,8 @@ public class VideoPlayerManager : MonoBehaviour
     {
         isDragging = true;
 
-        // 少し暗くする
         darkOverlay.SetActive(true);
 
-        // 一旦停止
         videoPlayer.Pause();
     }
 
@@ -116,7 +189,6 @@ public class VideoPlayerManager : MonoBehaviour
 
         darkOverlay.SetActive(false);
 
-        // その位置から再生
         videoPlayer.Play();
     }
 
@@ -157,13 +229,10 @@ public class VideoPlayerManager : MonoBehaviour
     // 動画終了
     void OnVideoFinished(VideoPlayer vp)
     {
-        // 動画の最後のフレームで停止
         videoPlayer.Pause();
 
-        // シークバーを最後まで進める
         seekSlider.value = 1f;
 
-        // 停止アイコン（▶）を表示
         ShowCenterIcon(playSprite);
     }
 }

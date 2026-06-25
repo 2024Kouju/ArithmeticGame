@@ -14,6 +14,8 @@ public class HPManager : MonoBehaviour
     public Text playerHPText;
     public Text enemyHPText;
     public Text timerText;
+    public Text playerStatusText;
+    public Text enemyStatusText;
 
     private float elapsedTime;
 
@@ -27,10 +29,58 @@ public class HPManager : MonoBehaviour
     {
         UpdateHPUI();
 
-        // 3•bŒã‚ÉŠJŽn
+        playerStatusText.gameObject.SetActive(false);
+        enemyStatusText.gameObject.SetActive(false);
+
         Invoke(nameof(StartGame), startDelay);
     }
+    void ShowPlayerStatus(int value)
+    {
+        playerStatusText.gameObject.SetActive(true);
 
+        if (value > 0)
+        {
+            playerStatusText.text = "HP +" + value;
+            playerStatusText.color = Color.green;
+        }
+        else
+        {
+            playerStatusText.text = "HP " + value;
+            playerStatusText.color = Color.red;
+        }
+
+        CancelInvoke(nameof(HidePlayerStatus));
+        Invoke(nameof(HidePlayerStatus), 1f);
+    }
+
+    void HidePlayerStatus()
+    {
+        playerStatusText.gameObject.SetActive(false);
+    }
+
+    void ShowEnemyStatus(int value)
+    {
+        enemyStatusText.gameObject.SetActive(true);
+
+        if (value > 0)
+        {
+            enemyStatusText.text = "HP +" + value;
+            enemyStatusText.color = Color.green;
+        }
+        else
+        {
+            enemyStatusText.text = "HP " + value;
+            enemyStatusText.color = Color.red;
+        }
+
+        CancelInvoke(nameof(HideEnemyStatus));
+        Invoke(nameof(HideEnemyStatus), 1f);
+    }
+
+    void HideEnemyStatus()
+    {
+        enemyStatusText.gameObject.SetActive(false);
+    }
     void StartGame()
     {
         isStarted = true;
@@ -58,6 +108,8 @@ public class HPManager : MonoBehaviour
     public void AddPlayerHP(int value)
     {
         playerHP += value;
+        ShowPlayerStatus(value);
+
         UpdateHPUI();
 
         if (playerHP <= 0)
@@ -78,6 +130,8 @@ public class HPManager : MonoBehaviour
     public void AddEnemyHP(int value)
     {
         enemyHP += value;
+        ShowEnemyStatus(value);
+
         UpdateHPUI();
 
         if (enemyHP <= 0)
@@ -99,6 +153,7 @@ public class HPManager : MonoBehaviour
     void HealEnemy()
     {
         enemyHP += 5;
+        ShowEnemyStatus(5);
         UpdateHPUI();
     }
 

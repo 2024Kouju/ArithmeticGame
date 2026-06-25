@@ -11,29 +11,85 @@ public class ShieldManager : MonoBehaviour
 
     public Text playerShieldText;
     public Text enemyShieldText;
+    public Text playerShieldStatusText;
+    public Text enemyShieldStatusText;
 
     void Start()
     {
         UpdateShieldUI();
 
-        InvokeRepeating(nameof(IncreaseEnemyShield), 15f, 15f);
+        playerShieldStatusText.gameObject.SetActive(false);
+        enemyShieldStatusText.gameObject.SetActive(false);
+
+        InvokeRepeating(nameof(IncreaseEnemyShield), 21f, 15f);
+    }
+    void ShowPlayerShieldStatus(int value)
+    {
+        playerShieldStatusText.gameObject.SetActive(true);
+
+        if (value > 0)
+        {
+            playerShieldStatusText.text = "–hŒä—Í +" + value;
+        }
+        else
+        {
+            playerShieldStatusText.text = "–hŒä—Í " + value;
+        }
+
+        CancelInvoke(nameof(HidePlayerShieldStatus));
+        Invoke(nameof(HidePlayerShieldStatus), 1f);
+    }
+
+    void HidePlayerShieldStatus()
+    {
+        playerShieldStatusText.gameObject.SetActive(false);
+    }
+    void ShowEnemyShieldStatus(int value)
+    {
+        enemyShieldStatusText.gameObject.SetActive(true);
+
+        if (value > 0)
+        {
+            enemyShieldStatusText.text = "–hŒä—Í +" + value;
+        }
+        else
+        {
+            enemyShieldStatusText.text = "–hŒä—Í " + value;
+        }
+
+        CancelInvoke(nameof(HideEnemyShieldStatus));
+        Invoke(nameof(HideEnemyShieldStatus), 1f);
+    }
+
+    void HideEnemyShieldStatus()
+    {
+        enemyShieldStatusText.gameObject.SetActive(false);
     }
 
     public void AddPlayerShield(int value)
     {
         playerShield += value;
+
+        ShowPlayerShieldStatus(value);
+
         UpdateShieldUI();
     }
 
     public void AddEnemyShield(int value)
     {
         enemyShield += value;
+
+        ShowEnemyShieldStatus(value);
+
         UpdateShieldUI();
     }
 
     void IncreaseEnemyShield()
     {
         enemyShield += 5;
+
+        ShowEnemyShieldStatus(5);
+
         UpdateShieldUI();
     }
 

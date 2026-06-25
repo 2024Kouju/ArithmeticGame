@@ -4,33 +4,48 @@ using UnityEngine.SceneManagement;
 public class PauseManager : MonoBehaviour
 {
     public GameObject pausePanel;
-    
-    public string NextSceneText;
-    // àÍéûí‚é~
+    public string nextSceneName;
+
+    private bool isPaused = false;
+
+    void Start()
+    {
+        pausePanel.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
+    }
+
     public void PauseGame()
     {
+        isPaused = true;
         Time.timeScale = 0f;
-
-        if (pausePanel != null)
-        {
-            pausePanel.SetActive(true);
-        }
+        pausePanel.SetActive(true);
     }
 
-    // çƒäJ
     public void ResumeGame()
     {
+        isPaused = false;
         Time.timeScale = 1f;
-
-        if (pausePanel != null)
-        {
-            pausePanel.SetActive(false);
-        }
+        pausePanel.SetActive(false);
     }
+
     public void EndGame()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(NextSceneText);
-
+        SceneManager.LoadScene(nextSceneName);
     }
 }

@@ -1,26 +1,58 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class BoosAttackChange : MonoBehaviour
+public class BoosAttackChange : MonoBehaviour,
+    IPointerEnterHandler,
+    IPointerExitHandler
 {
     public string NextSceneText;
 
     private AudioSource audioSource;
-
     public AudioClip ButtonSound;
+
+    // 枠のImage
+    public Image frameImage;
+
+    // 色設定
+    public Color hoverColor = Color.yellow;
+    public Color clickColor = Color.red;
+
+    private bool isClicked = false;
 
     void Start()
     {
-        // AudioSourceコンポーネントを取得
         audioSource = GetComponent<AudioSource>();
+
+        if (frameImage != null)
+        {
+            frameImage.gameObject.SetActive(false);
+        }
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (isClicked) return;
+
+        frameImage.gameObject.SetActive(true);
+        frameImage.color = hoverColor;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (isClicked) return;
+
+        frameImage.gameObject.SetActive(false);
+    }
 
     public void NextScene()
     {
+        isClicked = true;
+
+        // 赤枠表示
+        frameImage.gameObject.SetActive(true);
+        frameImage.color = clickColor;
 
         Quiz1.Score = false;
         Quiz5.Score5 = false;
@@ -38,7 +70,7 @@ public class BoosAttackChange : MonoBehaviour
 
         audioSource.PlayOneShot(ButtonSound);
 
-        Invoke("Change", 1f);
+        Invoke(nameof(Change), 1f);
     }
 
     public void Change()
