@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -14,6 +16,11 @@ public class SwordManager : MonoBehaviour
     public Text enemySwordText;
     public Text playerSwordStatusText;
     public Text enemySwordStatusText;
+
+    // ìGÇÃçUåÇóÕÉAÉbÉvï\é¶ópÉLÉÖÅ[
+    private Queue<int> enemySwordQueue = new Queue<int>();
+    private bool isShowingEnemySword = false;
+
     void Start()
     {
         UpdateSwordUI();
@@ -23,18 +30,11 @@ public class SwordManager : MonoBehaviour
 
         InvokeRepeating(nameof(IncreaseEnemySword), 21f, 15f);
     }
+
     void ShowPlayerSwordStatus(int value)
     {
         playerSwordStatusText.gameObject.SetActive(true);
-
-        if (value > 0)
-        {
-            playerSwordStatusText.text = "çUåÇóÕ +" + value;
-        }
-        else
-        {
-            playerSwordStatusText.text = "çUåÇóÕ " + value;
-        }
+        playerSwordStatusText.text = "çUåÇóÕ +" + value;
 
         CancelInvoke(nameof(HidePlayerSwordStatus));
         Invoke(nameof(HidePlayerSwordStatus), 1f);
@@ -47,35 +47,61 @@ public class SwordManager : MonoBehaviour
 
     void ShowEnemySwordStatus(int value)
     {
-        enemySwordStatusText.gameObject.SetActive(true);
+        enemySwordQueue.Enqueue(value);
 
-        if (value > 0)
+        if (!isShowingEnemySword)
         {
+            StartCoroutine(ShowEnemySwordQueue());
+        }
+    }
+
+    IEnumerator ShowEnemySwordQueue()
+    {
+        isShowingEnemySword = true;
+
+        while (enemySwordQueue.Count > 0)
+        {
+            int value = enemySwordQueue.Dequeue();
+
+            enemySwordStatusText.gameObject.SetActive(true);
             enemySwordStatusText.text = "çUåÇóÕ +" + value;
-        }
-        else
-        {
-            enemySwordStatusText.text = "çUåÇóÕ " + value;
+
+            yield return new WaitForSeconds(1f);
+
+            enemySwordStatusText.gameObject.SetActive(false);
+
+            yield return new WaitForSeconds(0.1f);
         }
 
-        CancelInvoke(nameof(HideEnemySwordStatus));
-        Invoke(nameof(HideEnemySwordStatus), 1f);
+        isShowingEnemySword = false;
     }
 
     void HideEnemySwordStatus()
     {
         enemySwordStatusText.gameObject.SetActive(false);
     }
+
     public void AddPlayerSword(int value)
     {
         playerSword += value;
+
+        if (value > 0)
+        {
+            ShowPlayerSwordStatus(value);
+        }
+
         UpdateSwordUI();
     }
 
     public void AddEnemySword(int value)
     {
         enemySword += value;
-        ShowPlayerSwordStatus(value);
+
+        if (value > 0)
+        {
+            ShowEnemySwordStatus(value);
+        }
+
         UpdateSwordUI();
     }
 
@@ -87,11 +113,13 @@ public class SwordManager : MonoBehaviour
 
         UpdateSwordUI();
     }
+
     public void SaveFinalStatus()
     {
         FinalPlayerSword = playerSword;
         FinalEnemySword = enemySword;
     }
+
     void UpdateSwordUI()
     {
         playerSwordText.text = "çUåÇóÕ : " + playerSword;

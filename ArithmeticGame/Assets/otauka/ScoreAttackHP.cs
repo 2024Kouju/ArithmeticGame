@@ -16,8 +16,8 @@ public class ScoreAttackHP : MonoBehaviour
 
     public Text playerHPText;
     public Text scoreText;
-    public Text timerText;
-
+    public Text timerText; 
+    public Text playerStatusText;
     private float elapsedTime;
 
     public static int FinalRight;

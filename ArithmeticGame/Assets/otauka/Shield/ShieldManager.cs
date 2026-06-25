@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +16,10 @@ public class ShieldManager : MonoBehaviour
     public Text playerShieldStatusText;
     public Text enemyShieldStatusText;
 
+    // “G‚Ì–hŒä—ÍƒAƒbƒv•\¦—pƒLƒ…[
+    private Queue<int> enemyShieldQueue = new Queue<int>();
+    private bool isShowingEnemyShield = false;
+
     void Start()
     {
         UpdateShieldUI();
@@ -23,18 +29,11 @@ public class ShieldManager : MonoBehaviour
 
         InvokeRepeating(nameof(IncreaseEnemyShield), 21f, 15f);
     }
+
     void ShowPlayerShieldStatus(int value)
     {
         playerShieldStatusText.gameObject.SetActive(true);
-
-        if (value > 0)
-        {
-            playerShieldStatusText.text = "–hŒä—Í +" + value;
-        }
-        else
-        {
-            playerShieldStatusText.text = "–hŒä—Í " + value;
-        }
+        playerShieldStatusText.text = "–hŒä—Í +" + value;
 
         CancelInvoke(nameof(HidePlayerShieldStatus));
         Invoke(nameof(HidePlayerShieldStatus), 1f);
@@ -44,21 +43,36 @@ public class ShieldManager : MonoBehaviour
     {
         playerShieldStatusText.gameObject.SetActive(false);
     }
+
     void ShowEnemyShieldStatus(int value)
     {
-        enemyShieldStatusText.gameObject.SetActive(true);
+        enemyShieldQueue.Enqueue(value);
 
-        if (value > 0)
+        if (!isShowingEnemyShield)
         {
+            StartCoroutine(ShowEnemyShieldQueue());
+        }
+    }
+
+    IEnumerator ShowEnemyShieldQueue()
+    {
+        isShowingEnemyShield = true;
+
+        while (enemyShieldQueue.Count > 0)
+        {
+            int value = enemyShieldQueue.Dequeue();
+
+            enemyShieldStatusText.gameObject.SetActive(true);
             enemyShieldStatusText.text = "–hŒä—Í +" + value;
-        }
-        else
-        {
-            enemyShieldStatusText.text = "–hŒä—Í " + value;
+
+            yield return new WaitForSeconds(1f);
+
+            enemyShieldStatusText.gameObject.SetActive(false);
+
+            yield return new WaitForSeconds(0.1f);
         }
 
-        CancelInvoke(nameof(HideEnemyShieldStatus));
-        Invoke(nameof(HideEnemyShieldStatus), 1f);
+        isShowingEnemyShield = false;
     }
 
     void HideEnemyShieldStatus()
@@ -70,7 +84,10 @@ public class ShieldManager : MonoBehaviour
     {
         playerShield += value;
 
-        ShowPlayerShieldStatus(value);
+        if (value > 0)
+        {
+            ShowPlayerShieldStatus(value);
+        }
 
         UpdateShieldUI();
     }
@@ -79,7 +96,10 @@ public class ShieldManager : MonoBehaviour
     {
         enemyShield += value;
 
-        ShowEnemyShieldStatus(value);
+        if (value > 0)
+        {
+            ShowEnemyShieldStatus(value);
+        }
 
         UpdateShieldUI();
     }
