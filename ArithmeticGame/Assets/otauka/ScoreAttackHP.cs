@@ -36,6 +36,8 @@ public class ScoreAttackHP : MonoBehaviour
         FinalTime = 0;
         DefultScore = 0;
 
+        playerStatusText.gameObject.SetActive(false);
+
         UpdateUI();
 
         Invoke(nameof(StartTimer), startDelay);
@@ -45,7 +47,21 @@ public class ScoreAttackHP : MonoBehaviour
     {
         isStarted = true;
     }
+    // HP‰ñ•œ•\Ž¦
+    void ShowPlayerStatus(int value)
+    {
+        playerStatusText.gameObject.SetActive(true);
+        playerStatusText.text = "HP +" + value;
+        playerStatusText.color = Color.green;
 
+        CancelInvoke(nameof(HidePlayerStatus));
+        Invoke(nameof(HidePlayerStatus), 1f);
+    }
+
+    void HidePlayerStatus()
+    {
+        playerStatusText.gameObject.SetActive(false);
+    }
     void Update()
     {
         if (!isStarted)
@@ -106,6 +122,11 @@ public class ScoreAttackHP : MonoBehaviour
             return;
         }
         playerHP += value;
+
+        if (value > 0)
+        {
+            ShowPlayerStatus(value);
+        }
 
         if (playerHP <= 0)
         {
