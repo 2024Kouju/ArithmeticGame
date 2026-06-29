@@ -7,6 +7,10 @@ public class EnemyAutoBattle : MonoBehaviour
     public SwordManager swordManager;
     public ShieldManager shieldManager;
 
+    // ボイスSE
+    public AudioSource audioSource;
+    public AudioClip attackVoice;
+
     // 攻撃間隔
     public float attackInterval = 10f;
 
@@ -70,7 +74,8 @@ public class EnemyAutoBattle : MonoBehaviour
         {
             damage = 1;
         }
-
+        // ボイス再生
+        audioSource.PlayOneShot(attackVoice);
         // プレイヤーHP減少
         hpManager.AddPlayerHP(-damage);
 
