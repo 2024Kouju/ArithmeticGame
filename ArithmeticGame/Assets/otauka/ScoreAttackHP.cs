@@ -35,6 +35,9 @@ public class ScoreAttackHP : MonoBehaviour
         FinalScore = 0;
         FinalTime = 0;
         DefultScore = 0;
+        FinalRight = 0;
+        FinalWorng = 0;
+        FinalRW = 0;
 
         playerStatusText.gameObject.SetActive(false);
 
