@@ -12,6 +12,12 @@ public class BoosAttackChange : MonoBehaviour,
     private AudioSource audioSource;
     public AudioClip ButtonSound;
 
+    // ‘€ì‹Ö~‚É‚µ‚½‚¢ƒ{ƒ^ƒ“
+    public Button[] buttons;
+
+    // ˜A‘Å–h~
+    private bool isProcessing = false;
+
     // ˜g‚ÌImage
     public Image frameImage;
 
@@ -48,11 +54,21 @@ public class BoosAttackChange : MonoBehaviour,
 
     public void NextScene()
     {
+        // ˜A‘Å–h~
+        if (isProcessing) return;
+        isProcessing = true;
+
         isClicked = true;
 
         // Ô˜g•\¦
         frameImage.gameObject.SetActive(true);
         frameImage.color = clickColor;
+
+        // ‘Sƒ{ƒ^ƒ“‚ğ–³Œø‰»
+        foreach (Button btn in buttons)
+        {
+            btn.interactable = false;
+        }
 
         Quiz1.Score = false;
         Quiz5.Score5 = false;

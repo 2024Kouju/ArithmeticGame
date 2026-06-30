@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 public class HPManager : MonoBehaviour
 {
@@ -31,6 +32,16 @@ public class HPManager : MonoBehaviour
     private Queue<int> enemyStatusQueue = new Queue<int>();
     private bool isShowingEnemyStatus = false;
 
+    public VideoPlayer clearVideo;
+    public GameObject videoImage;
+    public VideoClip introClip;   // 最初だけ再生する動画
+    public VideoClip loopClip;    // ループする動画
+
+
+    private bool changedToLoop = false;
+    // 最初の再生が終わったか
+    private bool firstLoop = false;
+
     void Start()
     {
         UpdateHPUI();
@@ -38,7 +49,23 @@ public class HPManager : MonoBehaviour
         playerStatusText.gameObject.SetActive(false);
         enemyStatusText.gameObject.SetActive(false);
 
+        videoImage.SetActive(false);
+
+        clearVideo.loopPointReached += OnVideoFinished;
+
         Invoke(nameof(StartGame), startDelay);
+    }
+
+    void OnVideoFinished(VideoPlayer vp)
+    {
+        if (!changedToLoop)
+        {
+            changedToLoop = true;
+
+            vp.clip = loopClip;
+            vp.isLooping = true;
+            vp.Play();
+        }
     }
 
     void StartGame()
@@ -52,9 +79,7 @@ public class HPManager : MonoBehaviour
     void Update()
     {
         if (!isStarted)
-        {
             return;
-        }
 
         elapsedTime += Time.deltaTime;
 
@@ -166,7 +191,18 @@ public class HPManager : MonoBehaviour
 
             CancelInvoke(nameof(HealEnemy));
 
-            SceneManager.LoadScene("GameClear");
+      
+
+            // ゲーム停止
+            CancelInvoke();
+            Time.timeScale = 0;
+
+            // 動画表示
+            videoImage.SetActive(true);
+
+            // 動画再生
+            clearVideo.Play();
+
             return;
         }
 

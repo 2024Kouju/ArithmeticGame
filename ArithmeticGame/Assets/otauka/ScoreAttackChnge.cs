@@ -11,6 +11,12 @@ public class ScoreAttackChange : MonoBehaviour,
 {
     public string NextSceneText;
 
+    // ëÄçÏã÷é~Ç…ÇµÇΩÇ¢É{É^Éì
+    public Button[] buttons;
+
+    // òAë≈ñhé~
+    private bool isProcessing = false;
+
     private AudioSource audioSource;
 
     public AudioClip ButtonSound;
@@ -51,12 +57,21 @@ public class ScoreAttackChange : MonoBehaviour,
 
     public void NextScene()
     {
+        // òAë≈ñhé~
+        if (isProcessing) return;
+        isProcessing = true;
 
         isClicked = true;
 
         // ê‘ògï\é¶
         frameImage.gameObject.SetActive(true);
         frameImage.color = clickColor;
+
+        // ëSÉ{É^ÉìÇñ≥å¯âª
+        foreach (Button btn in buttons)
+        {
+            btn.interactable = false;
+        }
 
         Quiz1.Boss = false;
         Quiz5.Boss5 = false;
@@ -74,7 +89,7 @@ public class ScoreAttackChange : MonoBehaviour,
 
         audioSource.PlayOneShot(ButtonSound);
 
-        Invoke("Change", 1f);
+        Invoke(nameof(Change), 1f);
     }
 
     public void Change()

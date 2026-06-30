@@ -16,8 +16,9 @@ public class ScoreAttackHP : MonoBehaviour
 
     public Text playerHPText;
     public Text scoreText;
-    public Text timerText; 
+    public Text timerText;
     public Text playerStatusText;
+
     private float elapsedTime;
 
     public static int FinalRight;
@@ -29,6 +30,7 @@ public class ScoreAttackHP : MonoBehaviour
 
     // タイマー開始フラグ
     private bool isStarted = false;
+
     void Start()
     {
         FinalPlayerHP = 0;
@@ -38,6 +40,10 @@ public class ScoreAttackHP : MonoBehaviour
         FinalRight = 0;
         FinalWorng = 0;
         FinalRW = 0;
+
+        // 正解・不正解数をリセット
+        Rightorwrong.Right = 0;
+        Rightorwrong.Wrong = 0;
 
         playerStatusText.gameObject.SetActive(false);
 
@@ -50,6 +56,7 @@ public class ScoreAttackHP : MonoBehaviour
     {
         isStarted = true;
     }
+
     // HP回復表示
     void ShowPlayerStatus(int value)
     {
@@ -65,22 +72,18 @@ public class ScoreAttackHP : MonoBehaviour
     {
         playerStatusText.gameObject.SetActive(false);
     }
+
     void Update()
     {
         if (!isStarted)
-        {
             return;
-        }
 
         if (Quiz1.Boss == true)
-        {
             return;
-        }
 
         elapsedTime += Time.deltaTime;
 
         float remainTime = limitTime - elapsedTime;
-
 
         if (remainTime <= 0)
         {
@@ -91,25 +94,26 @@ public class ScoreAttackHP : MonoBehaviour
 
             FinalPlayerHP = playerHP;
 
-            // 正解数・不正解数を保存
+            // 正解数・不正解数
             FinalRight = Rightorwrong.Right;
             FinalWorng = Rightorwrong.Wrong;
-
-            // (正解数 - 不正解数) × 10
             FinalRW = (FinalRight - FinalWorng) * 10;
 
-            // 最終スコア
-            FinalScore = score + FinalRW;
-
-            // マイナスにならないようにする
-            if (FinalScore < 0)
+            // 正解・不正解がどちらも0ならスコア0
+            if (FinalRight == 0 && FinalWorng == 0)
             {
                 FinalScore = 0;
+            }
+            else
+            {
+                FinalScore = score + FinalRW;
+
+                if (FinalScore < 0)
+                    FinalScore = 0;
             }
 
             SceneManager.LoadScene("Result");
         }
-
 
         int minutes = Mathf.FloorToInt(remainTime / 60);
         int seconds = Mathf.FloorToInt(remainTime % 60);
@@ -120,10 +124,9 @@ public class ScoreAttackHP : MonoBehaviour
     // プレイヤーHP増減
     public void AddPlayerHP(int value)
     {
-        if(Quiz1.Boss == true)
-        {
+        if (Quiz1.Boss == true)
             return;
-        }
+
         playerHP += value;
 
         if (value > 0)
@@ -141,11 +144,17 @@ public class ScoreAttackHP : MonoBehaviour
             FinalWorng = Rightorwrong.Wrong;
             FinalRW = (FinalRight - FinalWorng) * 10;
 
-            FinalScore = score + FinalRW;
-
-            if (FinalScore < 0)
+            // 正解・不正解がどちらも0ならスコア0
+            if (FinalRight == 0 && FinalWorng == 0)
             {
                 FinalScore = 0;
+            }
+            else
+            {
+                FinalScore = score + FinalRW;
+
+                if (FinalScore < 0)
+                    FinalScore = 0;
             }
 
             SceneManager.LoadScene("Result");
@@ -165,6 +174,8 @@ public class ScoreAttackHP : MonoBehaviour
 
         UpdateUI();
     }
+
+    // スコア減算
     public void SubScore(int value)
     {
         score -= value;
@@ -175,10 +186,10 @@ public class ScoreAttackHP : MonoBehaviour
             score = 0;
             DefultScore = 0;
         }
-           
 
         UpdateUI();
     }
+
     void UpdateUI()
     {
         playerHPText.text = "HP : " + playerHP;
