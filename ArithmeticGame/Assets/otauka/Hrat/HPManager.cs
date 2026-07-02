@@ -32,15 +32,19 @@ public class HPManager : MonoBehaviour
     private Queue<int> enemyStatusQueue = new Queue<int>();
     private bool isShowingEnemyStatus = false;
 
+    // 動画
     public VideoPlayer clearVideo;
     public GameObject videoImage;
-    public VideoClip introClip;   // 最初だけ再生する動画
-    public VideoClip loopClip;    // ループする動画
 
+    public VideoClip winVideo;
+    public VideoClip loseVideo;
 
-    private bool changedToLoop = false;
-    // 最初の再生が終わったか
-    private bool firstLoop = false;
+    // 遷移先シーン
+    public string winScene = "Result";
+    public string loseScene = "GameOver";
+
+    // 勝敗判定
+    private bool isWin = false;
 
     void Start()
     {
@@ -54,18 +58,6 @@ public class HPManager : MonoBehaviour
         clearVideo.loopPointReached += OnVideoFinished;
 
         Invoke(nameof(StartGame), startDelay);
-    }
-
-    void OnVideoFinished(VideoPlayer vp)
-    {
-        if (!changedToLoop)
-        {
-            changedToLoop = true;
-
-            vp.clip = loopClip;
-            vp.isLooping = true;
-            vp.Play();
-        }
     }
 
     void StartGame()
@@ -89,6 +81,21 @@ public class HPManager : MonoBehaviour
         timerText.text = $"経過時間 : {minutes}分{seconds}秒";
     }
 
+    // 動画終了時
+    void OnVideoFinished(VideoPlayer vp)
+    {
+        Time.timeScale = 1;
+
+        if (isWin)
+        {
+            SceneManager.LoadScene(winScene);
+        }
+        else
+        {
+            SceneManager.LoadScene(loseScene);
+        }
+    }
+
     // プレイヤー回復表示
     void ShowPlayerStatus(int value)
     {
@@ -105,7 +112,7 @@ public class HPManager : MonoBehaviour
         playerStatusText.gameObject.SetActive(false);
     }
 
-    // 敵回復表示（順番待ち）
+    // 敵回復表示
     void ShowEnemyStatus(int value)
     {
         enemyStatusQueue.Enqueue(value);
@@ -128,12 +135,10 @@ public class HPManager : MonoBehaviour
             enemyStatusText.text = "HP +" + value;
             enemyStatusText.color = Color.green;
 
-            // 1秒表示
             yield return new WaitForSeconds(1f);
 
             enemyStatusText.gameObject.SetActive(false);
 
-            // 少し間を空ける
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -161,7 +166,19 @@ public class HPManager : MonoBehaviour
             FindObjectOfType<SwordManager>()?.SaveFinalStatus();
             FindObjectOfType<ShieldManager>()?.SaveFinalStatus();
 
-            SceneManager.LoadScene("GameOver");
+            CancelInvoke(nameof(HealEnemy));
+
+            isStarted = false;
+            Time.timeScale = 0;
+
+            isWin = false;
+
+            videoImage.SetActive(true);
+
+            clearVideo.clip = loseVideo;
+            clearVideo.isLooping = false;
+            clearVideo.Play();
+
             return;
         }
 
@@ -191,16 +208,15 @@ public class HPManager : MonoBehaviour
 
             CancelInvoke(nameof(HealEnemy));
 
-      
-
-            // ゲーム停止
-            CancelInvoke();
+            isStarted = false;
             Time.timeScale = 0;
 
-            // 動画表示
+            isWin = true;
+
             videoImage.SetActive(true);
 
-            // 動画再生
+            clearVideo.clip = winVideo;
+            clearVideo.isLooping = false;
             clearVideo.Play();
 
             return;
@@ -222,5 +238,13 @@ public class HPManager : MonoBehaviour
     {
         playerHPText.text = "HP : " + playerHP;
         enemyHPText.text = "HP : " + enemyHP;
+    }
+
+    private void OnDestroy()
+    {
+        if (clearVideo != null)
+        {
+            clearVideo.loopPointReached -= OnVideoFinished;
+        }
     }
 }

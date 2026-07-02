@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -25,12 +26,19 @@ public class ScoreAttackHP : MonoBehaviour
     public static int FinalWorng;
     public static int FinalRW;
 
+    [Header("Sound")]
+    public AudioSource audioSource;
+    public AudioClip buttonSound;
+
     // 開始までの待機時間
     public float startDelay = 3f;
 
     // タイマー開始フラグ
     private bool isStarted = false;
 
+    public Text finishText;
+
+    private bool isFinished = false;
     void Start()
     {
         FinalPlayerHP = 0;
@@ -41,6 +49,8 @@ public class ScoreAttackHP : MonoBehaviour
         FinalWorng = 0;
         FinalRW = 0;
 
+        finishText.gameObject.SetActive(false);
+
         // 正解・不正解数をリセット
         Rightorwrong.Right = 0;
         Rightorwrong.Wrong = 0;
@@ -50,6 +60,29 @@ public class ScoreAttackHP : MonoBehaviour
         UpdateUI();
 
         Invoke(nameof(StartTimer), startDelay);
+    }
+
+    IEnumerator ResultScene()
+    {
+        isFinished = true;
+
+        if (audioSource != null && buttonSound != null)
+        {
+            audioSource.PlayOneShot(buttonSound);
+        }
+
+        // ゲーム全体を停止
+        Time.timeScale = 0f;
+
+        finishText.gameObject.SetActive(true);
+
+        // 実時間で3秒待つ
+        yield return new WaitForSecondsRealtime(3f);
+
+        // 次のシーンのために時間を元に戻す
+        Time.timeScale = 1f;
+
+        SceneManager.LoadScene("Result");
     }
 
     void StartTimer()
@@ -75,8 +108,9 @@ public class ScoreAttackHP : MonoBehaviour
 
     void Update()
     {
-        if (!isStarted)
+        if (!isStarted || isFinished)
             return;
+
 
         if (Quiz1.Boss == true)
             return;
@@ -112,7 +146,7 @@ public class ScoreAttackHP : MonoBehaviour
                     FinalScore = 0;
             }
 
-            SceneManager.LoadScene("Result");
+            StartCoroutine(ResultScene());
         }
 
         int minutes = Mathf.FloorToInt(remainTime / 60);
@@ -157,7 +191,7 @@ public class ScoreAttackHP : MonoBehaviour
                     FinalScore = 0;
             }
 
-            SceneManager.LoadScene("Result");
+            StartCoroutine(ResultScene());
         }
 
         UpdateUI();
