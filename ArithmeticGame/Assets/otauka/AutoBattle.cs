@@ -62,6 +62,10 @@ public class AutoBattle : MonoBehaviour
         {
             timer = 0f;
 
+
+            // ボイス再生
+            audioSource.PlayOneShot(attackVoice);
+
             PlayerAttack();
         }
     }
@@ -77,8 +81,6 @@ public class AutoBattle : MonoBehaviour
             damage = 1;
         }
 
-        // ボイス再生
-        audioSource.PlayOneShot(attackVoice);
 
         hpManager.AddEnemyHP(-damage);
 

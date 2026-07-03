@@ -27,6 +27,9 @@ public class ScoreAutoBattle : MonoBehaviour
     // 攻撃ゲージ
     public Slider attackGauge;
 
+    // ボイスSE
+    public AudioSource audioSource;
+    public AudioClip attackVoice;
     void Start()
     {
         attackInterval = defaultAttackInterval;
@@ -58,6 +61,9 @@ public class ScoreAutoBattle : MonoBehaviour
         if (timer >= attackInterval)
         {
             timer = 0f;
+
+            // ボイス再生
+            audioSource.PlayOneShot(attackVoice);
 
             PlayerAttack();
         }

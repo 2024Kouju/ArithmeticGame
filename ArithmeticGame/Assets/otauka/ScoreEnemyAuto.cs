@@ -21,6 +21,10 @@ public class ScoreEnemyAuto : MonoBehaviour
     // 敵攻撃ゲージ
     public Slider enemyAttackGauge;
 
+    // ボイスSE
+    public AudioSource audioSource;
+    public AudioClip attackVoice;
+
     void Start()
     {
         // ゲージ最大値
@@ -55,6 +59,9 @@ public class ScoreEnemyAuto : MonoBehaviour
         if (timer >= attackInterval)
         {
             timer = 0f;
+
+            // ボイス再生
+            audioSource.PlayOneShot(attackVoice);
 
             EnemyAttack();
         }
