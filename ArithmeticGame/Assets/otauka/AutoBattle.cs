@@ -7,10 +7,10 @@ public class AutoBattle : MonoBehaviour
     public SwordManager swordManager;
     public ShieldManager shieldManager;
 
-    // ボイスSE
     public AudioSource audioSource;
-    public AudioClip attackVoice;
+    public AudioClip[] attackVoices;
 
+    private int lastVoiceIndex = -1;
 
     // 攻撃間隔
     public static float attackInterval = 10f;
@@ -42,6 +42,24 @@ public class AutoBattle : MonoBehaviour
         // 3秒後に開始
         Invoke(nameof(StartAutoBattle), startDelay);
     }
+
+    void PlayRandomAttackVoice()
+    {
+        if (attackVoices == null || attackVoices.Length == 0)
+            return;
+
+        int index;
+
+        do
+        {
+            index = Random.Range(0, attackVoices.Length);
+        }
+        while (attackVoices.Length > 1 && index == lastVoiceIndex);
+
+        lastVoiceIndex = index;
+
+        audioSource.PlayOneShot(attackVoices[index]);
+    }
     void StartAutoBattle()
     {
         isStarted = true;
@@ -63,8 +81,12 @@ public class AutoBattle : MonoBehaviour
             timer = 0f;
 
 
-            // ボイス再生
-            audioSource.PlayOneShot(attackVoice);
+            if (Random.value < 0.5f)
+            {
+                PlayRandomAttackVoice();
+            }
+
+
 
             PlayerAttack();
         }

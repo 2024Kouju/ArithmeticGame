@@ -46,6 +46,15 @@ public class HPManager : MonoBehaviour
     // 勝敗判定
     private bool isWin = false;
 
+    // ボイス用
+    public AudioSource voiceAudioSource;
+
+    // プレイヤー被弾ボイス
+    public AudioClip[] playerDamageVoices;
+
+    // 敵被弾ボイス
+    public AudioClip[] enemyDamageVoices;
+
     void Start()
     {
         UpdateHPUI();
@@ -66,6 +75,18 @@ public class HPManager : MonoBehaviour
 
         // 敵の自動回復開始
         InvokeRepeating(nameof(HealEnemy), 15f, 15f);
+    }
+
+    void PlayRandomVoice(AudioClip[] voices)
+    {
+        if (voices == null || voices.Length == 0) return;
+
+        // 50%の確率で再生
+        if (Random.value >= 0.5f)
+            return;
+
+        int index = Random.Range(0, voices.Length);
+        voiceAudioSource.PlayOneShot(voices[index]);
     }
 
     void Update()
@@ -147,7 +168,15 @@ public class HPManager : MonoBehaviour
 
     public void AddPlayerHP(int value)
     {
+        // ダメージを受けたとき
+        if (value < 0)
+        {
+            PlayRandomVoice(playerDamageVoices);
+        }
+
         playerHP += value;
+
+
 
         if (value > 0)
         {
@@ -187,6 +216,12 @@ public class HPManager : MonoBehaviour
 
     public void AddEnemyHP(int value)
     {
+        // ダメージを受けたとき
+        if (value < 0)
+        {
+            PlayRandomVoice(enemyDamageVoices);
+        }
+
         enemyHP += value;
 
         if (value > 0)

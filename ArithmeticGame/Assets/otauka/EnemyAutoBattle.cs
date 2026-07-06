@@ -9,7 +9,9 @@ public class EnemyAutoBattle : MonoBehaviour
 
     // ボイスSE
     public AudioSource audioSource;
-    public AudioClip attackVoice;
+    public AudioClip[] attackVoices;
+
+    private int lastVoiceIndex = -1;
 
     // 攻撃間隔
     public float attackInterval = 10f;
@@ -37,6 +39,23 @@ public class EnemyAutoBattle : MonoBehaviour
         Invoke(nameof(StartEnemyBattle), startDelay);
     }
 
+    void PlayRandomAttackVoice()
+    {
+        if (attackVoices == null || attackVoices.Length == 0)
+            return;
+
+        int index;
+
+        do
+        {
+            index = Random.Range(0, attackVoices.Length);
+        }
+        while (attackVoices.Length > 1 && index == lastVoiceIndex);
+
+        lastVoiceIndex = index;
+
+        audioSource.PlayOneShot(attackVoices[index]);
+    }
     void StartEnemyBattle()
     {
         isStarted = true;
@@ -74,8 +93,10 @@ public class EnemyAutoBattle : MonoBehaviour
         {
             damage = 1;
         }
-        // ボイス再生
-        audioSource.PlayOneShot(attackVoice);
+        if (Random.value < 0.5f)
+        {
+            PlayRandomAttackVoice();
+        }
         // プレイヤーHP減少
         hpManager.AddPlayerHP(-damage);
 

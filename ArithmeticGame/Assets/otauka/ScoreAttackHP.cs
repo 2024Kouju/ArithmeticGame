@@ -30,6 +30,12 @@ public class ScoreAttackHP : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip buttonSound;
 
+
+    [Header("Damage Voice")]
+    public AudioClip[] damageVoices;
+
+    private int lastDamageVoice = -1;
+
     // 開始までの待機時間
     public float startDelay = 3f;
 
@@ -61,7 +67,27 @@ public class ScoreAttackHP : MonoBehaviour
 
         Invoke(nameof(StartTimer), startDelay);
     }
+    void PlayRandomDamageVoice()
+    {
+        if (audioSource == null || damageVoices == null || damageVoices.Length == 0)
+            return;
 
+        // 一定確率でのみ再生
+        if (Random.value > 0.5f)
+            return;
+
+        int index;
+
+        do
+        {
+            index = Random.Range(0, damageVoices.Length);
+        }
+        while (damageVoices.Length > 1 && index == lastDamageVoice);
+
+        lastDamageVoice = index;
+
+        audioSource.PlayOneShot(damageVoices[index]);
+    }
     IEnumerator ResultScene()
     {
         isFinished = true;
@@ -160,6 +186,12 @@ public class ScoreAttackHP : MonoBehaviour
     {
         if (Quiz1.Boss == true)
             return;
+
+        // ダメージを受けたとき
+        if (value < 0)
+        {
+            PlayRandomDamageVoice();
+        }
 
         playerHP += value;
 

@@ -29,7 +29,9 @@ public class ScoreAutoBattle : MonoBehaviour
 
     // ボイスSE
     public AudioSource audioSource;
-    public AudioClip attackVoice;
+    public AudioClip[] attackVoices;
+
+    private int lastAttackVoice = -1;
     void Start()
     {
         attackInterval = defaultAttackInterval;
@@ -45,7 +47,23 @@ public class ScoreAutoBattle : MonoBehaviour
     {
         isStarted = true;
     }
+    void PlayRandomAttackVoice()
+    {
+        if (audioSource == null || attackVoices == null || attackVoices.Length == 0)
+            return;
 
+        int index;
+
+        do
+        {
+            index = Random.Range(0, attackVoices.Length);
+        }
+        while (attackVoices.Length > 1 && index == lastAttackVoice);
+
+        lastAttackVoice = index;
+
+        audioSource.PlayOneShot(attackVoices[index]);
+    }
     void Update()
     {
         // 開始前なら何もしない
@@ -62,8 +80,10 @@ public class ScoreAutoBattle : MonoBehaviour
         {
             timer = 0f;
 
-            // ボイス再生
-            audioSource.PlayOneShot(attackVoice);
+            if (Random.value < 0.5f)
+            {
+                PlayRandomAttackVoice();
+            }
 
             PlayerAttack();
         }
