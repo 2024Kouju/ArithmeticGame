@@ -101,7 +101,7 @@ public class Quiz50 : MonoBehaviour
             ResetQuestionList();
         }
 
-       // ランダム選択
+        // ランダム選択
         int randomIndex = Random.Range(0, remainingQuestions.Count);
 
         currentQuestion = remainingQuestions[randomIndex];
