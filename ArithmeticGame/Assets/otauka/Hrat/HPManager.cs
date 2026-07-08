@@ -46,14 +46,18 @@ public class HPManager : MonoBehaviour
     // 勝敗判定
     private bool isWin = false;
 
-    // ボイス用
-    public AudioSource voiceAudioSource;
+    // HP30以下警告音
+    public AudioSource audioSource;
+    public AudioClip lowHPVoice;
 
-    // プレイヤー被弾ボイス
-    public AudioClip[] playerDamageVoices;
+    // 一度だけ再生するため
+    private bool isLowHPVoicePlayed = false;
 
-    // 敵被弾ボイス
-    public AudioClip[] enemyDamageVoices;
+    // 敵HP低下ボイス
+    public AudioClip enemyLowHPVoice;
+
+    // 一度だけ再生するため
+    private bool isEnemyLowHPVoicePlayed = false;
 
     void Start()
     {
@@ -77,17 +81,7 @@ public class HPManager : MonoBehaviour
         InvokeRepeating(nameof(HealEnemy), 15f, 15f);
     }
 
-    void PlayRandomVoice(AudioClip[] voices)
-    {
-        if (voices == null || voices.Length == 0) return;
 
-        // 50%の確率で再生
-        if (Random.value >= 0.5f)
-            return;
-
-        int index = Random.Range(0, voices.Length);
-        voiceAudioSource.PlayOneShot(voices[index]);
-    }
 
     void Update()
     {
@@ -168,15 +162,17 @@ public class HPManager : MonoBehaviour
 
     public void AddPlayerHP(int value)
     {
-        // ダメージを受けたとき
-        if (value < 0)
-        {
-            PlayRandomVoice(playerDamageVoices);
-        }
+       
 
         playerHP += value;
 
 
+        // HP30以下で一度だけ再生
+        if (playerHP <= 30 && playerHP > 0 && !isLowHPVoicePlayed)
+        {
+            audioSource.PlayOneShot(lowHPVoice);
+            isLowHPVoicePlayed = true;
+        }
 
         if (value > 0)
         {
@@ -216,13 +212,15 @@ public class HPManager : MonoBehaviour
 
     public void AddEnemyHP(int value)
     {
-        // ダメージを受けたとき
-        if (value < 0)
-        {
-            PlayRandomVoice(enemyDamageVoices);
-        }
-
+      
         enemyHP += value;
+
+        // 敵HP30以下で一度だけ再生
+        if (enemyHP <= 30 && enemyHP > 0 && !isEnemyLowHPVoicePlayed)
+        {
+            audioSource.PlayOneShot(enemyLowHPVoice);
+            isEnemyLowHPVoicePlayed = true;
+        }
 
         if (value > 0)
         {
