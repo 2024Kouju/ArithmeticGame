@@ -61,6 +61,18 @@ public class Quiz10 : MonoBehaviour
     void ResetQuestionList()
     {
         remainingQuestions = new List<QuestionData10>(questions);
+
+        // 問題をシャッフル
+        for (int i = 0; i < remainingQuestions.Count; i++)
+        {
+            int randomIndex = Random.Range(i, remainingQuestions.Count);
+
+            QuestionData10 temp = remainingQuestions[i];
+            remainingQuestions[i] = remainingQuestions[randomIndex];
+            remainingQuestions[randomIndex] = temp;
+        }
+
+        Debug.Log("問題をシャッフルしました");
     }
 
     public void ShowRandomQuestion()
@@ -81,13 +93,11 @@ public class Quiz10 : MonoBehaviour
             ResetQuestionList();
         }
 
-        // ランダム選択
-        int randomIndex = Random.Range(0, remainingQuestions.Count);
+        // シャッフル済みリストの先頭から出題
+        currentQuestion = remainingQuestions[0];
 
-        currentQuestion = remainingQuestions[randomIndex];
-
-        // 出題済み問題を除外
-        remainingQuestions.RemoveAt(randomIndex);
+        // 出題済みなので削除
+        remainingQuestions.RemoveAt(0);
 
         Debug.Log("出題: " + currentQuestion.question10);
         Debug.Log("残り問題数: " + remainingQuestions.Count);
