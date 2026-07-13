@@ -59,6 +59,8 @@ public class HPManager : MonoBehaviour
     // 一度だけ再生するため
     private bool isEnemyLowHPVoicePlayed = false;
 
+
+    public Animator enemyAnimator;
     void Start()
     {
         UpdateHPUI();
@@ -185,6 +187,7 @@ public class HPManager : MonoBehaviour
             UpdateHPUI();
 
             FinalPlayerHP = playerHP;
+           
             FinalEnemyHP = enemyHP;
             FinalTime = elapsedTime;
 
@@ -193,21 +196,50 @@ public class HPManager : MonoBehaviour
 
             CancelInvoke(nameof(HealEnemy));
 
-            isStarted = false;
-            Time.timeScale = 0;
-
-            isWin = false;
-
-            videoImage.SetActive(true);
-
-            clearVideo.clip = loseVideo;
-            clearVideo.isLooping = false;
-            clearVideo.Play();
+            StartCoroutine(PlayerLoseSequence());
 
             return;
         }
 
         UpdateHPUI();
+    }
+    IEnumerator PlayerLoseSequence()
+    {
+        isStarted = false;
+
+       
+
+        // アニメーション時間
+        yield return new WaitForSeconds(1.5f);
+
+        Time.timeScale = 0;
+
+        isWin = false;
+
+        videoImage.SetActive(true);
+
+        clearVideo.clip = loseVideo;
+        clearVideo.Play();
+    }
+    IEnumerator EnemyLoseSequence()
+    {
+        isStarted = false;
+
+        if (enemyAnimator != null)
+        {
+            enemyAnimator.SetTrigger("Lose");
+        }
+
+        yield return new WaitForSeconds(3.0f);
+
+        Time.timeScale = 0;
+
+        isWin = true;
+
+        videoImage.SetActive(true);
+
+        clearVideo.clip = winVideo;
+        clearVideo.Play();
     }
 
     public void AddEnemyHP(int value)
@@ -233,6 +265,7 @@ public class HPManager : MonoBehaviour
             UpdateHPUI();
 
             FinalPlayerHP = playerHP;
+        
             FinalEnemyHP = enemyHP;
             FinalTime = elapsedTime;
 
@@ -241,16 +274,7 @@ public class HPManager : MonoBehaviour
 
             CancelInvoke(nameof(HealEnemy));
 
-            isStarted = false;
-            Time.timeScale = 0;
-
-            isWin = true;
-
-            videoImage.SetActive(true);
-
-            clearVideo.clip = winVideo;
-            clearVideo.isLooping = false;
-            clearVideo.Play();
+            StartCoroutine(EnemyLoseSequence());
 
             return;
         }
