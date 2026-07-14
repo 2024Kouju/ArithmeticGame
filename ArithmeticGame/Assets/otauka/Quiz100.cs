@@ -250,10 +250,10 @@ public class Quiz100 : MonoBehaviour
 
             Incorrect.SetActive(true);
             // 正解を取得
-            string correctAnswer =
-                currentQuestion.choices100[currentQuestion.correctIndex100];
+            string playerAnswer = shuffledChoices[index].choiceText;
+            string correctAnswer = currentQuestion.choices100[currentQuestion.correctIndex100];
 
-            StartCoroutine(ShowCorrectAnswer(correctAnswer));
+            StartCoroutine(ShowCorrectAnswer(playerAnswer, correctAnswer));
 
             Debug.Log("不正解！");
 
@@ -318,7 +318,7 @@ public class Quiz100 : MonoBehaviour
 
         panel.SetActive(false);
     }
-    IEnumerator ShowCorrectAnswer(string correctAnswer)
+    IEnumerator ShowCorrectAnswer(string playerAnswer, string correctAnswer)
     {
         // ① ✕を表示
         yield return new WaitForSeconds(incorrectInterval);
@@ -333,9 +333,11 @@ public class Quiz100 : MonoBehaviour
             button.gameObject.SetActive(false);
         }
         // ③ 正解を表示
-        answerText.text = "正解は\n「" + correctAnswer + "」です";
-        answerText.gameObject.SetActive(true);
-
+        answerText.text =
+            "あなたの回答\n" +
+            "「" + playerAnswer + "」\n" +
+            "正解は\n" +
+            "「" + correctAnswer + "」";
         answerText.gameObject.SetActive(true);
 
         // ④ 正解を表示

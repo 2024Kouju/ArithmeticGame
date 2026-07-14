@@ -9,7 +9,7 @@ public class ScoreStart : MonoBehaviour
     IEnumerator Start()
     {
         // 2秒間メッセージ表示
-        startText.text = "テストを開始します。";
+        startText.text = "  テストを開始します。";
         yield return new WaitForSeconds(2f);
 
         // 3カウント

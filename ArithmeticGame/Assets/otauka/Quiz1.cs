@@ -267,10 +267,12 @@ public class Quiz1 : MonoBehaviour
             Debug.Log("不正解！");
 
             // 正解を取得
-            string correctAnswer =
-                currentQuestion.choices1[currentQuestion.correctIndex1];
+            string playerAnswer = shuffledChoices[index].choiceText;
+            string correctAnswer = currentQuestion.choices1[currentQuestion.correctIndex1];
 
-            StartCoroutine(ShowCorrectAnswer(correctAnswer));
+            StartCoroutine(ShowCorrectAnswer(playerAnswer, correctAnswer));
+
+        
 
             comboManager.ResetCombo();
 
@@ -327,7 +329,7 @@ public class Quiz1 : MonoBehaviour
 
         panel.SetActive(false);
     }
-    IEnumerator ShowCorrectAnswer(string correctAnswer)
+    IEnumerator ShowCorrectAnswer(string playerAnswer, string correctAnswer)
     {
         // ① ✕を表示
         yield return new WaitForSeconds(incorrectInterval);
@@ -343,7 +345,11 @@ public class Quiz1 : MonoBehaviour
         }
 
         // ③ 正解を表示
-        answerText.text = "正解は\n「" + correctAnswer + "」です";
+        answerText.text =
+            "あなたの回答\n" +
+            "「" + playerAnswer + "」\n" +
+            "正解は\n" +
+            "「" + correctAnswer + "」";
         answerText.gameObject.SetActive(true);
 
         // ④ 答えを一定時間表示

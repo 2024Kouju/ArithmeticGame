@@ -59,7 +59,7 @@ public class HPManager : MonoBehaviour
     // 一度だけ再生するため
     private bool isEnemyLowHPVoicePlayed = false;
 
-
+    public Animator playerAnimator;
     public Animator enemyAnimator;
     void Start()
     {
@@ -207,10 +207,13 @@ public class HPManager : MonoBehaviour
     {
         isStarted = false;
 
-       
+        if (playerAnimator != null)
+        {
+            playerAnimator.SetTrigger("Lose");
+        }
 
-        // アニメーション時間
-        yield return new WaitForSeconds(1.5f);
+        // アニメーションが終わるまで待機
+        yield return new WaitForSeconds(1.8f);
 
         Time.timeScale = 0;
 
@@ -230,7 +233,7 @@ public class HPManager : MonoBehaviour
             enemyAnimator.SetTrigger("Lose");
         }
 
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(1.8f);
 
         Time.timeScale = 0;
 

@@ -123,13 +123,17 @@ public class ScoreAutoBattle : MonoBehaviour
     // コンボ切れ時に呼ぶ
     public void ResetAttackSpeed()
     {
+        // 現在の進行率を保存
+        float rate = timer / attackInterval;
+
+        // 攻撃速度を初期値へ
         attackInterval = defaultAttackInterval;
 
-        attackGauge.maxValue = attackInterval;
+        // 同じ進行率になるようtimerを調整
+        timer = attackInterval * rate;
 
-        // ゲージもリセット
-        timer = 0f;
-        attackGauge.value = 0f;
+        attackGauge.maxValue = attackInterval;
+        attackGauge.value = timer;
 
         Debug.Log("攻撃速度リセット！");
     }
