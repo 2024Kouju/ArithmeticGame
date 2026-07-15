@@ -8,29 +8,26 @@ using UnityEngine.UIElements;
 
 public class SwordItem10 : MonoBehaviour
 {
-    public GameObject panel;
-    public Quiz10 quizManager;
+    public GameObject quizPanel;
+    public GameObject imageQuizPanel;
 
+    public Quiz10 quizManager;
+    public imageQuiz10 imageQuizManager;
     static public bool SwordFlag10 = false;
+
     // 表示までの時間
     public float interval = 0.5f;
 
     // ジャンル選択
 
 
-    public void SetPanel(GameObject p)
-    {
-        panel = p;
-    }
 
     // コルーチン開始
 
 
     void OnMouseDown()
     {
-
-        // panelが表示中ならクリック無効
-        if (panel.activeSelf)
+        if (quizPanel.activeSelf || imageQuizPanel.activeSelf)
         {
             return;
         }
@@ -42,27 +39,31 @@ public class SwordItem10 : MonoBehaviour
 
     IEnumerator OpenPanel()
     {
-        // 待機
         yield return new WaitForSeconds(interval);
 
-        // パネル表示
-        panel.SetActive(true);
+        int rand = Random.Range(0, 100);
 
-
-
-
-
-        // 問題表示
-        if (quizManager != null)
+        if (rand < 20)
         {
-           
-            quizManager.ShowRandomQuestion();
+            //画像クイズ
+            imageQuizPanel.SetActive(true);
+
+            if (imageQuizManager != null)
+            {
+                imageQuizManager.ShowRandomQuestion();
+            }
+        }
+        else
+        {
+            // 通常クイズ
+            quizPanel.SetActive(true);
+
+            if (quizManager != null)
+            {
+                quizManager.ShowRandomQuestion();
+            }
         }
 
-
-
-
-        // このオブジェクト削除
         Destroy(gameObject);
     }
 }

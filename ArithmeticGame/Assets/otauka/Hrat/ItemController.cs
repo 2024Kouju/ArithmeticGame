@@ -33,6 +33,9 @@ public class ItemController : MonoBehaviour
 
     public GameObject panel;
 
+    public GameObject imagequizPanel;
+
+
     // ê∂ê¨äJénÇ‹Ç≈ÇÃë“ã@éûä‘
     public float startDelay = 3f;
 
@@ -163,18 +166,23 @@ public class ItemController : MonoBehaviour
                 {
                     Item5 click = item.GetComponent<Item5>();
 
-                    click.panel = panel;
+                    click.quizPanel = panel;
+                    click.imageQuizPanel = imagequizPanel;
+
                     click.quizManager = FindObjectOfType<Quiz5>();
+                    click.imageQuizManager = FindObjectOfType<imageQuiz5>();
 
                     break;
                 }
-
             case QuizType.Quiz10:
                 {
                     Item10 click = item.GetComponent<Item10>();
 
-                    click.panel = panel;
+                    click.quizPanel = panel;
+                    click.imageQuizPanel = imagequizPanel;
+
                     click.quizManager = FindObjectOfType<Quiz10>();
+                    click.imageQuizManager = FindObjectOfType<imageQuiz10>();
 
                     break;
                 }
@@ -182,8 +190,11 @@ public class ItemController : MonoBehaviour
                 {
                     Item25 click = item.GetComponent<Item25>();
 
-                    click.panel = panel;
+                    click.quizPanel = panel;
+                    click.imageQuizPanel = imagequizPanel;
+
                     click.quizManager = FindObjectOfType<Quiz25>();
+                    click.imageQuizManager = FindObjectOfType<imageQuiz25>();
 
                     break;
                 }
@@ -191,8 +202,11 @@ public class ItemController : MonoBehaviour
                 {
                     Item50 click = item.GetComponent<Item50>();
 
-                    click.panel = panel;
+                    click.quizPanel = panel;
+                    click.imageQuizPanel = imagequizPanel;
+
                     click.quizManager = FindObjectOfType<Quiz50>();
+                    click.imageQuizManager = FindObjectOfType<imageQuiz50>();
 
                     break;
                 }
@@ -200,8 +214,11 @@ public class ItemController : MonoBehaviour
                 {
                     Item100 click = item.GetComponent<Item100>();
 
-                    click.panel = panel;
+                    click.quizPanel = panel;
+                    click.imageQuizPanel = imagequizPanel;
+
                     click.quizManager = FindObjectOfType<Quiz100>();
+                    click.imageQuizManager = FindObjectOfType<imageQuiz100>();
 
                     break;
                 }

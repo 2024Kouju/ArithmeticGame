@@ -34,6 +34,9 @@ public class ShieldItemController : MonoBehaviour
 
     public GameObject panel;
 
+    public GameObject imagequizPanel;
+
+
     // ê∂ê¨äJénÇ‹Ç≈ÇÃë“ã@éûä‘
     public float startDelay = 3f;
 
@@ -158,47 +161,62 @@ public class ShieldItemController : MonoBehaviour
 
             case QuizType.Quiz5:
                 {
-                    ShieldItem5 click = item.GetComponent<ShieldItem5>();
+                    Item5 click = item.GetComponent<Item5>();
 
-                    click.panel = panel;
+                    click.quizPanel = panel;
+                    click.imageQuizPanel = imagequizPanel;
+
                     click.quizManager = FindObjectOfType<Quiz5>();
+                    click.imageQuizManager = FindObjectOfType<imageQuiz5>();
 
                     break;
                 }
 
             case QuizType.Quiz10:
                 {
-                    ShieldItem10 click = item.GetComponent<ShieldItem10>();
+                    Item10 click = item.GetComponent<Item10>();
 
-                    click.panel = panel;
+                    click.quizPanel = panel;
+                    click.imageQuizPanel = imagequizPanel;
+
                     click.quizManager = FindObjectOfType<Quiz10>();
+                    click.imageQuizManager = FindObjectOfType<imageQuiz10>();
 
                     break;
                 }
             case QuizType.Quiz25:
                 {
-                    ShieldItem25 click = item.GetComponent<ShieldItem25>();
+                    Item25 click = item.GetComponent<Item25>();
 
-                    click.panel = panel;
+                    click.quizPanel = panel;
+                    click.imageQuizPanel = imagequizPanel;
+
                     click.quizManager = FindObjectOfType<Quiz25>();
+                    click.imageQuizManager = FindObjectOfType<imageQuiz25>();
 
                     break;
                 }
             case QuizType.Quiz50:
                 {
-                    ShieldItem50 click = item.GetComponent<ShieldItem50>();
+                    Item50 click = item.GetComponent<Item50>();
 
-                    click.panel = panel;
+                    click.quizPanel = panel;
+                    click.imageQuizPanel = imagequizPanel;
+
                     click.quizManager = FindObjectOfType<Quiz50>();
+                    click.imageQuizManager = FindObjectOfType<imageQuiz50>();
 
                     break;
                 }
             case QuizType.Quiz100:
                 {
-                    ShieldItem100 click = item.GetComponent<ShieldItem100>();
+                    Item100 click = item.GetComponent<Item100>();
 
-                    click.panel = panel;
+                    click.quizPanel = panel;
+                    click.imageQuizPanel = imagequizPanel;
+
                     click.quizManager = FindObjectOfType<Quiz100>();
+                    click.imageQuizManager = FindObjectOfType<imageQuiz100>();
 
                     break;
                 }
