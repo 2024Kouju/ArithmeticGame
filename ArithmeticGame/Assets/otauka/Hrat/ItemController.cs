@@ -156,8 +156,11 @@ public class ItemController : MonoBehaviour
                 {
                     Item1 click = item.GetComponent<Item1>();
 
-                    click.panel = panel;
+                    click.quizPanel = panel;
+                    click.imageQuizPanel = imagequizPanel;
+
                     click.quizManager = FindObjectOfType<Quiz1>();
+                    click.imageQuizManager = FindObjectOfType<imageQuiz1>();
 
                     break;
                 }

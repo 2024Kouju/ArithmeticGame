@@ -149,14 +149,19 @@ public class SwordItemController : MonoBehaviour
             case QuizType.Quiz1:
                 {
                     SwordItem1 click = item.GetComponent<SwordItem1>();
-                    click.panel = panel;
+
+                    click.quizPanel = panel;
+                    click.imageQuizPanel = imagequizPanel;
+
                     click.quizManager = FindObjectOfType<Quiz1>();
+                    click.imageQuizManager = FindObjectOfType<imageQuiz1>();
+
                     break;
                 }
 
             case QuizType.Quiz5:
                 {
-                    Item5 click = item.GetComponent<Item5>();
+                    SwordItem5 click = item.GetComponent<SwordItem5>();
 
                     click.quizPanel = panel;
                     click.imageQuizPanel = imagequizPanel;
@@ -169,7 +174,7 @@ public class SwordItemController : MonoBehaviour
 
             case QuizType.Quiz10:
                 {
-                    Item10 click = item.GetComponent<Item10>();
+                    SwordItem10 click = item.GetComponent<SwordItem10>();
 
                     click.quizPanel = panel;
                     click.imageQuizPanel = imagequizPanel;
@@ -182,7 +187,7 @@ public class SwordItemController : MonoBehaviour
 
             case QuizType.Quiz25:
                 {
-                    Item25 click = item.GetComponent<Item25>();
+                    SwordItem25 click = item.GetComponent<SwordItem25>();
 
                     click.quizPanel = panel;
                     click.imageQuizPanel = imagequizPanel;
@@ -195,7 +200,7 @@ public class SwordItemController : MonoBehaviour
 
             case QuizType.Quiz50:
                 {
-                    Item50 click = item.GetComponent<Item50>();
+                    SwordItem50 click = item.GetComponent<SwordItem50>();
 
                     click.quizPanel = panel;
                     click.imageQuizPanel = imagequizPanel;
@@ -208,7 +213,7 @@ public class SwordItemController : MonoBehaviour
 
             case QuizType.Quiz100:
                 {
-                    Item100 click = item.GetComponent<Item100>();
+                    SwordItem100 click = item.GetComponent<SwordItem100>();
 
                     click.quizPanel = panel;
                     click.imageQuizPanel = imagequizPanel;

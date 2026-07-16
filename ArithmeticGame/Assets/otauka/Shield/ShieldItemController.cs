@@ -153,15 +153,18 @@ public class ShieldItemController : MonoBehaviour
                 {
                     ShieldItem1 click = item.GetComponent<ShieldItem1>();
 
-                    click.panel = panel;
+                    click.quizPanel = panel;
+                    click.imageQuizPanel = imagequizPanel;
+
                     click.quizManager = FindObjectOfType<Quiz1>();
+                    click.imageQuizManager = FindObjectOfType<imageQuiz1>();
 
                     break;
                 }
 
             case QuizType.Quiz5:
                 {
-                    Item5 click = item.GetComponent<Item5>();
+                    ShieldItem5 click = item.GetComponent<ShieldItem5>();
 
                     click.quizPanel = panel;
                     click.imageQuizPanel = imagequizPanel;
@@ -174,7 +177,7 @@ public class ShieldItemController : MonoBehaviour
 
             case QuizType.Quiz10:
                 {
-                    Item10 click = item.GetComponent<Item10>();
+                    ShieldItem10 click = item.GetComponent<ShieldItem10>();
 
                     click.quizPanel = panel;
                     click.imageQuizPanel = imagequizPanel;
@@ -186,7 +189,7 @@ public class ShieldItemController : MonoBehaviour
                 }
             case QuizType.Quiz25:
                 {
-                    Item25 click = item.GetComponent<Item25>();
+                    ShieldItem25 click = item.GetComponent<ShieldItem25>();
 
                     click.quizPanel = panel;
                     click.imageQuizPanel = imagequizPanel;
@@ -198,7 +201,7 @@ public class ShieldItemController : MonoBehaviour
                 }
             case QuizType.Quiz50:
                 {
-                    Item50 click = item.GetComponent<Item50>();
+                    ShieldItem50 click = item.GetComponent<ShieldItem50>();
 
                     click.quizPanel = panel;
                     click.imageQuizPanel = imagequizPanel;
@@ -210,7 +213,7 @@ public class ShieldItemController : MonoBehaviour
                 }
             case QuizType.Quiz100:
                 {
-                    Item100 click = item.GetComponent<Item100>();
+                    ShieldItem100 click = item.GetComponent<ShieldItem100>();
 
                     click.quizPanel = panel;
                     click.imageQuizPanel = imagequizPanel;

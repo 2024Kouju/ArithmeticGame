@@ -87,6 +87,21 @@ public class ScoreAttackChange : MonoBehaviour,
         Quiz50.Score50 = true;
         Quiz100.Score100 = true;
 
+        imageQuiz1.Boss1 = false;
+        imageQuiz5.Boss5 = false;
+        imageQuiz10.Boss10 = false;
+        imageQuiz25.Boss25 = false;
+        imageQuiz50.Boss50 = false;
+        imageQuiz100.Boss100 = false;
+
+        imageQuiz1.Score1 = true;
+        imageQuiz5.Score5 = true;
+        imageQuiz10.Score10 = true;
+        imageQuiz25.Score25 = true;
+        imageQuiz50.Score50 = true;
+        imageQuiz100.Score100 = true;
+
+
         audioSource.PlayOneShot(ButtonSound);
 
         Invoke(nameof(Change), 1f);
