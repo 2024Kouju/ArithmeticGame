@@ -150,6 +150,16 @@ public class Quiz10 : MonoBehaviour
 
             txt.text = shuffledChoices[i].choiceText;
 
+            // 文字数によって文字サイズを変更
+            if (shuffledChoices[i].choiceText.Length >= 7)
+            {
+                txt.fontSize = 25;   // 6文字以上
+            }
+            else
+            {
+                txt.fontSize = 35;   // 通常サイズ
+            }
+
             choiceButtons[i].onClick.RemoveAllListeners();
 
             choiceButtons[i].onClick.AddListener(() =>

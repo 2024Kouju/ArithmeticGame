@@ -43,7 +43,7 @@ public class SwordItem10 : MonoBehaviour
 
         int rand = Random.Range(0, 100);
 
-        if (rand < 20)
+        if (rand < 5)
         {
             //‰æ‘œƒNƒCƒY
             imageQuizPanel.SetActive(true);
