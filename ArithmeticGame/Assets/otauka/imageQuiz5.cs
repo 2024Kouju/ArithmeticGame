@@ -153,9 +153,9 @@ public class imageQuiz5 : MonoBehaviour
             txt.text = shuffledChoices[i].choiceText;
 
             // 文字数によって文字サイズを変更
-            if (shuffledChoices[i].choiceText.Length >= 7)
+            if (shuffledChoices[i].choiceText.Length >= 8)
             {
-                txt.fontSize = 25;   // 6文字以上
+                txt.fontSize = 30;   // 6文字以上
             }
             else
             {

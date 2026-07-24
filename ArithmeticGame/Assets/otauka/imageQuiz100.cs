@@ -153,15 +153,14 @@ public class imageQuiz100 : MonoBehaviour
             txt.text = shuffledChoices[i].choiceText;
 
             // 文字数によって文字サイズを変更
-            if (shuffledChoices[i].choiceText.Length >= 7)
+            if (shuffledChoices[i].choiceText.Length >= 8)
             {
-                txt.fontSize = 25;   // 6文字以上
+                txt.fontSize = 30;   // 6文字以上
             }
             else
             {
                 txt.fontSize = 35;   // 通常サイズ
             }
-
             choiceButtons[i].onClick.RemoveAllListeners();
 
             choiceButtons[i].onClick.AddListener(() =>
@@ -209,23 +208,23 @@ public class imageQuiz100 : MonoBehaviour
             {
                 comboManager.AddCombo();
                 // アイテム効果
-                if (Item5.HPFlag5 == true)
+                if (Item100.HPFlag100 == true)
                 {
-                    hpManager.AddPlayerHP(5);
-                    QuizUnlockManager.Heart5Clear = true;
-                    Item5.HPFlag5 = false;
+                    hpManager.AddPlayerHP(100);
+                 
+                    Item100.HPFlag100 = false;
                 }
-                else if (SwordItem5.SwordFlag5 == true)
+                else if (SwordItem100.SwordFlag100 == true)
                 {
-                    swordManager.AddPlayerSword(5);
-                    QuizUnlockManager.Sword5Clear = true;
-                    SwordItem5.SwordFlag5 = false;
+                    swordManager.AddPlayerSword(100);
+                  
+                    SwordItem100.SwordFlag100 = false;
                 }
-                else if (ShieldItem5.ShieldFlag5 == true)
+                else if (ShieldItem100.ShieldFlag100 == true)
                 {
-                    shieldManager.AddPlayerShield(5);
-                    QuizUnlockManager.Shield5Clear = true;
-                    ShieldItem5.ShieldFlag5 = false;
+                    shieldManager.AddPlayerShield(100);
+                    
+                    ShieldItem100.ShieldFlag100 = false;
                 }
             }
 
@@ -233,23 +232,23 @@ public class imageQuiz100 : MonoBehaviour
             {
                 comboManager.AddScoreCombo();
                 // アイテム効果
-                if (Item5.HPFlag5 == true)
+                if (Item100.HPFlag100 == true)
                 {
-                    attackHP.AddPlayerHP(5);
-                    QuizUnlockManager.Heart5Clear = true;
-                    Item5.HPFlag5 = false;
+                    attackHP.AddPlayerHP(100);
+                    
+                    Item100.HPFlag100 = false;
                 }
-                else if (SwordItem5.SwordFlag5 == true)
+                else if (SwordItem100.SwordFlag100 == true)
                 {
-                    swordManager.AddPlayerSword(5);
-                    QuizUnlockManager.Sword5Clear = true;
-                    SwordItem5.SwordFlag5 = false;
+                    swordManager.AddPlayerSword(100);
+                  
+                    SwordItem100.SwordFlag100 = false;
                 }
-                else if (ShieldItem5.ShieldFlag5 == true)
+                else if (ShieldItem100.ShieldFlag100 == true)
                 {
-                    shieldManager.AddPlayerShield(5);
-                    QuizUnlockManager.Shield5Clear = true;
-                    ShieldItem5.ShieldFlag5 = false;
+                    shieldManager.AddPlayerShield(100);
+                   
+                    ShieldItem100.ShieldFlag100 = false;
                 }
             }
         }
@@ -276,20 +275,20 @@ public class imageQuiz100 : MonoBehaviour
             {
 
                 // アイテム効果
-                if (Item5.HPFlag5 == true)
+                if (Item100.HPFlag100 == true)
                 {
-                    hpManager.AddEnemyHP(3);
-                    Item5.HPFlag5 = false;
+                    hpManager.AddEnemyHP(50);
+                    Item100.HPFlag100 = false;
                 }
-                else if (SwordItem5.SwordFlag5 == true)
+                else if (SwordItem100.SwordFlag100 == true)
                 {
-                    swordManager.AddEnemySword(3);
-                    SwordItem5.SwordFlag5 = false;
+                    swordManager.AddEnemySword(50);
+                    SwordItem100.SwordFlag100 = false;
                 }
-                else if (ShieldItem5.ShieldFlag5 == true)
+                else if (ShieldItem100.ShieldFlag100 == true)
                 {
-                    shieldManager.AddEnemyShield(3);
-                    ShieldItem5.ShieldFlag5 = false;
+                    shieldManager.AddEnemyShield(50);
+                    ShieldItem100.ShieldFlag100 = false;
                 }
             }
 
@@ -298,23 +297,23 @@ public class imageQuiz100 : MonoBehaviour
             {
 
                 // アイテム効果
-                if (Item5.HPFlag5 == true)
+                if (Item100.HPFlag100 == true)
                 {
-                    attackHP.SubScore(5);
+                    attackHP.SubScore(50);
 
-                    Item5.HPFlag5 = false;
+                    Item100.HPFlag100 = false;
                 }
-                else if (SwordItem5.SwordFlag5 == true)
+                else if (SwordItem100.SwordFlag100 == true)
                 {
-                    swordManager.AddEnemySword(3);
+                    swordManager.AddEnemySword(50);
 
-                    SwordItem5.SwordFlag5 = false;
+                    SwordItem100.SwordFlag100 = false;
                 }
-                else if (ShieldItem5.ShieldFlag5 == true)
+                else if (ShieldItem100.ShieldFlag100 == true)
                 {
-                    shieldManager.AddEnemyShield(3);
+                    shieldManager.AddEnemyShield(50);
 
-                    ShieldItem5.ShieldFlag5 = false;
+                    ShieldItem100.ShieldFlag100 = false;
                 }
             }
         }
