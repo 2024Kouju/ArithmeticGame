@@ -4,24 +4,28 @@ using UnityEngine.UI;
 
 public class BossStart : MonoBehaviour
 {
-    public Text startText;
+    public Text messageText;   // メッセージ用
+    public Text countText;     // カウント用
 
     IEnumerator Start()
     {
-        // 2秒間メッセージ表示
-        startText.text = "授業を開始します。";
+        // メッセージ表示
+        messageText.text = "授業を開始します。";
+        countText.text = "";
+
         yield return new WaitForSeconds(2f);
 
-        // 3カウント
+        // メッセージを消す
+        messageText.text = "";
+
+        // カウントダウン
         for (int i = 3; i >= 0; i--)
         {
-            startText.text = i.ToString();
+            countText.text = i.ToString();
             yield return new WaitForSeconds(1f);
         }
 
-        // 消す
-        startText.text = "";
-        // または
-        // startText.gameObject.SetActive(false);
+        // カウントを消す
+        countText.text = "";
     }
 }

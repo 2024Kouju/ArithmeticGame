@@ -181,14 +181,19 @@ public class Quiz50 : MonoBehaviour
 
             txt.text = shuffledChoices[i].choiceText;
 
-            // 文字数によって文字サイズを変更
-            if (shuffledChoices[i].choiceText.Length >= 8)
+            int length = shuffledChoices[i].choiceText.Length;
+
+            if (length >= 8)
             {
-                txt.fontSize = 30;   // 6文字以上
+                txt.fontSize = 30;   // 8文字以上
+            }
+            else if (length <= 3)
+            {
+                txt.fontSize = 45;   // 3文字以下
             }
             else
             {
-                txt.fontSize = 35;   // 通常サイズ
+                txt.fontSize = 35;   // 4～7文字
             }
 
             choiceButtons[i].onClick.RemoveAllListeners();
