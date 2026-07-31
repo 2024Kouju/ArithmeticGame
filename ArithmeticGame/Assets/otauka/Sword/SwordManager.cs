@@ -107,7 +107,7 @@ public class SwordManager : MonoBehaviour
 
     void IncreaseEnemySword()
     {
-        enemySword += 5;
+        enemySword += 2;
 
         ShowEnemySwordStatus(5);
 
