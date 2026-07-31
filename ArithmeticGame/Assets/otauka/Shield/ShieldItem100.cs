@@ -9,10 +9,10 @@ using UnityEngine.UIElements;
 public class ShieldItem100 : MonoBehaviour
 {
     public GameObject quizPanel;
-    public GameObject imageQuizPanel;
+
 
     public Quiz100 quizManager;
-    public imageQuiz100 imageQuizManager;
+
     static public bool ShieldFlag100 = false;
 
     // 表示までの時間
@@ -27,7 +27,7 @@ public class ShieldItem100 : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (quizPanel.activeSelf || imageQuizPanel.activeSelf)
+        if (quizPanel.activeSelf)
         {
             return;
         }
@@ -41,20 +41,7 @@ public class ShieldItem100 : MonoBehaviour
     {
         yield return new WaitForSeconds(interval);
 
-        int rand = Random.Range(0, 100);
-
-        if (rand < 5)
-        {
-            //画像クイズ
-            imageQuizPanel.SetActive(true);
-
-            if (imageQuizManager != null)
-            {
-                imageQuizManager.ShowRandomQuestion();
-            }
-        }
-        else
-        {
+ 
             // 通常クイズ
             quizPanel.SetActive(true);
 
@@ -62,7 +49,7 @@ public class ShieldItem100 : MonoBehaviour
             {
                 quizManager.ShowRandomQuestion();
             }
-        }
+        
 
         Destroy(gameObject);
     }

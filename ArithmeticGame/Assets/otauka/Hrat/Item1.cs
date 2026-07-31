@@ -43,7 +43,7 @@ public class Item1 : MonoBehaviour
 
         int rand = Random.Range(0, 100);
 
-        if (rand < 50)
+        if (rand < 5)
         {
             //‰æ‘œƒNƒCƒY
             imageQuizPanel.SetActive(true);

@@ -29,7 +29,7 @@ public class SwordItemController : MonoBehaviour
     public RectTransform spawnArea;
 
 
-    public int maxItems = 10;
+ 
 
     public GameObject panel;
 
@@ -43,7 +43,15 @@ public class SwordItemController : MonoBehaviour
     {
         StartCoroutine(StartSpawn());
     }
+    int GetMaxItems()
+    {
+        if (QuizUnlockManager.Sword50Clear)
+        {
+            return 4;
+        }
 
+        return 5;
+    }
     IEnumerator StartSpawn()
     {
         yield return new WaitForSeconds(startDelay);
@@ -88,7 +96,7 @@ public class SwordItemController : MonoBehaviour
             GameObject[] items =
                 GameObject.FindGameObjectsWithTag("Sword");
 
-            if (items.Length < maxItems && CanSpawn())
+            if (items.Length < GetMaxItems() && CanSpawn())
             {
                 SpawnItem();
             }
@@ -216,10 +224,10 @@ public class SwordItemController : MonoBehaviour
                     SwordItem100 click = item.GetComponent<SwordItem100>();
 
                     click.quizPanel = panel;
-                    click.imageQuizPanel = imagequizPanel;
+        
 
                     click.quizManager = FindObjectOfType<Quiz100>();
-                    click.imageQuizManager = FindObjectOfType<imageQuiz100>();
+            
 
                     break;
                 }

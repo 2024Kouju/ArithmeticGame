@@ -30,7 +30,7 @@ public class ShieldItemController : MonoBehaviour
     public RectTransform spawnArea;
 
 
-    public int maxItems = 10;
+
 
     public GameObject panel;
 
@@ -44,7 +44,15 @@ public class ShieldItemController : MonoBehaviour
     {
         StartCoroutine(StartSpawn());
     }
+    int GetMaxItems()
+    {
+        if (QuizUnlockManager.Shield50Clear)
+        {
+            return 4;
+        }
 
+        return 5;
+    }
     IEnumerator StartSpawn()
     {
         yield return new WaitForSeconds(startDelay);
@@ -89,7 +97,7 @@ public class ShieldItemController : MonoBehaviour
             GameObject[] items =
                 GameObject.FindGameObjectsWithTag("Shield");
 
-            if (items.Length < maxItems && CanSpawn())
+            if (items.Length < GetMaxItems() && CanSpawn())
             {
                 SpawnItem();
             }
@@ -216,10 +224,10 @@ public class ShieldItemController : MonoBehaviour
                     ShieldItem100 click = item.GetComponent<ShieldItem100>();
 
                     click.quizPanel = panel;
-                    click.imageQuizPanel = imagequizPanel;
+      
 
                     click.quizManager = FindObjectOfType<Quiz100>();
-                    click.imageQuizManager = FindObjectOfType<imageQuiz100>();
+             
 
                     break;
                 }

@@ -29,7 +29,7 @@ public class ItemController : MonoBehaviour
 
     public RectTransform spawnArea;
 
-    public int maxItems = 10;
+  
 
     public GameObject panel;
 
@@ -43,7 +43,15 @@ public class ItemController : MonoBehaviour
     {
         StartCoroutine(StartSpawn());
     }
+    int GetMaxItems()
+    {
+        if (QuizUnlockManager.Heart50Clear)
+        {
+            return 4;
+        }
 
+        return 5;
+    }
     IEnumerator StartSpawn()
     {
         yield return new WaitForSeconds(startDelay);
@@ -82,13 +90,11 @@ public class ItemController : MonoBehaviour
         while (true)
         {
             float waitTime = Random.Range(minTime, maxTime);
-
             yield return new WaitForSeconds(waitTime);
 
-            GameObject[] items =
-                GameObject.FindGameObjectsWithTag("Hart");
+            GameObject[] items = GameObject.FindGameObjectsWithTag("Hart");
 
-            if (items.Length < maxItems&&CanSpawn())
+            if (items.Length < GetMaxItems() && CanSpawn())
             {
                 SpawnItem();
             }
